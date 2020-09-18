@@ -2,6 +2,7 @@
 
 toml client extension for coc-nvim
 taplo is used to parse toml and taplo-lsp is used as language-server
+I'm sorry but please wait for publish `taplo-lsp` or build it on yourself on 24 hours
 
 ## ! Important !
 
@@ -29,6 +30,6 @@ MIT
 ## Using
 - [taplo](https://github.com/tamasfe/taplo)
   - to parse toml
-  - taplo-lsp is forked from [taplo/taplo-ide](https://github.com/tamasfe/taplo/tree/master/taplo-ide)
+  - [taplo-lsp](https://github.com/kkiyama117/taplo-lsp) is forked from [taplo/taplo-ide](https://github.com/tamasfe/taplo/tree/master/taplo-ide)
 - [create-coc-extension](https://github.com/fannheyward/create-coc-extension)
   - To generate templates
