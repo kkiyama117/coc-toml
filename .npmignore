@@ -11,3 +11,9 @@ yarn-error.log
 .eslintrc.js
 .prettierrc
 .eslintrc.js
+
+# for use otser editor
+.vscode
+.idea
+.netrwhist
+

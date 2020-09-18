@@ -1,6 +1,6 @@
 {
   "name": "coc-toml",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "toml extension for coc-nvim",
   "author": "kkiyama117 <k.kiyama117@gmail.com>",
   "publisher": "kkiyama117",
@@ -17,7 +17,6 @@
     "url": "https://github.com/kkiyama117/coc-toml/issues"
   },
   "preview": true,
-  "private": true,
   "engines": {
     "coc": "^0.0.77"
   },
