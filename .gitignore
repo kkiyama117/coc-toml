@@ -1,2 +1,7 @@
 lib
 node_modules/
+
+# for use other editor
+.vscode
+.idea
+.netrwhist

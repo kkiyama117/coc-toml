@@ -1,13 +1,14 @@
 {
   "name": "coc-toml",
-  "version": "0.0.1-development",
+  "version": "0.0.1",
   "description": "toml extension for coc-nvim",
   "author": "kkiyama117 <k.kiyama117@gmail.com>",
   "publisher": "kkiyama117",
   "license": "MIT",
   "main": "lib/index.js",
   "keywords": [
-    "coc.nvim"
+    "coc.nvim",
+    "toml"
   ],
   "repository": {
     "url": "https://github.com/kkiyama117/coc-toml"
@@ -18,14 +19,16 @@
   "preview": true,
   "private": true,
   "engines": {
-    "vscode": "^1..0",
     "coc": "^0.0.77"
   },
   "scripts": {
     "lint": "eslint src --ext ts",
     "clean": "rimraf lib",
     "watch": "webpack --watch",
-    "build": "webpack",
+    "build": "webpack --mode production && npm run webpack-server",
+    "webpack": "webpack --mode development",
+    "webpack-server": "webpack --config webpack.config.server.js --mode production",
+    "test-compile": "tsc -p ./",
     "prepare": "npm-run-all clean build"
   },
   "prettier": {
@@ -36,22 +39,23 @@
   "devDependencies": {
     "@types/node": "^14.6.0",
     "@types/node-fetch": "^2.5.7",
-    "@typescript-eslint/eslint-plugin": "^3.9.1",
-    "@typescript-eslint/parser": "^3.9.1",
-    "coc.nvim": "^0.0.77",
+    "@typescript-eslint/eslint-plugin": "^4.1.1",
+    "@typescript-eslint/parser": "^4.1.1",
+    "coc.nvim": "0.0.79",
+    "copy-webpack-plugin": "^6.0.1",
     "eslint": "^7.7.0",
     "eslint-config-prettier": "^6.11.0",
     "eslint-plugin-prettier": "^3.1.4",
+    "node-fetch": "^2.6.0",
     "npm-run-all": "^4.1.5",
     "prettier": "^2.0.5",
     "rimraf": "^3.0.2",
-    "ts-loader": "^8.0.2",
-    "typescript": "^3.9.7",
-    "webpack": "^4.44.1",
-    "webpack-cli": "^3.3.12",
-    "node-fetch": "^2.6.0",
     "taplo-lsp": "^0.1.2",
-    "vscode-languageclient": "^6.1.3"
+    "ts-loader": "^8.0.2",
+    "typescript": "^4.0.2",
+    "vscode-languageclient": "^6.1.3",
+    "webpack": "^4.44.1",
+    "webpack-cli": "^3.3.12"
   },
   "activationEvents": [
     "onLanguage:toml",
@@ -68,34 +72,143 @@
           "type": "boolean",
           "default": true,
           "description": "Enable coc-toml extension"
+        },
+        "coc-toml.activationStatus": {
+          "description": "Show a status bar message while the extension is activating.",
+          "type": "boolean",
+          "scope": "resource",
+          "default": true
+        },
+        "coc-toml.semanticTokens": {
+          "description": "Enable semantic tokens for inline table and array keys. If enabled, keys of arrays and inline tables will have the same color as table headers and array of tables headers.",
+          "type": "boolean",
+          "scope": "resource",
+          "default": false
+        },
+        "coc-toml.commands.copyTomlAsJson": {
+          "description": "Show the \"Copy Selection as JSON\" command in the palette.",
+          "type": "boolean",
+          "scope": "resource",
+          "default": true
+        },
+        "coc-toml.commands.pasteTomlAsJson": {
+          "description": "Show the \"Paste as JSON\" command in the palette.",
+          "type": "boolean",
+          "scope": "resource",
+          "default": true
+        },
+        "coc-toml.formatter.alignEntries": {
+          "description": "Align consecutive entries vertically.",
+          "type": "boolean",
+          "scope": "resource",
+          "default": false
+        },
+        "coc-toml.formatter.arrayTrailingComma": {
+          "description": "Append trailing commas for multi-line arrays.",
+          "type": "boolean",
+          "scope": "resource",
+          "default": true
+        },
+        "coc-toml.formatter.arrayAutoExpand": {
+          "description": "Expand arrays to multiple lines that exceed the maximum column width.",
+          "type": "boolean",
+          "scope": "resource",
+          "default": true
+        },
+        "coc-toml.formatter.arrayAutoCollapse": {
+          "description": "Collapse arrays that don't exceed the maximum column width and don't contain comments.",
+          "type": "boolean",
+          "scope": "resource",
+          "default": true
+        },
+        "coc-toml.formatter.compactArrays": {
+          "description": "Omit white space padding from single-line arrays.",
+          "type": "boolean",
+          "scope": "resource",
+          "default": true
+        },
+        "coc-toml.formatter.compactInlineTables": {
+          "description": "Omit white space padding from the start and end of inline tables.",
+          "type": "boolean",
+          "scope": "resource",
+          "default": false
+        },
+        "coc-toml.formatter.columnWidth": {
+          "description": "Maximum column width in characters, affects array expansion and collapse, this doesn't take whitespace into account.",
+          "type": "number",
+          "minimum": 0,
+          "default": 80
+        },
+        "coc-toml.formatter.indentTables": {
+          "description": "Indent based on tables and arrays of tables and their subtables, subtables out of order are not indented.",
+          "type": "boolean",
+          "scope": "resource",
+          "default": false
+        },
+        "coc-toml.formatter.indentString": {
+          "description": "The substring that is used for indentation, should be tabs or spaces, but technically can be anything. Uses the IDE setting if not set.",
+          "type": [
+            "string",
+            "null"
+          ],
+          "scope": "resource",
+          "default": null
+        },
+        "coc-toml.formatter.reorderKeys": {
+          "description": "Alphabetically reorder keys that are not separated by empty lines.",
+          "type": "boolean",
+          "scope": "resource",
+          "default": false
+        },
+        "coc-toml.formatter.allowedBlankLines": {
+          "description": "Maximum amount of allowed consecutive blank lines. This does not affect the whitespace at the end of the document, as it is always stripped.",
+          "type": "integer",
+          "scope": "resource",
+          "minimum": 0,
+          "default": 2
+        },
+        "coc-toml.formatter.trailingNewline": {
+          "description": "Add trailing newline at the end of the file if not present.",
+          "type": "boolean",
+          "scope": "resource",
+          "default": true
+        },
+        "coc-toml.formatter.crlf": {
+          "description": "Use CRLF for line endings.",
+          "type": "boolean",
+          "scope": "resource",
+          "default": false
+        },
+        "coc-toml.schema.enabled": {
+          "description": "Enable completion and validation based on JSON schemas.",
+          "type": "boolean",
+          "scope": "resource",
+          "default": true
+        },
+        "coc-toml.schema.links": {
+          "description": "Enable editor links.",
+          "type": "boolean",
+          "scope": "resource",
+          "default": false
+        },
+        "coc-toml.schema.associations": {
+          "description": "Document and schema associations.",
+          "markdownDescription": "Document and schema associations. \n\n The key must be a regular expression, this pattern is used to associate schemas with absolute document URIs. On multiple matches the first one is used in an undefined order. \n\n The value must be an absolute URI to the JSON schema, for supported values and more information [read here](https://github.com/tamasfe/taplo/tree/master/taplo-ide/schemas).",
+          "type": "object",
+          "scope": "resource",
+          "default": {
+            ".*/Cargo\\.toml": "toml_builtin://cargo",
+            ".*/pyproject\\.toml": "toml_builtin://pyproject"
+          }
+        },
+        "coc-toml.debug": {
+          "description": "Enable features to debug the extension.",
+          "type": "boolean",
+          "scope": "resource",
+          "default": true
         }
       }
     },
-    "commands": [
-      {
-        "command": "coc-toml.copyTomlAsJson",
-        "title": "TOML: Copy Selection as JSON",
-        "enablement": "editorHasSelection"
-      },
-      {
-        "command": "coc-toml.pasteTomlAsJson",
-        "title": "TOML: Paste as JSON"
-      },
-      {
-        "command": "coc-toml.debug.showSyntaxTree",
-        "title": "TOML (debug): Show Syntax Tree",
-        "enablement": "editorLangId == toml && config.coc-toml.debug"
-      },
-      {
-        "command": "coc-toml.debug.showDomTree",
-        "title": "TOML (debug): Show DOM Tree",
-        "enablement": "editorLangId == toml && config.coc-toml.debug"
-      },
-      {
-        "command": "coc-toml.debug.showLineMappings",
-        "title": "TOML (debug): Show Offset Line Mappings",
-        "enablement": "editorLangId == toml && config.coc-toml.debug"
-      }
-    ]
+    "commands": []
   }
 }
