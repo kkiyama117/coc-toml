@@ -34,11 +34,17 @@ import * as path from 'path';
 // import { registerCommands } from "./commands";
 // import { MessageWithOutput } from "./requestExt";
 import DemoList from './lists';
+import getCompletionItems from './completions';
+import cocTomlAutoCmd from './auto_cmd';
 
 export async function activate(context: ExtensionContext): Promise<void> {
   // define variables
   const { subscriptions, logger } = context;
   const fileSchemaErrors = new Map<string, string>();
+  const config = workspace.getConfiguration().get('coc-toml') as any;
+
+  // Don't activate if disabled
+  if (!config.enable) return;
 
   // check buffer data
   events.on(
@@ -67,7 +73,7 @@ export async function activate(context: ExtensionContext): Promise<void> {
     ],
 
     initializationOptions: {
-      configuration: workspace.getConfiguration().get('coc-toml'),
+      configuration: config,
     },
 
     synchronize: {
@@ -97,25 +103,6 @@ export async function activate(context: ExtensionContext): Promise<void> {
       },
     }),
 
-    workspace.registerAutocmd({
-      event: 'InsertLeave',
-      request: true,
-      callback: () => {
-        workspace.showMessage(`registerAutocmd on InsertLeave`);
-      },
-    })
+    workspace.registerAutocmd(cocTomlAutoCmd(workspace))
   );
-}
-
-async function getCompletionItems(): Promise<CompleteResult> {
-  return {
-    items: [
-      {
-        word: 'TestCompletionItem 1',
-      },
-      {
-        word: 'TestCompletionItem 2',
-      },
-    ],
-  };
 }
