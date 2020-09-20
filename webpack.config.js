@@ -7,14 +7,14 @@ module.exports = {
   mode: 'none',
   resolve: {
     mainFields: ['module', 'main'],
-    extensions: ['.js', '.ts']
+    extensions: ['.js', '.ts'],
   },
   externals: {
-    'vscode': 'commonjs vscode', 
-    'coc.nvim': 'commonjs coc.nvim'
+    vscode: 'commonjs vscode',
+    'coc.nvim': 'commonjs coc.nvim',
   },
   optimization: {
-    minimize: true
+    minimize: true,
   },
   module: {
     rules: [
@@ -27,22 +27,22 @@ module.exports = {
             loader: 'ts-loader',
             options: {
               compilerOptions: {
-                sourceMap: true
-              }
-            }
-          }
-        ]
-      }
-    ]
+                sourceMap: true,
+              },
+            },
+          },
+        ],
+      },
+    ],
   },
   output: {
     path: path.join(__dirname, 'lib'),
     filename: 'index.js',
-    libraryTarget: 'commonjs'
+    libraryTarget: 'commonjs2',
   },
   plugins: [],
   node: {
     __dirname: false,
-    __filename: false
-  }
+    __filename: false,
+  },
 };
