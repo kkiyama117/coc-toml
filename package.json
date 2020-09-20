@@ -85,18 +85,6 @@
           "scope": "resource",
           "default": false
         },
-        "coc-toml.commands.copyTomlAsJson": {
-          "description": "Show the \"Copy Selection as JSON\" command in the palette.",
-          "type": "boolean",
-          "scope": "resource",
-          "default": true
-        },
-        "coc-toml.commands.pasteTomlAsJson": {
-          "description": "Show the \"Paste as JSON\" command in the palette.",
-          "type": "boolean",
-          "scope": "resource",
-          "default": true
-        },
         "coc-toml.formatter.alignEntries": {
           "description": "Align consecutive entries vertically.",
           "type": "boolean",
@@ -208,7 +196,6 @@
           "default": false
         }
       }
-    },
-    "commands": []
+    }
   }
 }
