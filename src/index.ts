@@ -1,33 +1,13 @@
 import {
-  DidChangeConfigurationNotification,
-  TextDocument,
-  Position,
-  CompletionContext,
-  CancellationToken,
-  CompletionItem,
-  CompletionList,
-  CompletionItemKind,
-  Diagnostic,
-  RequestType,
-} from 'vscode-languageserver-protocol';
-import {
-  Uri,
   commands,
-  CompleteResult,
   ExtensionContext,
   listManager,
   sources,
   events,
-  extensions,
   LanguageClient,
   ServerOptions,
   services,
-  TransportKind,
   LanguageClientOptions,
-  ServiceStat,
-  ProvideCompletionItemsSignature,
-  ResolveCompletionItemSignature,
-  HandleDiagnosticsSignature,
   workspace,
 } from 'coc.nvim';
 import * as path from 'path';
