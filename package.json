@@ -59,7 +59,6 @@
   },
   "activationEvents": [
     "onLanguage:toml",
-    "*",
     "onLanguage:cargoLock",
     "onCommand:coc-toml.pasteTomlAsJson",
     "onCommand:coc-toml.copyTomlAsJson"
