@@ -44,7 +44,7 @@ export async function activate(context: ExtensionContext): Promise<void> {
   const config = workspace.getConfiguration().get('coc-toml') as any;
 
   // Don't activate if disabled
-  if (!config.enable) return;
+  if (!config.enabled) return;
 
   // check buffer data
   events.on(
