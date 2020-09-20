@@ -34,8 +34,10 @@ import * as path from 'path';
 // import { registerCommands } from "./commands";
 // import { MessageWithOutput } from "./requestExt";
 import DemoList from './lists';
-import getCompletionItems from './completions';
 import cocTomlAutoCmd from './auto_cmd';
+import sourceConfig from './toml_source_config';
+import getServerOptions from './configs/server_options';
+import getClientOptions from './configs/client_options';
 
 export async function activate(context: ExtensionContext): Promise<void> {
   // define variables
@@ -45,8 +47,8 @@ export async function activate(context: ExtensionContext): Promise<void> {
 
   // Don't activate if disabled
   if (!config.enabled) {
-    logger.log('congig.enabled: false');
-    workspace.showMessage('activate stopped because of: config.enabled is false');
+    logger.log('configs.enabled: false');
+    workspace.showMessage('activate stopped because of: configs.enabled is false');
   }
 
   // check buffer data
@@ -64,27 +66,11 @@ export async function activate(context: ExtensionContext): Promise<void> {
 
   // Create the language client and start the client.
   const p = path.resolve(context.asAbsolutePath(path.join('lib', 'server.js')));
-  const serverOptions: ServerOptions = {
-    run: { module: p, transport: TransportKind.ipc },
-    debug: { module: p, transport: TransportKind.ipc },
-  };
+  const serverOptions: ServerOptions = getServerOptions(p);
   // Options to control the language client
-  const clientOptions: LanguageClientOptions = {
-    documentSelector: [
-      { scheme: 'file', language: 'toml' },
-      { scheme: 'file', language: 'cargoLock' },
-    ],
-
-    initializationOptions: {
-      configuration: config,
-    },
-
-    synchronize: {
-      configurationSection: 'coc-toml',
-      fileEvents: [workspace.createFileSystemWatcher('**/.toml'), workspace.createFileSystemWatcher('**/Cargo.lock')],
-    },
-  };
+  const clientOptions: LanguageClientOptions = getClientOptions(config, fileSchemaErrors);
   const client = new LanguageClient('toml', 'toml language server', serverOptions, clientOptions);
+
   // Push the disposable to the context's subscriptions so that the
   // client can be deactivated on extension deactivation
   context.subscriptions.push(
@@ -95,17 +81,10 @@ export async function activate(context: ExtensionContext): Promise<void> {
 
     listManager.registerList(new DemoList(workspace.nvim)),
 
-    sources.createSource({
-      name: 'coc-toml completion source', // unique id
-      shortcut: '[CS]', // [CS] is custom source
-      priority: 1,
-      triggerPatterns: [], // RegExp pattern
-      doComplete: async () => {
-        const items = await getCompletionItems();
-        return items;
-      },
-    }),
+    // add source completions
+    sources.createSource(sourceConfig),
 
+    // add autocmd
     workspace.registerAutocmd(cocTomlAutoCmd(workspace))
   );
 }
