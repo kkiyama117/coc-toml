@@ -17,7 +17,6 @@
     "url": "https://github.com/kkiyama117/coc-toml/issues"
   },
   "preview": true,
-  "private": true,
   "engines": {
     "coc": "^0.0.77"
   },
