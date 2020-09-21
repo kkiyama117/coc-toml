@@ -117,11 +117,8 @@ server         = "192.168.1.1"
   dc = "eqdc10"
   ip = "10.0.0.2"
 [clients]
-data = [ ["gamma", "delta"], [1, 2] ]
+data = [["gamma", "delta"], [1, 2]]
 # Line breaks are OK when inside arrays
-hosts = [
-    "alpha",
-    "omega"
-]
+hosts = ["alpha", "omega"]
 
 ###############################################################################
