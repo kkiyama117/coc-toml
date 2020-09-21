@@ -1,0 +1,127 @@
+###############################################################################
+# Key/Value Pair
+
+# The primary building block of a TOML document is the key/value pair.
+
+# Keys are on the left of the equals sign and values are on the right.
+# Whitespace is ignored around key names and values.
+# The key, equals sign, and value must be on the same line (though some values
+# can be broken over multiple lines).
+title = "TOML Example"
+
+# Values must have one of the following types.
+# String
+# Integer
+# Float
+# Boolean
+# Offset Date-Time
+# Local Date-Time
+# Local Date
+# Local Time
+# Array
+# Inline Table
+
+# Unspecified values are invalid.
+# *Invalid* key = # INVALID
+
+# There must be a newline after a key/value pair. (See Inline Table for
+# exceptions.)
+# *Invalid* first = "Tom" last = "Preston-Werner" # INVALID
+
+###############################################################################
+# Keys
+
+# A key may be either bare, quoted or dotted.
+# Bare keys may only contain ASCII letters, ASCII digits, underscores, and
+# dashes (A-Za-z0-9_-). Note that bare keys are allowed to be composed of only
+# ASCII digits, e.g. 1234, but are always interpreted as strings.
+key = "value"
+bare_key = "value"
+bare-key = "value"
+1234 = "value"
+
+# Quoted keys follow the exact same rules as either basic strings or literal
+# strings and allow you to use a much broader set of key names. Best practice
+# is to use bare keys except when absolutely necessary.
+"127.0.0.1" = "value"
+"character encoding" = "value"
+"ʎǝʞ" = "value"
+'key2' = "value"
+'quoted "value"' = "value"
+
+# A bare key must be non-empty, but an empty quoted key is allowed (though
+# discouraged).
+# *Invalid* = "no key name"  # INVALID
+"" = "blank" # VALID but discouraged
+'' = 'blank' # VALID but discouraged
+
+# Dotted keys are a sequence of bare or quoted keys joined with a dot. This
+# allows for grouping similar properties together:
+name = "Orange"
+physical.color = "orange"
+physical.shape = "round"
+site."google.com" = true
+# In JSON land, that would give you the following structure:
+# {
+#   "name": "Orange",
+#   "physical": {
+#     "color": "orange",
+#     "shape": "round"
+#   },
+#   "site": {
+#     "google.com": true
+#   }
+# }
+
+# Whitespace around dot-separated parts is ignored, however, best practice is
+# to not use any extraneous whitespace.
+
+# Defining a key multiple times is invalid.
+# DO NOT DO THIS
+# *duplicated* name = "Tom"
+# *Invalid* name = "Pradyun"
+
+# Since bare keys are allowed to compose of only ASCII integers, it is possible
+# to write dotted keys that look like floats but are 2-part dotted keys. Don't
+# do this unless you have a good reason to (you probably don't).
+3.14159 = "pi"
+# The above TOML maps to the following JSON.
+# { "3": { "14159": "pi" } }
+
+# As long as a key hasn't been directly defined, you may still write to it and to
+# names within it.
+# This makes the key "fruit" into a table.
+fruit.apple.smooth = true
+
+# So then you can add to the table "fruit" like so:
+fruit.orange = 2
+
+# THE FOLLOWING IS INVALID
+# This defines the value of fruit.apple to be an integer.
+# *Invalid* fruit.apple = 1
+# But then this treats fruit.apple like it's a table.
+# You can't turn an integer into a table.
+# *Duplicated* fruit.apple.smooth = true
+
+# VALID BUT DISCOURAGED
+
+apple.type = "fruit"
+orange.type = "fruit"
+
+apple.skin = "thin"
+orange.skin = "thick"
+
+apple.color = "red"
+orange.color = "orange"
+
+# RECOMMENDED
+
+# *Duplicated* apple.type = "fruit"
+# *Duplicated* apple.skin = "thin"
+# *Duplicated* apple.color = "red"
+
+# *Duplicated* orange.type = "fruit"
+# *Duplicated* orange.skin = "thick"
+# *Duplicated* orange.color = "orange"
+
+###############################################################################

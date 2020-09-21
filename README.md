@@ -1,7 +1,7 @@
 # coc-toml
 
-toml client extension for coc-nvim
-taplo is used to parse toml and taplo-lsp is used as language-server
+toml lsp client extension for coc-nvim
+[taplo](https://github.com/tamasfe/taplo) is used to parse toml and [taplo-lsp](https://github.com/kkiyama117/taplo-lsp) is used as language-server
 
 ## ! Important
 
@@ -15,7 +15,19 @@ So, tell me if I'm wrong or going to bad way to implement this.
 
 ## Install
 
+- from coc command
 `:CocInstall coc-toml`
+- from plugin manager
+  - dein.vim
+    ```
+    [[plugins]]
+    build   = 'yarn install --frozen-lockfile'
+    depends = 'coc.nvim'
+    merged  = 0
+    on_ft   = 'toml'
+    repo    = 'kkiyama117/coc-toml'
+    rev     = "develop"
+    ```
 
 ## Keymaps
 

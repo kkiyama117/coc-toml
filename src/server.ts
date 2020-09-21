@@ -5,18 +5,18 @@
 //
 // And provides some utilities.
 
-import run from "taplo-lsp";
+import run from 'taplo-lsp';
 
-import * as fs from "fs";
+import * as fs from 'fs';
 
 (global as any).sendMessage = (msg: any) => {
-    if (process.send) {
-        process.send(msg);
-    }
+  if (process.send) {
+    process.send(msg);
+  }
 };
 
 (global as any).readFile = (path: string): Uint8Array => {
-    return fs.readFileSync(path);
+  return fs.readFileSync(path);
 };
 
 run();
