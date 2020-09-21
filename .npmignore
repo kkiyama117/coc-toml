@@ -9,5 +9,8 @@ yarn.lock
 yarn-error.log
 .github
 .eslintrc.js
-.prettierrc
-.eslintrc.js
+
+# Editor
+.vscode
+.idea
+.netrwhist
