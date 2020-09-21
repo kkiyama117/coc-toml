@@ -28,10 +28,12 @@ export async function activate(context: ExtensionContext): Promise<void> {
   // Don't activate if disabled
   if (!config.enabled) {
     logger.log('configs.enabled: false');
-    workspace.showMessage('activate stopped because of: configs.enabled is false');
+    workspace.showMessage(
+      'activate stopped because of: configs.enabled is false'
+    );
   }
 
-  // check buffer data
+  // When opening buffer, get doc and find errors
   events.on(
     'BufEnter',
     (bufnr) => {
@@ -45,16 +47,37 @@ export async function activate(context: ExtensionContext): Promise<void> {
   );
 
   // Create the language client and start the client.
-  const p = path.resolve(context.asAbsolutePath(path.join('lib', 'server.js')));
-  const serverOptions: ServerOptions = getServerOptions(p);
+  const serverPath = path.resolve(
+    context.asAbsolutePath(path.join('lib', 'server.js'))
+  );
+  // Options to control the language server
+  const serverOptions: ServerOptions = getServerOptions(serverPath);
   // Options to control the language client
-  const clientOptions: LanguageClientOptions = getClientOptions(config, fileSchemaErrors);
-  const client = new LanguageClient('toml', 'toml language server', serverOptions, clientOptions);
+  const clientOptions: LanguageClientOptions = getClientOptions(
+    config,
+    fileSchemaErrors
+  );
+
+  // Create client for toml
+  const client = new LanguageClient(
+    'toml',
+    'toml language server',
+    serverOptions,
+    clientOptions
+  );
 
   // Push the disposable to the context's subscriptions so that the
   // client can be deactivated on extension deactivation
+  context.subscriptions.push(services.registLanguageClient(client));
+  client.onReady().then(() => {
+    // WIP, get schema
+  });
+
+  // show loading status.
+  const statusItem = workspace.createStatusBarItem(0, { progress: true });
+  subscriptions.push(statusItem);
+
   context.subscriptions.push(
-    services.registLanguageClient(client),
     commands.registerCommand('coc-toml.Command', async () => {
       workspace.showMessage(`coc-toml Commands works!`);
     }),

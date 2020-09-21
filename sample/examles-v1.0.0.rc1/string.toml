@@ -63,10 +63,10 @@ str7 = """"This," she said, "is just a pointless statement.""""
 # must appear on a single line:
 
 # What you see is what you get.
-winpath  = 'C:\Users\nodejs\templates'
-winpath2 = '\\ServerX\admin$\system32\'
 quoted   = 'Tom "Dubs" Preston-Werner'
 regex    = '<\i\c*\s*>'
+winpath  = 'C:\Users\nodejs\templates'
+winpath2 = '\\ServerX\admin$\system32\'
 
 # Since there is no escaping, there is no way to write a single quote inside a
 # literal string enclosed by single quotes. Luckily, TOML supports a multi-line
@@ -77,13 +77,13 @@ regex    = '<\i\c*\s*>'
 # newline immediately following the opening delimiter will be trimmed. All
 # other content between the delimiters is interpreted as-is without
 # modification.
-regex2 = '''I [dw]on't need \d{2} apples'''
 lines  = '''
 The first newline is
 trimmed in raw strings.
    All other whitespace
    is preserved.
 '''
+regex2 = '''I [dw]on't need \d{2} apples'''
 
 # You can write 1 or 2 single quotes anywhere within a multi-line literal
 # string, but sequences of three or more single quotes are not permitted.
@@ -100,24 +100,22 @@ apos15 = "Here are fifteen apostrophes: '''''''''''''''"
 # suitable ASCII or UTF-8 encoding. The handling of that encoding will be
 # application specific.
 
-
-
 [owner]
-name = "Tom Preston-Werner"
-dob = 1979-05-27T07:32:00-08:00 # First class dates
+dob  = 1979-05-27T07:32:00-08:00 # First class dates
+name = "Tom Preston-Werner"      
 [database]
-server = "192.168.1.1"
-ports = [ 8001, 8001, 8002 ]
 connection_max = 5000
-enabled = true
+enabled        = true
+ports          = [8001, 8001, 8002]
+server         = "192.168.1.1"
 [servers]
 # Indentation (tabs and/or spaces) is allowed but not required
-[servers.alpha]
-ip = "10.0.0.1"
-dc = "eqdc10"
-[servers.beta]
-ip = "10.0.0.2"
-dc = "eqdc10"
+  [servers.alpha]
+  dc = "eqdc10"
+  ip = "10.0.0.1"
+  [servers.beta]
+  dc = "eqdc10"
+  ip = "10.0.0.2"
 [clients]
 data = [ ["gamma", "delta"], [1, 2] ]
 # Line breaks are OK when inside arrays
@@ -127,4 +125,3 @@ hosts = [
 ]
 
 ###############################################################################
-
