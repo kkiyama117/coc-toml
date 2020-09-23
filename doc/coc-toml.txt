@@ -1,0 +1,243 @@
+*coc-toml.txt*          toml analyzer, parser and formatter extension for vim.
+
+Version: 0.0.4-alpha
+Author: kkiyama117 <k.kiyama117@gmail.com>
+License: MIT license
+
+==============================================================================
+CONTENTS                                                   *coc-toml-contents*
+
+Introduction    |coc-toml-introduction|
+Install         |coc-toml-install|
+Interface       |coc-toml-interface|
+  Mappings        |coc-toml-mappings|
+  Commands        |coc-toml-commands|
+  Options         |coc-toml-options|
+
+==============================================================================
+INTRODUCTION                                           *coc-toml-introduction*
+
+There are many plugins for vim with lsp or coc-nvim. But, there are no toml
+analyzer for vim. Even more there are few standalone lsp for toml.
+
+This plugin aims for writing toml much easier and making better lsp of toml
+able to be used in other editor also.
+
+==============================================================================
+INSTALL                                                     *coc-toml-install*
+
+                                                            *coc-toml-install*
+Requirements~
+
+- Neovim or vim alternative(Required to be work with coc-nvim).
+- coc-nvim and its requirements
+- (Optional) vim plugin manager. (If you use non-default branch version)
+
+Now configure this plugin if needed. (Refer to |coc-toml-options|)
+
+==============================================================================
+INTERFACE                                                 *coc-toml-interface*
+
+------------------------------------------------------------------------------
+MAPPINGS                                                   *coc-toml-mappings*
+
+WIP.
+
+Note:
+    there are no maggings now, but some mappings for format, copy, and actions in
+    future.
+
+------------------------------------------------------------------------------
+COMMANDS                                                   *coc-toml-mappings*
+
+WIP.
+
+Note:
+    there are no commands now, but some mappings for format, copy, and actions in
+    future.
+
+------------------------------------------------------------------------------
+OPTIONS                                                     *coc-toml-options*
+
+All this options have default value, so we can use coc-toml without any
+settings. write this settings at coc-settings.json if you change behavior.
+
+                                                    *coc-toml-options-enabled*
+coc-toml.enabled~
+        type: boolean
+        default: true
+
+        Enable coc-toml extension.
+
+                                           *coc-toml-options-activationStatus*
+coc-toml.activationStatus~
+        type: boolean
+        scope: resource
+        default: true
+
+        Show a status bar message while the extension is activating.
+
+                                             *coc-toml-options-semanticTokens*
+coc-toml.semanticTokens~
+        type: boolean
+        scope: resource
+        default: false
+        
+        Enable semantic tokens for inline table and array keys. If enabled,
+        keys of arrays and inline tables will have the same color as table 
+        headers and array of tables headers.
+
+                                     *coc-toml-options-formatter-alignEntries*
+coc-toml.formatter.alignEntries~
+        type: boolean
+        scope: resource
+        default: false
+        Align consecutive entries vertically.
+
+                               *coc-toml-options-formatter-arrayTrailingComma*
+coc-toml.formatter.arrayTrailingComma~
+        type: boolean
+        scope: resource
+        default: true
+
+        Append trailing commas for multi-line arrays.
+
+                                  *coc-toml-options-formatter-arrayAutoExpand*
+coc-toml.formatter.arrayAutoExpand~
+        type: boolean
+        scope: resource
+        default: true
+
+        Expand arrays to multiple lines that exceed the maximum column width.
+
+                                *coc-toml-options-formatter-arrayAutoCollapse*
+coc-toml.formatter.arrayAutoCollapse~
+        type: boolean
+        scope: resource
+        default: true
+
+        Collapse arrays that don't exceed the maximum column width and don't 
+        contain comments.
+
+                                    *coc-toml-options-formatter-compactArrays*
+coc-toml.formatter.compactArrays~
+        type: boolean
+        scope: resource
+        default: true
+
+        Omit white space padding from single-line arrays.
+
+                              *coc-toml-options-formatter-compactInlineTables*
+coc-toml.formatter.compactInlineTables~
+        type: boolean
+        scope: resource
+        default: false
+
+        Omit white space padding from the start and end of inline tables.
+
+                                      *coc-toml-options-formatter-columnWidth*
+coc-toml.formatter.columnWidth~
+        type: number
+        minimum: 0
+        default: 80
+
+        Maximum column width in characters, affects array expansion and 
+        collapse, this doesn't take whitespace into account.
+
+                                     *coc-toml-options-formatter-indentTables*
+coc-toml.formatter.indentTables~
+        type: boolean
+        scope: resource
+        default: false
+
+        Indent based on tables and arrays of tables and their subtables,
+        subtables out of order are not indented.
+
+                                     *coc-toml-options-formatter-indentString*
+coc-toml.formatter.indentString~
+        type: [string | null]
+        scope: resource
+        default: null
+
+        The substring that is used for indentation, should be tabs or spaces,
+        but technically can be anything. Uses the IDE setting if not set.
+
+                                      *coc-toml-options-formatter-reorderKeys*
+coc-toml.formatter.reorderKeys~
+        type: boolean
+        scope: resource
+        default: false
+
+        Alphabetically reorder keys that are not separated by empty lines.
+
+                                *coc-toml-options-formatter-allowedBlankLines*
+coc-toml.formatter.allowedBlankLines~
+        type: integer
+        scope: resource
+        minimum: 0
+        default: 2
+
+        Maximum amount of allowed consecutive blank lines. This does not
+        affect the whitespace at the end of the document, as it is always
+        stripped.
+
+                                  *coc-toml-options-formatter-trailingNewline*
+coc-toml.formatter.trailingNewline~
+        type: boolean
+        scope: resource
+        default: true
+
+        Add trailing newline at the end of the file if not present.
+
+                                             *coc-toml-options-formatter-crlf*
+coc-toml.formatter.crlf~
+        type: boolean
+        scope: resource
+        default: false
+        Use CRLF for line endings.
+
+                                             *coc-toml-options-schema-enabled*
+coc-toml.schema.enabled~
+        type: boolean
+        scope: resource
+        default: true
+
+        Enable completion and validation based on JSON schemas.
+
+                                               *coc-toml-options-schema-links*
+coc-toml.schema.links~
+        type: boolean
+        scope: resource
+        default: true
+
+        Enable editor links.
+
+                                        *coc-toml-options-schema-associations*
+coc-toml.schema.associations~
+        type: object
+        scope: resource
+        default: {
+            ".*/Cargo\\.toml": "toml_builtin://cargo",
+            ".*/pyproject\\.toml": "toml_builtin://pyproject"
+        }
+
+        Document and schema associations.
+            Document and schema associations. \n\n
+            The key must be a regular expression, this pattern is used to
+            associate schemas with absolute document URIs. On multiple
+            matches the first one is used in an undefined order. \n\n
+            The value must be an absolute URI to the JSON schema, for
+            supported values and more information [read here]
+            (https://github.com/tamasfe/taplo/tree/master/taplo-ide/schemas).
+
+                                                      *coc-toml-options-debug*
+coc-toml.debug~
+        type: boolean
+        scope: resource
+        default: false
+
+        Enable features to debug the extension.
+
+==============================================================================
+vim:ft=help:tw=78:sw=4:ts=8:sts=0:nosta:norl:noet:fen:fdm=marker:fdl=0:
+

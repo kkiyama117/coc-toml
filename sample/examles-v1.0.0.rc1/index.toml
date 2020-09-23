@@ -1,0 +1,27 @@
+# This is a TOML document.
+# This is made from https://toml.io/en/v1.0.0-rc.1
+# Sometimes the words are duplicated in the original, and I have marked those
+# instances as follows. there are listed as correct sentences.
+
+# *Duplicated* key = "value"
+
+# Also, there are some invalid examples not commented out and I marked like
+# this to prevent parser from considering this documents to be invalid toml.
+
+# *Invalid* key = value
+
+###############################################################################
+# SPEC
+
+# TOML is case sensitive.
+# A TOML file must be a valid UTF-8 encoded Unicode document.
+# Whitespace means tab (0x09) or space (0x20).
+# Newline means LF (0x0A) or CRLF (0x0D 0x0A).
+
+###############################################################################
+# Comment
+
+# This is a full-line comment
+key = "value"  # This is a comment at the end of a line
+another = "# This is not a comment"
+
