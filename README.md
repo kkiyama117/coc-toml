@@ -5,7 +5,7 @@ toml lsp client extension for coc-nvim
 
 ## ! Important
 
-This repo and package is alpha-version.
+This repo and package is under developing.
 
 There are some bugs, unimplemented features, and documents missing,
 though I'm making efforts to add them on it.
