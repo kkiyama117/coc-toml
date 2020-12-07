@@ -42,8 +42,8 @@ jobs:
       - name: yarn
         run: |
           yarn --frozen-lockfile
-      - name: yarn lint
-        run: yarn lint
+      - name: check format
+        run: yarn prettier
       - if: matrix.os == 'macos-latest'
         name: yarn test on macOS
         run: |
