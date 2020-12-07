@@ -26,13 +26,21 @@ jobs:
         uses: actions/setup-node@v1
         with:
           node-version: ${{ matrix.node-version }}
+
       - name: Install yarn
         run: |
           curl --compressed -o- -L https://yarnpkg.com/install.sh | bash
       - uses: actions/checkout@v2
+
+      - name: Checkout submodules
+        shell: bash
+        run: |
+          auth_header="$(git config --local --get http.https://github.com/.extraheader)"
+          git submodule sync --recursive
+          git -c "http.extraheader=$auth_header" -c protocol.version=2 submodule update --init --force --recursive --depth=1
+
       - name: yarn
         run: |
-          yarn global add typescript
           yarn --frozen-lockfile
       - name: yarn lint
         run: yarn lint
@@ -43,7 +51,7 @@ jobs:
           tar xzf nvim-macos.tar.gz
           export PATH="${PATH}:node_modules/.bin:$(pwd)/nvim-osx64/bin"
           nvim --version
-          yarn test
+          yarn --frozen-lockfile
       - if: matrix.os == 'ubuntu-latest'
         name: yarn test on Ubuntu
         run: |
