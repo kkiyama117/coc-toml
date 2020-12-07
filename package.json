@@ -28,6 +28,9 @@
     "build:syntax": "ts-node src/syntax/index.ts",
     "clean": "rimraf lib",
     "prepare": "npm-run-all clean build",
+    "prettier:base": "prettier --parser typescript --single-quote",
+    "prettier": "yarn prettier:base -- --list-different \"src/**/*.{ts,tsx}\"",
+    "format": "yarn prettier:base -- --write \"src/**/*.{ts,tsx}\"",
     "watch": "yarn build --watch"
   },
   "prettier": {
@@ -46,13 +49,8 @@
     "@rollup/plugin-node-resolve": "^10.0.0",
     "@types/deep-equal": "^1.0.1",
     "@types/node-fetch": "^2.5.7",
-    "@typescript-eslint/eslint-plugin": "^4.8.2",
-    "@typescript-eslint/parser": "^4.8.2",
     "@wasm-tool/rollup-plugin-rust": "^1.0.5",
     "coc.nvim": "0.0.79",
-    "eslint": "^7.14.0",
-    "eslint-config-prettier": "^6.15.0",
-    "eslint-plugin-prettier": "^3.1.4",
     "npm-run-all": "^4.1.5",
     "prettier": "^2.2.0",
     "rimraf": "^3.0.2",
