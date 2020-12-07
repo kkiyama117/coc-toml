@@ -1,5 +1,5 @@
 {
-  "name": "coc-toml",
+  "name": "@kkiyama117/coc-toml",
   "version": "0.1.3",
   "description": "toml extension for coc-nvim",
   "author": "kkiyama117 <k.kiyama117@gmail.com>",
@@ -11,13 +11,14 @@
     "toml"
   ],
   "repository": {
-    "url": "https://github.com/kkiyama117/coc-toml"
+    "type": "git",
+    "url": "git+https://github.com/kkiyama117/coc-toml.git"
   },
   "bugs": {
     "url": "https://github.com/kkiyama117/coc-toml/issues"
   },
   "publishConfig": {
-    "registry": "https://npm.pkg.github.com"
+    "registry": "https://npm.pkg.github.com/"
   },
   "preview": true,
   "engines": {
