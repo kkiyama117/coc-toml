@@ -23,7 +23,6 @@ So, please tell me if I'm wrong or going to bad way to implement this.
     ```
     [[plugins]]
     repo    = 'kkiyama117/coc-toml'
-    build   = 'yarn --frozen-lockfile'
     depends = 'coc.nvim'
     on_ft   = 'toml'
     ```
