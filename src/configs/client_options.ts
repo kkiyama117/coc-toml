@@ -26,14 +26,23 @@ const clientOptions = (config, fileSchemaErrors): LanguageClientOptions => ({
 
   synchronize: {
     configurationSection: 'coc-toml',
-    fileEvents: [workspace.createFileSystemWatcher('**/.toml'), workspace.createFileSystemWatcher('**/Cargo.lock')],
+    fileEvents: [
+      workspace.createFileSystemWatcher('**/.toml'),
+      workspace.createFileSystemWatcher('**/Cargo.lock'),
+    ],
   },
   middleware: {
     workspace: {
       // WIP
     },
-    handleDiagnostics: (uri: string, diagnostics: Diagnostic[], next: HandleDiagnosticsSignature) => {
-      const schemaErrorIndex = diagnostics.findIndex((candidate) => candidate.code === /* SchemaResolveError */ 0x300);
+    handleDiagnostics: (
+      uri: string,
+      diagnostics: Diagnostic[],
+      next: HandleDiagnosticsSignature
+    ) => {
+      const schemaErrorIndex = diagnostics.findIndex(
+        (candidate) => candidate.code === /* SchemaResolveError */ 0x300
+      );
       if (uri.endsWith('coc-settings.json')) {
         diagnostics = diagnostics.filter((o) => o.code != 521);
       }
@@ -45,7 +54,10 @@ const clientOptions = (config, fileSchemaErrors): LanguageClientOptions => ({
       fileSchemaErrors.set(uri.toString(), schemaResolveDiagnostic.message);
       const doc = workspace.getDocument(uri);
       if (doc && doc.uri == uri) {
-        workspace.showMessage(`Schema error: ${schemaResolveDiagnostic.message}`, 'warning');
+        workspace.showMessage(
+          `Schema error: ${schemaResolveDiagnostic.message}`,
+          'warning'
+        );
       }
       next(uri, diagnostics as any);
     },
