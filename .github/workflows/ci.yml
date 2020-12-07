@@ -30,10 +30,10 @@ jobs:
         run: |
           curl --compressed -o- -L https://yarnpkg.com/install.sh | bash
       - uses: actions/checkout@v2
-      - name: yarn install
+      - name: yarn
         run: |
           yarn global add typescript
-          yarn
+          yarn --frozen-lockfile
       - name: yarn lint
         run: yarn lint
       - if: matrix.os == 'macos-latest'
@@ -51,6 +51,6 @@ jobs:
           tar xzf nvim-linux64.tar.gz
           export PATH="${PATH}:node_modules/.bin:$(pwd)/nvim-linux64/bin"
           nvim --version
-          yarn test
+          yarn --frozen-lockfile
         env:
           NODE_ENV: test
