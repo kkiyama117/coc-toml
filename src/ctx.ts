@@ -9,11 +9,7 @@ import {
   workspace,
 } from 'coc.nvim';
 import path from 'path';
-import {
-  Disposable,
-  GenericNotificationHandler,
-  Position,
-} from 'vscode-languageserver-protocol';
+import { Disposable, Position } from 'vscode-languageserver-protocol';
 // import { TextDocument } from 'vscode-languageserver-textdocument';
 import { Config } from './config';
 import { createClient } from './client';
@@ -77,7 +73,10 @@ export class Ctx {
       // show loading status.
       const statusItem = workspace.createStatusBarItem(0, { progress: true });
       this.extCtx.subscriptions.push(statusItem);
+      statusItem.text = 'Initializing taplo...';
+      statusItem.show();
       await client.onReady();
+      statusItem.hide();
     } else {
       await client.onReady();
     }
@@ -383,12 +382,4 @@ function allRange(doc: coc.Document): Range {
       doc.getline(doc.lineCount - 1).length - 1
     )
   );
-}
-
-function registerNotification(
-  client,
-  method: string,
-  handler: GenericNotificationHandler
-) {
-  client.onNotification(method, handler);
 }

@@ -1,6 +1,6 @@
 *coc-toml.txt*          toml analyzer, parser and formatter extension for vim.
 
-Version: 0.0.4-alpha
+Version: 0.1.3
 Author: kkiyama117 <k.kiyama117@gmail.com>
 License: MIT license
 
@@ -41,22 +41,25 @@ INTERFACE                                                 *coc-toml-interface*
 ------------------------------------------------------------------------------
 MAPPINGS                                                   *coc-toml-mappings*
 
-WIP.
-
 Note:
-    there are no maggings now, but some mappings for format, copy, and actions in
-    future.
+   This plugin has no unique keymaps now.
+   Use your own keybinding or commands for coc.nvim.
 
 ------------------------------------------------------------------------------
 COMMANDS                                                   *coc-toml-commands*
 
-                                                *coc-toml-commands-tomlToJson*
-AAAAAAAAa~
-        Enable coc-toml extension.
+                                                *coc-toml-commands-syntaxTree*
+coc-toml.syntaxTree~
+        show syntaxTree like `rust-analyzer` does.
 
-Note:
-    there are no commands now, but some mappings for format, copy, and actions in
-    future.
+                                                *coc-toml-commands-tomlToJson*
+coc-toml.tomlToJson~
+        convert toml to Json. If you run it with visualmode, convert toml in
+        selected range instead of it in the whole of document.
+
+                                                    *coc-toml-commands-reload*
+coc-toml.reload~
+        reload this plugin and taplo instance.
 
 ------------------------------------------------------------------------------
 OPTIONS                                                     *coc-toml-options*

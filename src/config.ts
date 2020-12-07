@@ -31,6 +31,10 @@ export class Config {
 
   private async onConfigChange(event: ConfigurationChangeEvent) {
     this.cfg = workspace.getConfiguration(this.rootSection);
+    if (this.debug) {
+      workspace.showMessage('config is changed!');
+      workspace.showMessage(JSON.stringify(this.cfg));
+    }
 
     const requiresReloadOpt = this.requiresReloadOpts.find((opt) =>
       event.affectsConfiguration(opt)
