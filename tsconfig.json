@@ -1,15 +1,13 @@
 {
   "compilerOptions": {
-    "target": "es2017",
-    "lib": ["es2017", "es2018"],
-    "module": "commonjs",
-    "declaration": false,
-    "sourceMap": true,
-    "outDir": "lib",
-    "strict": true,
+    "target": "es2019",
+    "lib": ["ES2019"],
+    "sourceMap": false,
+    "rootDir": "src",
     "moduleResolution": "node",
-    "noImplicitAny": false,
-    "esModuleInterop": true
+    "module": "ESNext",
+    "allowSyntheticDefaultImports": true,
+    "strict": false
   },
-  "include": ["src"]
+  "exclude": ["node_modules","taplo"]
 }
