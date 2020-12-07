@@ -23,13 +23,7 @@
   "engines": {
     "coc": "^0.0.77"
   },
-  "scripts": {
-    "build": "yarn --ignore-engines rollup --silent -c rollup.config.js",
-    "build:syntax": "ts-node src/syntax/index.ts",
-    "clean": "rimraf lib",
-    "prepare": "npm-run-all clean build",
-    "watch": "yarn build --watch"
-  },
+  "scripts": {},
   "prettier": {
     "singleQuote": true,
     "printWidth": 80,
@@ -38,30 +32,6 @@
   "dependencies": {
     "deep-equal": "^2.0.5",
     "node-fetch": "^2.6.1"
-  },
-  "devDependencies": {
-    "@types/node": "^14.11.2",
-    "@rollup/plugin-commonjs": "^16.0.0",
-    "@rollup/plugin-json": "^4.1.0",
-    "@rollup/plugin-node-resolve": "^10.0.0",
-    "@types/deep-equal": "^1.0.1",
-    "@types/node-fetch": "^2.5.7",
-    "@typescript-eslint/eslint-plugin": "^4.8.2",
-    "@typescript-eslint/parser": "^4.8.2",
-    "@wasm-tool/rollup-plugin-rust": "^1.0.5",
-    "coc.nvim": "0.0.79",
-    "eslint": "^7.14.0",
-    "eslint-config-prettier": "^6.15.0",
-    "eslint-plugin-prettier": "^3.1.4",
-    "npm-run-all": "^4.1.5",
-    "prettier": "^2.2.0",
-    "rimraf": "^3.0.2",
-    "rollup": "^2.33.1",
-    "rollup-plugin-typescript2": "^0.29.0",
-    "rollup-plugin-wasm": "^3.0.0",
-    "ts-node": "^8.10.2",
-    "typescript": "^4.1.2",
-    "vscode-languageserver-types": "^3.15.1"
   },
   "activationEvents": [
     "onLanguage:toml",

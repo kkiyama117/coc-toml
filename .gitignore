@@ -1,5 +1,8 @@
 lib
 node_modules/
+/taplo
+/src
+
 
 # for use other editor
 .vscode
