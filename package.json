@@ -30,8 +30,8 @@
     "clean": "rimraf lib",
     "prepare": "npm-run-all clean build",
     "prettier:base": "prettier --parser typescript --single-quote",
-    "prettier": "yarn prettier:base -- --list-different \"src/**/*.{ts,tsx}\"",
-    "format": "yarn prettier:base -- --write \"src/**/*.{ts,tsx}\"",
+    "prettier": "yarn prettier:base --list-different \"src/**/*.ts\"",
+    "format": "yarn prettier:base --write \"src/**/*.ts\"",
     "watch": "yarn build --watch"
   },
   "prettier": {

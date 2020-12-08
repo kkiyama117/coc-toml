@@ -245,8 +245,8 @@ export class Ctx {
 
     if (deepEqual(defaultAssociations, currentAssociations, { strict: true })) {
       // default values, nothing to do
-      if (config.debug){
-        workspace.showMessage("associations is same. pass.")
+      if (config.debug) {
+        workspace.showMessage('associations is same. pass.');
       }
       return;
     }
