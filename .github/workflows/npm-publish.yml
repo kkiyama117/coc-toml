@@ -22,7 +22,22 @@ jobs:
         run: |
           yarn --frozen-lockfile
           yarn prettier
-
+  publish-npm:
+    needs: test
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          ref: 'main'
+          submodules: true
+      - uses: actions/setup-node@v1
+        with:
+          node-version: 14
+          registry-url: 'https://registry.npmjs.org'
+      - run: yarn --frozen-lockfile
+      - run: yarn publish
+        env:
+          NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}
   publish-gpr:
     needs: test
     runs-on: ubuntu-latest
@@ -33,8 +48,9 @@ jobs:
           submodules: true
       - uses: actions/setup-node@v1
         with:
-          node-version: 12
-          registry-url: https://npm.pkg.github.com/
+          node-version: 14
+          registry-url: 'https://npm.pkg.github.com/'
+          scope: '@kkiyama117'
       - run: yarn --frozen-lockfile
       - run: yarn publish
         env:
