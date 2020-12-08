@@ -8,7 +8,7 @@ on:
     types: [created]
 
 jobs:
-  test:
+  release:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
@@ -22,8 +22,12 @@ jobs:
         run: |
           yarn --frozen-lockfile
           yarn prettier
+      - name: release
+        run: |
+          # hack for get version number
+          yarn version --new-version "${GITHUB_REF:11}" --no-git-tag-version
   publish-npm:
-    needs: test
+    needs: release
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
@@ -34,12 +38,16 @@ jobs:
         with:
           node-version: 14
           registry-url: 'https://registry.npmjs.org'
+      - name: version number
+        run: |
+          # hack for get version number
+          yarn version --new-version "${GITHUB_REF:11}" --no-git-tag-version
       - run: yarn --frozen-lockfile
       - run: yarn publish
         env:
           NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}
   publish-gpr:
-    needs: test
+    needs: release
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
@@ -51,6 +59,10 @@ jobs:
           node-version: 14
           registry-url: 'https://npm.pkg.github.com/'
           scope: '@kkiyama117'
+      - name: version number
+        run: |
+          # hack for get version number
+          yarn version --new-version "${GITHUB_REF:11}" --no-git-tag-version
       - run: yarn --frozen-lockfile
       - run: yarn publish
         env:
