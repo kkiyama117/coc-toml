@@ -27,6 +27,7 @@ import * as vscode_ls from 'vscode-languageserver-types';
 import deepEqual from 'deep-equal';
 import * as coc from 'coc.nvim';
 import { Range } from 'vscode-languageserver-types';
+import { globalConfig } from './index';
 
 // export type TomlDocument = TextDocument & { languageId: 'toml' };
 
@@ -47,11 +48,12 @@ export class Ctx {
 
   constructor(
     private readonly extCtx: ExtensionContext,
-    private readonly config: Config
+    readonly config: Config
   ) {
     this.statusBar = workspace.createStatusBarItem(10);
     this.statusBar.text = 'coc-toml';
     this.extCtx.subscriptions.push(this.statusBar);
+    this.config = config;
   }
 
   registerCommand(name: string, factory: (ctx: Ctx) => Cmd) {
@@ -81,19 +83,21 @@ export class Ctx {
       await client.onReady();
     }
 
+    this.client = client;
+    this.watchConfigFile();
+
     // register Notification
-    client.onNotification(MessageWithOutput.METHOD, this.showMessage);
-    client.onNotification(UpdateBuiltInSchemas.METHOD, this.updateAssociations);
-    client.onNotification(CacheSchema.METHOD, this.cacheSchema);
-    client.onNotification(
+    this.client.onNotification(MessageWithOutput.METHOD, this.showMessage);
+    this.client.onNotification(
+      UpdateBuiltInSchemas.METHOD,
+      this.updateAssociations
+    );
+    this.client.onNotification(CacheSchema.METHOD, this.cacheSchema);
+    this.client.onNotification(
       WatchConfigFile.METHOD,
       this.watchServerTaploConfigFile
     );
-    client.onRequest(GetCachedSchema.METHOD, this.getCachedSchema);
-
-    this.watchConfigFile();
-
-    this.client = client;
+    this.client.onRequest(GetCachedSchema.METHOD, this.getCachedSchema);
   }
 
   get subscriptions(): Disposable[] {
@@ -224,24 +228,26 @@ export class Ctx {
   //   throw 'unreachable';
   // }
 
+  // TODO: find the reason of `this` become `undefined`
   private async updateAssociations(params: UpdateBuiltInSchemas.Params) {
-    if (this?.config === undefined) {
-      console.error('No context!');
-      return;
-    }
-    type Choice = 'ask' | 'always' | 'never';
-    const updateNew: Choice = this.config.addNewBuiltins;
+    const config = this?.config ? this.config : globalConfig;
 
-    const removeOld: Choice = this.config.removeOldBuiltins;
+    type Choice = 'ask' | 'always' | 'never';
+    const updateNew: Choice = config.addNewBuiltins;
+
+    const removeOld: Choice = config.removeOldBuiltins;
 
     if (updateNew === 'never' && removeOld === 'never') {
       return;
     }
-    const defaultAssociations: any = this.config.defaultAssociations;
-    let currentAssociations: any = this.config.currentAssociations;
+    const defaultAssociations: any = config.defaultAssociations;
+    let currentAssociations: any = config.currentAssociations;
 
     if (deepEqual(defaultAssociations, currentAssociations, { strict: true })) {
       // default values, nothing to do
+      if (config.debug){
+        workspace.showMessage("associations is same. pass.")
+      }
       return;
     }
 
@@ -278,7 +284,7 @@ export class Ctx {
           );
           switch (action) {
             case 0:
-              await this.config.setAssociations(
+              await config.setAssociations(
                 {
                   ...currentAssociations,
                   ...toAdd,
@@ -287,11 +293,11 @@ export class Ctx {
               );
               break;
             case 1:
-              await this.config.setAddNewBuiltins('never', true);
+              await config.setAddNewBuiltins('never', true);
               break;
             case 2:
-              await this.config.setAddNewBuiltins('always', true);
-              await this.config.setAssociations(
+              await config.setAddNewBuiltins('always', true);
+              await config.setAssociations(
                 {
                   ...currentAssociations,
                   ...toAdd,
@@ -302,7 +308,7 @@ export class Ctx {
           }
         } else {
           // always update
-          await this.config.setAssociations(
+          await config.setAssociations(
             {
               ...currentAssociations,
               ...toAdd,
@@ -313,7 +319,7 @@ export class Ctx {
       }
     }
 
-    currentAssociations = this.config.currentAssociations;
+    currentAssociations = config.currentAssociations;
 
     if (deepEqual(defaultAssociations, currentAssociations, { strict: true })) {
       // default values, nothing to do
@@ -356,18 +362,18 @@ export class Ctx {
 
           switch (action) {
             case 0:
-              await this.config.setAssociations(finalAssociations, true);
+              await config.setAssociations(finalAssociations, true);
               break;
             case 1:
-              await this.config.setRemoveOldBuiltins('never', false);
+              await config.setRemoveOldBuiltins('never', false);
               break;
             case 2:
-              await this.config.setRemoveOldBuiltins('always', false);
-              await this.config.setAssociations(finalAssociations, true);
+              await config.setRemoveOldBuiltins('always', false);
+              await config.setAssociations(finalAssociations, true);
               break;
           }
         } else {
-          await this.config.setAssociations(finalAssociations, true);
+          await config.setAssociations(finalAssociations, true);
         }
       }
     }

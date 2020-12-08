@@ -9,11 +9,11 @@ type Choice = 'ask' | 'always' | 'never';
 
 export class Config {
   private readonly rootSection = 'coc-toml';
+  //TODO: check reload options
   private readonly requiresReloadOpts = [
     'taploConfig',
     'taploServerConfig',
     'taploConfigEnabled',
-    'schema.associations',
   ].map((opt) => `${this.rootSection}.${opt}`);
   private cfg: WorkspaceConfiguration;
 

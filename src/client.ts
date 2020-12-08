@@ -11,9 +11,9 @@ import { ClientCapabilities } from 'vscode-languageserver-protocol';
 class ExperimentalFeatures implements StaticFeature {
   fillClientCapabilities(capabilities: ClientCapabilities): void {
     const caps: any = capabilities.experimental ?? {};
-    caps.snippetTextEdit = true;
-    caps.resolveCodeAction = true;
-    caps.statusNotification = true;
+    caps.snippetTextEdit = false;
+    caps.resolveCodeAction = false;
+    caps.statusNotification = false;
     capabilities.experimental = caps;
   }
   initialize(): void {}
@@ -34,7 +34,7 @@ export function createClient(p: string): LanguageClient {
     ],
 
     initializationOptions: {
-      configuration: workspace.getConfiguration('coc-toml'),
+      configuration: workspace.getConfiguration().get('coc-toml'),
     },
 
     synchronize: {

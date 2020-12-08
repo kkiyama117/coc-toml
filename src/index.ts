@@ -5,17 +5,28 @@ import { Ctx } from './ctx';
 import { tomlToJson } from './commands/tomlToJson';
 import { syntaxTree } from './commands/syntaxTree';
 
+// TODO: find reason for bug
+export let globalConfig: Config;
+
 export async function activate(context: ExtensionContext): Promise<void> {
-  const config = new Config();
-  const ctx = new Ctx(context, config);
+  globalConfig = new Config();
+
+  const ctx = new Ctx(context, globalConfig);
   // Don't activate if disabled
-  if (!config.enabled) {
+  if (!globalConfig.enabled) {
     logger.log('configs.enabled: false');
     workspace.showMessage(
       'activate stopped because of: configs.enabled is false'
     );
   }
 
+  if (globalConfig.debug) {
+    ctx.registerCommand('configList', (ctx) => {
+      return async () => {
+        workspace.showMessage(JSON.stringify(ctx.config));
+      };
+    });
+  }
   ctx.registerCommand('tomlToJson', tomlToJson);
   ctx.registerCommand('syntaxTree', syntaxTree);
   ctx.registerCommand('reload', (ctx) => {
