@@ -11,13 +11,14 @@
     "toml"
   ],
   "repository": {
-    "url": "https://github.com/kkiyama117/coc-toml"
+    "type": "git",
+    "url": "git+https://github.com/kkiyama117/coc-toml.git"
   },
   "bugs": {
     "url": "https://github.com/kkiyama117/coc-toml/issues"
   },
   "publishConfig": {
-    "registry": "https://npm.pkg.github.com"
+    "registry": "https://npm.pkg.github.com/"
   },
   "preview": true,
   "engines": {
@@ -127,18 +128,6 @@
           "type": "boolean",
           "scope": "resource",
           "default": false
-        },
-        "coc-toml.commands.copyTomlAsJson": {
-          "description": "Show the \"Copy Selection as JSON\" command in the palette.",
-          "type": "boolean",
-          "scope": "resource",
-          "default": true
-        },
-        "coc-toml.commands.pasteTomlAsJson": {
-          "description": "Show the \"Paste as JSON\" command in the palette.",
-          "type": "boolean",
-          "scope": "resource",
-          "default": true
         },
         "coc-toml.formatter.alignEntries": {
           "description": "Align consecutive entries vertically.",
