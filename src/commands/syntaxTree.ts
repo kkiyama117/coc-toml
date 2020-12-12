@@ -3,7 +3,7 @@
 import * as requestExt from '../requestExt';
 import { LanguageClient, workspace } from 'coc.nvim';
 
-export function syntaxTree(client:LanguageClient): any{
+export function syntaxTree(client: LanguageClient): any {
   return async () => {
     const doc = await workspace.document;
     const params: requestExt.SyntaxTree.Params = {

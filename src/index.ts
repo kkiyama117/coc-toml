@@ -5,7 +5,7 @@ import {
   MsgTypes,
   OutputChannel,
   services,
-  workspace
+  workspace,
 } from 'coc.nvim';
 
 import { Config } from './config';
@@ -21,7 +21,7 @@ import {
   ConfigFileChanged,
   GetCachedSchema,
   UpdateBuiltInSchemas,
-  WatchConfigFile
+  WatchConfigFile,
 } from './requestExt';
 import { TextEncoder } from 'util';
 import { Range } from 'vscode-languageserver-types';
@@ -94,7 +94,7 @@ export async function activate(context: ExtensionContext): Promise<void> {
   }
   // auto reloading when config is changed
   context.subscriptions.push(
-    workspace.onDidChangeConfiguration(cfgEvent => {
+    workspace.onDidChangeConfiguration((cfgEvent) => {
       if (
         cfgEvent.affectsConfiguration('evenBetterToml.taploConfig') ||
         cfgEvent.affectsConfiguration('evenBetterToml.taploConfigEnabled')
@@ -110,11 +110,16 @@ export async function activate(context: ExtensionContext): Promise<void> {
   client.onNotification(UpdateBuiltInSchemas.METHOD, updateAssociations);
   // TODO: Check extensionContent is needed(instead of `context`)
   client.onNotification(CacheSchema.METHOD, cacheSchemaGen(extensionContext));
-  client.onNotification(WatchConfigFile.METHOD, watchServerTaploConfigFileGen(client));
+  client.onNotification(
+    WatchConfigFile.METHOD,
+    watchServerTaploConfigFileGen(client)
+  );
   // TODO: Check extensionContent is needed(instead of `context`)
-  client.onRequest(GetCachedSchema.METHOD, getCachedSchemaGen(extensionContext));
+  client.onRequest(
+    GetCachedSchema.METHOD,
+    getCachedSchemaGen(extensionContext)
+  );
 }
-
 
 function showMessage(params: MessageWithOutput.Params) {
   const _trans = (a: MessageWithOutput.MessageKind): MsgTypes | undefined => {
@@ -132,7 +137,12 @@ function showMessage(params: MessageWithOutput.Params) {
   workspace.showMessage(params.message, _trans(params.kind));
 }
 
-function registerCommand(context: Context, client: LanguageClient, name: string, cmd: (LanguageClient) => (...args: any[]) => Promise<void>) {
+function registerCommand(
+  context: Context,
+  client: LanguageClient,
+  name: string,
+  cmd: (LanguageClient) => (...args: any[]) => Promise<void>
+) {
   const fullName = `coc-toml.${name}`;
   const d = commands.registerCommand(fullName, cmd(client));
   client.onReady().then(() => {
@@ -187,8 +197,8 @@ const watchServerTaploConfigFileGen = (c: LanguageClient) => (
 
 // cache schema ============================================================
 function schemaPath(context: ExtensionContext): string | undefined {
-  if (config.debug){
-     console.error(context.storagePath);
+  if (config.debug) {
+    console.error(context.storagePath);
   }
   return path.join(context.storagePath, 'schemas.json');
 }
@@ -213,17 +223,25 @@ function allRange(doc: coc.Document): Range {
   );
 }
 
-const cacheSchemaGen = (context: ExtensionContext) => async (params: CacheSchema.Params) => {
+const cacheSchemaGen = (context: ExtensionContext) => async (
+  params: CacheSchema.Params
+) => {
   const schemas = await _schemaData(schemaPath(context));
   schemas[params.schemaUri] = params.schemaJson;
-  await fs.writeFile(schemaPath(context), new TextEncoder().encode(JSON.stringify(schemas)), err => {
-    workspace.showMessage('error occurred when caching schema', 'error');
-  });
+  await fs.writeFile(
+    schemaPath(context),
+    new TextEncoder().encode(JSON.stringify(schemas)),
+    (err) => {
+      workspace.showMessage('error occurred when caching schema', 'error');
+    }
+  );
 };
 
 const getCachedSchemaGen = (context: ExtensionContext) => async (
   params: GetCachedSchema.Params
-): Promise<GetCachedSchema.Response> => ({ schemaJson: (await _schemaData(schemaPath(context)))[params.schemaUri] });
+): Promise<GetCachedSchema.Response> => ({
+  schemaJson: (await _schemaData(schemaPath(context)))[params.schemaUri],
+});
 
 async function updateAssociations(params: UpdateBuiltInSchemas.Params) {
   const config = workspace.getConfiguration('coc-toml');
@@ -283,7 +301,7 @@ async function updateAssociations(params: UpdateBuiltInSchemas.Params) {
             await config.setAssociations(
               {
                 ...currentAssociations,
-                ...toAdd
+                ...toAdd,
               },
               true
             );
@@ -296,7 +314,7 @@ async function updateAssociations(params: UpdateBuiltInSchemas.Params) {
             await config.setAssociations(
               {
                 ...currentAssociations,
-                ...toAdd
+                ...toAdd,
               },
               true
             );
@@ -307,7 +325,7 @@ async function updateAssociations(params: UpdateBuiltInSchemas.Params) {
         await config.setAssociations(
           {
             ...currentAssociations,
-            ...toAdd
+            ...toAdd,
           },
           true
         );
@@ -327,7 +345,7 @@ async function updateAssociations(params: UpdateBuiltInSchemas.Params) {
     let needRemove = false;
 
     const deprecated = [
-      (val: string): boolean => val.startsWith('toml_builtin://')
+      (val: string): boolean => val.startsWith('toml_builtin://'),
     ];
 
     for (const key of Object.keys(currentAssociations)) {
@@ -374,4 +392,3 @@ async function updateAssociations(params: UpdateBuiltInSchemas.Params) {
     }
   }
 }
-

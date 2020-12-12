@@ -3,7 +3,7 @@ import { LanguageClient, workspace } from 'coc.nvim';
 import { Range } from 'vscode-languageserver-types';
 import { Position } from 'vscode-languageserver-protocol';
 
-export function tomlToJson(client:LanguageClient ): any{
+export function tomlToJson(client: LanguageClient): any {
   return async () => {
     const doc = await workspace.document;
     const mode = await workspace.nvim.call('visualmode');
