@@ -1,17 +1,16 @@
 // Various debug commands
 
 import * as requestExt from '../requestExt';
-import { workspace } from 'coc.nvim';
-import { Cmd, Ctx } from '../ctx';
+import { LanguageClient, workspace } from 'coc.nvim';
 
-export function syntaxTree(ctx: Ctx): Cmd {
+export function syntaxTree(client:LanguageClient): any{
   return async () => {
     const doc = await workspace.document;
     const params: requestExt.SyntaxTree.Params = {
       uri: doc.uri.toString(),
     };
 
-    const res = await ctx.client.sendRequest<requestExt.SyntaxTree.Response>(
+    const res = await client.sendRequest<requestExt.SyntaxTree.Response>(
       requestExt.SyntaxTree.METHOD,
       params
     );
