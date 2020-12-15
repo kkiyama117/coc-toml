@@ -49,7 +49,7 @@ const debug = true;
 
 let taplo: any;
 
-process.on('message', async d => {
+process.on('message', async (d) => {
   if (d.method === 'exit') {
     console.error('[INFO] taplo exit');
     exit(0);
@@ -70,10 +70,9 @@ process.on('message', async d => {
 });
 
 // These are panics from rust
-process.on('unhandledRejection', up => {
+process.on('unhandledRejection', (up) => {
   if (debug) {
     console.error(up);
   }
   throw up;
 });
-
