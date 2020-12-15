@@ -6,11 +6,11 @@
 // And provides some utilities.
 
 // @ts-ignore
-import loadTaplo from '../taplo/taplo-ide/Cargo.toml';
-
+import loadTaplo from '../taplo/taplo-lsp/Cargo.toml';
 import * as fs from 'fs';
 import * as path from 'path';
 import fetch, { Headers, Request, Response } from 'node-fetch';
+import { exit } from 'process';
 
 // For reqwest
 (global as any).Headers = Headers;
@@ -18,6 +18,9 @@ import fetch, { Headers, Request, Response } from 'node-fetch';
 (global as any).Response = Response;
 (global as any).Window = Object;
 (global as any).fetch = fetch;
+
+const debug = true;
+// const debug = false;
 
 // Needed for taplo-cli's glob matching
 (global as any).isWindows = () => {
@@ -30,8 +33,8 @@ import fetch, { Headers, Request, Response } from 'node-fetch';
   }
 };
 
-(global as any).readFile = (path: string): Uint8Array => {
-  return fs.readFileSync(path);
+(global as any).readFile = (path: string): Promise<Uint8Array> => {
+  return fs.promises.readFile(path);
 };
 
 (global as any).isAbsolutePath = (p: string): boolean => {
@@ -46,16 +49,31 @@ import fetch, { Headers, Request, Response } from 'node-fetch';
 
 let taplo: any;
 
-process.on('message', async (d) => {
+process.on('message', async d => {
+  if (d.method === 'exit') {
+    console.error('[INFO] taplo exit');
+    exit(0);
+  }
+
   if (typeof taplo === 'undefined') {
     taplo = await loadTaplo();
     await taplo.initialize();
+    if (debug) {
+      console.error('[INFO] taplo initialized');
+    }
+  }
+
+  if (debug) {
+    console.error(JSON.stringify(d));
   }
   taplo.message(d);
 });
 
 // These are panics from rust
-process.on('unhandledRejection', (up) => {
-  console.error('[Taplo Error]', up);
+process.on('unhandledRejection', up => {
+  if (debug) {
+    console.error(up);
+  }
   throw up;
 });
+

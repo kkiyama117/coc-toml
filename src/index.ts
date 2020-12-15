@@ -85,7 +85,7 @@ export async function activate(context: ExtensionContext): Promise<void> {
     // show loading status.
     const statusItem = workspace.createStatusBarItem(0, { progress: true });
     context.subscriptions.push(statusItem);
-    statusItem.text = 'Initializing taplo...';
+    statusItem.text = 'TOML loading...';
     statusItem.show();
     await client.onReady();
     statusItem.hide();

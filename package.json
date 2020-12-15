@@ -1,6 +1,6 @@
 {
   "name": "coc-toml",
-  "version": "0.1.4",
+  "version": "0.1.5",
   "description": "toml extension for coc-nvim",
   "author": "kkiyama117 <k.kiyama117@gmail.com>",
   "publisher": "kkiyama117 <k.kiyama117@gmail.com>",
@@ -22,7 +22,7 @@
   },
   "preview": true,
   "engines": {
-    "coc": "^0.0.77"
+    "coc": "^0.0.79"
   },
   "scripts": {
     "build": "yarn --ignore-engines rollup --silent -c rollup.config.js",
@@ -93,13 +93,9 @@
     ],
     "commands": [
       {
-        "command": "coc-toml.copyTomlAsJson",
-        "title": "TOML: Copy Selection as JSON",
+        "command": "coc-toml.tomlAsJson",
+        "title": "TOML: Show Selection as JSON",
         "enablement": "editorHasSelection"
-      },
-      {
-        "command": "coc-toml.pasteTomlAsJson",
-        "title": "TOML: Paste as JSON"
       },
       {
         "command": "coc-toml.debug.showSyntaxTree",
@@ -153,6 +149,18 @@
         },
         "coc-toml.semanticTokens": {
           "description": "Enable semantic tokens for inline table and array keys. If enabled, keys of arrays and inline tables will have the same color as table headers and array of tables headers.",
+          "type": "boolean",
+          "scope": "resource",
+          "default": false
+        },
+        "coc-toml.commands.copyTomlAsJson": {
+          "description": "Option only for run lsp correctly.",
+          "type": "boolean",
+          "scope": "resource",
+          "default": false
+        },
+        "coc-toml.commands.pasteTomlAsJson": {
+          "description": "Option only for run lsp correctly.",
           "type": "boolean",
           "scope": "resource",
           "default": false
