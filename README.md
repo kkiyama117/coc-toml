@@ -15,7 +15,7 @@ though I'm making efforts to add them on it.
 So, please tell me if I'm wrong or going to bad way to implement this.
 
 - Sometimes breaking changes occur because of this plugin is based on mutli
-programing language, rust and typescripts. Prease remain I'm trying to make
+programing language, rust and typescripts. Please remain I'm trying to make
 way to install and run much efficiently under version 0.xx.
 
 
