@@ -1,10 +1,9 @@
 import * as requestExt from '../requestExt';
-import { workspace } from 'coc.nvim';
-import { Cmd, Ctx } from '../ctx';
+import { LanguageClient, workspace } from 'coc.nvim';
 import { Range } from 'vscode-languageserver-types';
 import { Position } from 'vscode-languageserver-protocol';
 
-export function tomlToJson(ctx: Ctx): Cmd {
+export function tomlToJson(client: LanguageClient): any {
   return async () => {
     const doc = await workspace.document;
     const mode = await workspace.nvim.call('visualmode');
@@ -26,7 +25,7 @@ export function tomlToJson(ctx: Ctx): Cmd {
       text: text,
     };
 
-    const res = await ctx.client.sendRequest<requestExt.TomlToJson.Response>(
+    const res = await client.sendRequest<requestExt.TomlToJson.Response>(
       requestExt.TomlToJson.METHOD,
       params
     );
