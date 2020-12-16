@@ -18,7 +18,6 @@ So, please tell me if I'm wrong or going to bad way to implement this.
 programing language, rust and typescripts. Prease remain I'm trying to make
 way to install and run much efficiently under version 0.xx.
 
-
 ## Install
 
 - from coc command
@@ -31,6 +30,11 @@ way to install and run much efficiently under version 0.xx.
     depends = 'coc.nvim'
     on_ft   = 'toml'
     ```
+
+### Add external schemas
+
+You can add external schema config for specific type of toml like dein.nvim config file.
+To see how to add, see vim help or [doc txt on the web](https://github.com/kkiyama117/coc-toml/blob/main/doc/coc-toml.txt)
 
 ## Keymaps
 This plugin has no unique keymaps now.

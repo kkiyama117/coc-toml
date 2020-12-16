@@ -9,6 +9,7 @@ CONTENTS                                                   *coc-toml-contents*
 
 Introduction    |coc-toml-introduction|
 Install         |coc-toml-install|
+  External schemas         |coc-toml-install-external-schemas|
 Interface       |coc-toml-interface|
   Mappings        |coc-toml-mappings|
   Commands        |coc-toml-commands|
@@ -26,14 +27,33 @@ able to be used in other editor also.
 ==============================================================================
 INSTALL                                                     *coc-toml-install*
 
-                                                            *coc-toml-install*
+                                               *coc-toml-install-requirements*
 Requirements~
 
 - Neovim or vim alternative(Required to be work with coc-nvim).
 - coc-nvim and its requirements
 - (Optional) vim plugin manager. (If you use non-default branch version)
 
-Now configure this plugin if needed. (Refer to |coc-toml-options|)
+                                            *coc-toml-install-external-schema*
+External schema~
+
+You can add external schema not included in taplo.
+For example, if you apply dein toml schema to toml file including `toml` in
+file name, open `:CocConfig` and write config like this.
+
+>
+  (other configs ...)
+  "coc-toml.schema.associations": {
+    ".*/Cargo\\.toml": "taplo://cargo@Cargo.toml",
+    ".*/pyproject\\.toml": "taplo://python@pyproject.toml",
+    ".*/\\.?taplo\\.toml": "taplo://taplo@taplo.toml",
+    ".*/*dein*\\.toml": "https://raw.githubusercontent.com/kkiyama117/coc-toml/main/schemas/dein.json"
+  },
+  (other configs ...)
+>
+
+See |coc-toml-options-schema-associations| and homepage of taplo
+( https://taplo.tamasfe.dev/configuration/#schema )for details.
 
 ==============================================================================
 INTERFACE                                                 *coc-toml-interface*
