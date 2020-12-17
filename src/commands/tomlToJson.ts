@@ -1,7 +1,7 @@
 import * as requestExt from '../requestExt';
 import { LanguageClient, workspace } from 'coc.nvim';
 import { Range } from 'vscode-languageserver-types';
-import { Position } from 'vscode-languageserver-protocol';
+import { allRange } from '../util';
 
 export function tomlToJson(client: LanguageClient): any {
   return async () => {
@@ -12,13 +12,7 @@ export function tomlToJson(client: LanguageClient): any {
       range = await workspace.getSelectedRange(mode, doc);
     } else {
       // Select all range
-      range = Range.create(
-        Position.create(0, 0),
-        Position.create(
-          doc.lineCount - 1,
-          doc.getline(doc.lineCount - 1).length - 1
-        )
-      );
+      range = allRange(doc);
     }
     const text: string = doc.textDocument.getText(range);
     const params: requestExt.TomlToJson.Params = {
@@ -29,6 +23,7 @@ export function tomlToJson(client: LanguageClient): any {
       requestExt.TomlToJson.METHOD,
       params
     );
+
     const errLines: string[] = [];
     if (res.errors?.length ?? 0 !== 0) {
       errLines.push(`Selection Parse Errors in toml:`);
@@ -36,7 +31,6 @@ export function tomlToJson(client: LanguageClient): any {
         errLines.push(`${err}`);
       }
 
-      await workspace.showMessage('Copying has failed!', 'error');
       const show = await workspace.showQuickpick(['Yes', 'No'], 'Show Details');
 
       if (show === 0) {
@@ -46,10 +40,9 @@ export function tomlToJson(client: LanguageClient): any {
     }
 
     if (!res.text) {
-      await workspace.showMessage(
-        `The response shouldn't be empty, but it is.`
-      );
-      await workspace.showMessage('Copying has failed!', 'error');
+        workspace.showMessage(
+            `The response shouldn't be empty, but it is.`
+        );
 
       const show = await workspace.showQuickpick(['Yes', 'No'], 'Show Details');
 
@@ -64,6 +57,6 @@ export function tomlToJson(client: LanguageClient): any {
       const buf = await workspace.nvim.buffer;
       buf.setLines(res.text.split('\n'), { start: 0, end: -1 });
     });
-    await workspace.showMessage('JSON has been generated!');
+    workspace.showMessage('JSON has been generated!');
   };
 }

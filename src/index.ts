@@ -3,12 +3,11 @@ import {
   ExtensionContext,
   LanguageClient,
   MsgTypes,
-  OutputChannel,
   services,
   workspace,
 } from 'coc.nvim';
 
-import { Config } from './config';
+import config from './config';
 import { tomlToJson } from './commands/tomlToJson';
 import { syntaxTree } from './commands/syntaxTree';
 import fs from 'fs';
@@ -24,29 +23,23 @@ import {
   WatchConfigFile,
 } from './requestExt';
 import { TextEncoder } from 'util';
-import { Range } from 'vscode-languageserver-types';
-import * as coc from 'coc.nvim';
-import { Position } from 'vscode-languageserver-protocol';
 import deepEqual from 'deep-equal';
 import { isAbsolutePath } from './util';
 
 // TODO: Divide files
 /// side effects should be capsuled into one place.
 
-let output: OutputChannel;
 let extensionContext: ExtensionContext;
 let taploConfigWatcher: fs.FSWatcher | undefined;
 let serverTaploConfigWatcher: fs.FSWatcher | undefined;
-let config: Config;
 
 export async function activate(context: ExtensionContext): Promise<void> {
-  config = new Config();
   // Don't activate if disabled
   if (!config.enabled) {
-    logger.log('configs.enabled: false');
     workspace.showMessage(
-      'activate stopped because of: configs.enabled is false'
+      'activate stopped because of: toml.enabled is false'
     );
+    return;
   }
   // Create lsp client with server process
   const serverPath = context.asAbsolutePath(path.join('lib', 'server.js'));
@@ -59,24 +52,26 @@ export async function activate(context: ExtensionContext): Promise<void> {
       workspace.showMessage(JSON.stringify(config));
     });
   }
+
   registerCommand(context, client, 'tomlToJson', tomlToJson);
   registerCommand(context, client, 'syntaxTree', syntaxTree);
-  const _reload = async (_) => {
-    workspace.showMessage(`Reloading taplo...`);
+  registerCommand(context, client, 'reload', () => {
+    return async () => {
+        workspace.showMessage(`Reloading taplo...`);
 
-    for (const sub of context.subscriptions) {
-      try {
-        sub.dispose();
-      } catch (e) {
-        console.error(e);
-      }
+        for (const sub of context.subscriptions) {
+          try {
+            sub.dispose();
+          } catch (e) {
+            console.error(e);
+          }
+        }
+
+        await activate(context);
+
+        workspace.showMessage(`Reloaded taplo`);
     }
-
-    await activate(context);
-
-    workspace.showMessage(`Reloaded taplo`);
-  };
-  registerCommand(context, client, 'reload', (_) => _reload);
+  });
 
   // wait onReady
   context.subscriptions.push(services.registLanguageClient(client));
@@ -96,8 +91,8 @@ export async function activate(context: ExtensionContext): Promise<void> {
   context.subscriptions.push(
     workspace.onDidChangeConfiguration((cfgEvent) => {
       if (
-        cfgEvent.affectsConfiguration('evenBetterToml.taploConfig') ||
-        cfgEvent.affectsConfiguration('evenBetterToml.taploConfigEnabled')
+        cfgEvent.affectsConfiguration('toml.taploConfig') ||
+        cfgEvent.affectsConfiguration('toml.taploConfigEnabled')
       ) {
         watchConfigFile(client);
       }
@@ -141,9 +136,9 @@ function registerCommand(
   context: Context,
   client: LanguageClient,
   name: string,
-  cmd: (LanguageClient) => (...args: any[]) => Promise<void>
+  cmd: (arg0: LanguageClient) => (...args: any[]) => Promise<void>
 ) {
-  const fullName = `coc-toml.${name}`;
+  const fullName = `toml.${name}`;
   const d = commands.registerCommand(fullName, cmd(client));
   client.onReady().then(() => {
     context.subscriptions.push(d);
@@ -154,9 +149,7 @@ function watchConfigFile(c: LanguageClient) {
   taploConfigWatcher?.close();
   taploConfigWatcher = undefined;
 
-  let cfgPath: string | undefined = workspace
-    .getConfiguration()
-    .get('evenBetterToml.taploConfig');
+  let cfgPath: string | undefined = config.taploConfig
 
   if (typeof cfgPath === 'string' && cfgPath.length > 0) {
     let p = cfgPath;
@@ -213,28 +206,18 @@ const _schemaData = async (schemaPath: string) => {
   return schemas;
 };
 
-function allRange(doc: coc.Document): Range {
-  return Range.create(
-    Position.create(0, 0),
-    Position.create(
-      doc.lineCount - 1,
-      doc.getline(doc.lineCount - 1).length - 1
-    )
-  );
-}
-
 const cacheSchemaGen = (context: ExtensionContext) => async (
   params: CacheSchema.Params
 ) => {
   const schemas = await _schemaData(schemaPath(context));
   schemas[params.schemaUri] = params.schemaJson;
   await fs.writeFile(
-    schemaPath(context),
-    new TextEncoder().encode(JSON.stringify(schemas)),
-    (err) => {
-      workspace.showMessage('error occurred when caching schema', 'error');
-    }
-  );
+        schemaPath(context),
+        new TextEncoder().encode(JSON.stringify(schemas)),
+        (_err: any) => {
+            workspace.showMessage('error occurred when caching schema', 'error');
+        }
+    );
 };
 
 const getCachedSchemaGen = (context: ExtensionContext) => async (
@@ -244,7 +227,7 @@ const getCachedSchemaGen = (context: ExtensionContext) => async (
 });
 
 async function updateAssociations(params: UpdateBuiltInSchemas.Params) {
-  const config = workspace.getConfiguration('coc-toml');
+  const config = workspace.getConfiguration('toml');
 
   type Choice = 'ask' | 'always' | 'never';
   const updateNew: Choice = config.addNewBuiltins;
