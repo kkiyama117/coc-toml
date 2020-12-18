@@ -47,7 +47,7 @@ file name, open `:CocConfig` and write config like this.
     ".*/Cargo\\.toml": "taplo://cargo@Cargo.toml",
     ".*/pyproject\\.toml": "taplo://python@pyproject.toml",
     ".*/\\.?taplo\\.toml": "taplo://taplo@taplo.toml",
-    ".*/*dein*\\.toml": "https://raw.githubusercontent.com/kkiyama117/coc-toml/main/schemas/dein.json"
+    ".*/*dein*\\.toml": "file:///home/me/.cache/coc/coc-toml-data/test.json"
   },
   (other configs ...)
 >
