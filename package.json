@@ -258,7 +258,8 @@
             ".*/Cargo\\.toml": "taplo://cargo@Cargo.toml",
             ".*/pyproject\\.toml": "taplo://python@pyproject.toml",
             ".*/\\.?taplo\\.toml": "taplo://taplo@taplo.toml",
-            ".*/*dein*\\.toml": "https://raw.githubusercontent.com/kkiyama117/coc-toml/main/schemas/dein.json"
+            ".*/\\.?rustfmt\\.toml": "taplo://rustfmt@rustfmt.toml",
+            ".*/*dein*\\.toml": "taplo://dein@dein.toml"
           }
         },
         "toml.extension.actions.schema.addNewBuiltins": {
