@@ -6,7 +6,10 @@
   "publisher": "kkiyama117 <k.kiyama117@gmail.com>",
   "license": "MIT",
   "main": "lib/index.js",
-  "keywords": ["coc.nvim", "toml"],
+  "keywords": [
+    "coc.nvim",
+    "toml"
+  ],
   "repository": {
     "type": "git",
     "url": "git+https://github.com/kkiyama117/coc-toml.git"
@@ -49,6 +52,7 @@
     "@types/node-fetch": "^2.5.7",
     "@wasm-tool/rollup-plugin-rust": "^1.0.5",
     "coc.nvim": "0.0.79",
+    "ini": ">=1.3.6",
     "npm-run-all": "^4.1.5",
     "prettier": "^2.2.0",
     "rimraf": "^3.0.2",
@@ -76,9 +80,15 @@
     "languages": [
       {
         "id": "toml",
-        "aliases": ["TOML"],
-        "extensions": [".toml"],
-        "filenames": ["Cargo.lock"],
+        "aliases": [
+          "TOML"
+        ],
+        "extensions": [
+          ".toml"
+        ],
+        "filenames": [
+          "Cargo.lock"
+        ],
         "configuration": "./language-configuration.json"
       }
     ],
@@ -109,8 +119,12 @@
     "semanticTokenScopes": [
       {
         "scopes": {
-          "tomlArrayKey": ["variable.key.array.toml"],
-          "tomlTableKey": ["variable.key.table.toml"]
+          "tomlArrayKey": [
+            "variable.key.array.toml"
+          ],
+          "tomlTableKey": [
+            "variable.key.table.toml"
+          ]
         }
       }
     ],
@@ -208,7 +222,10 @@
         },
         "toml.formatter.indentString": {
           "description": "The substring that is used for indentation, should be tabs or spaces, but technically can be anything. Uses the IDE setting if not set.",
-          "type": ["string", "null"],
+          "type": [
+            "string",
+            "null"
+          ],
           "scope": "resource",
           "default": null
         },
@@ -266,14 +283,22 @@
           "description": "Whether to update new builtin schema associations.",
           "scope": "resource",
           "type": "string",
-          "enum": ["ask", "always", "never"],
+          "enum": [
+            "ask",
+            "always",
+            "never"
+          ],
           "default": "ask"
         },
         "toml.extension.actions.schema.removeOldBuiltins": {
           "description": "Whether to remove old builtin schema associations.",
           "scope": "resource",
           "type": "string",
-          "enum": ["ask", "always", "never"],
+          "enum": [
+            "ask",
+            "always",
+            "never"
+          ],
           "default": "ask"
         },
         "toml.debug": {
