@@ -1,6 +1,6 @@
 {
   "name": "coc-toml",
-  "version": "0.2.1",
+  "version": "1.0.0",
   "description": "toml extension for coc-nvim",
   "author": "kkiyama117 <k.kiyama117@gmail.com>",
   "publisher": "kkiyama117 <k.kiyama117@gmail.com>",
@@ -37,8 +37,8 @@
   "activationEvents": [
     "onLanguage:toml",
     "onLanguage:cargoLock",
-    "onCommand:coc-toml.showTomlAsJson",
-    "onCommand:coc-toml.syntaxTree"
+    "onCommand:toml.showTomlAsJson",
+    "onCommand:toml.syntaxTree"
   ],
   "contributes": {
     "grammars": [
@@ -65,14 +65,14 @@
     ],
     "commands": [
       {
-        "command": "coc-toml.tomlAsJson",
+        "command": "toml.tomlAsJson",
         "title": "TOML: Show Selection as JSON",
         "enablement": "editorHasSelection"
       },
       {
-        "command": "coc-toml.debug.showSyntaxTree",
+        "command": "toml.debug.showSyntaxTree",
         "title": "TOML (debug): Show Syntax Tree",
-        "enablement": "editorLangId == toml && config.coc-toml.debug"
+        "enablement": "editorLangId == toml && config.toml.debug"
       }
     ],
     "semanticTokenTypes": [
@@ -100,92 +100,98 @@
       }
     ],
     "configuration": {
-      "title": "coc-toml",
+      "title": "toml",
       "properties": {
-        "coc-toml.activationStatus": {
+        "toml.enabled": {
+          "description": "Whether to enable coc-toml or not",
+          "type": "boolean",
+          "scope": "resource",
+          "default": true
+        },
+        "toml.activationStatus": {
           "description": "Show a status bar message while the extension is activating.",
           "type": "boolean",
           "scope": "resource",
           "default": true
         },
-        "coc-toml.taploConfig": {
+        "toml.taploConfig": {
           "description": "An absolute, or workspace relative path to the Taplo configuration file.",
           "type": "string",
           "scope": "resource"
         },
-        "coc-toml.taploConfigEnabled": {
+        "toml.taploConfigEnabled": {
           "description": "Whether to enable the usage of a Taplo configuration file.",
           "type": "boolean",
           "scope": "resource",
           "default": true
         },
-        "coc-toml.semanticTokens": {
+        "toml.semanticTokens": {
           "description": "Enable semantic tokens for inline table and array keys. If enabled, keys of arrays and inline tables will have the same color as table headers and array of tables headers.",
           "type": "boolean",
           "scope": "resource",
           "default": false
         },
-        "coc-toml.commands.copyTomlAsJson": {
+        "toml.commands.copyTomlAsJson": {
           "description": "Option only for run lsp correctly.",
           "type": "boolean",
           "scope": "resource",
           "default": false
         },
-        "coc-toml.commands.pasteTomlAsJson": {
+        "toml.commands.pasteTomlAsJson": {
           "description": "Option only for run lsp correctly.",
           "type": "boolean",
           "scope": "resource",
           "default": false
         },
-        "coc-toml.formatter.alignEntries": {
+        "toml.formatter.alignEntries": {
           "description": "Align consecutive entries vertically.",
           "type": "boolean",
           "scope": "resource",
           "default": false
         },
-        "coc-toml.formatter.arrayTrailingComma": {
+        "toml.formatter.arrayTrailingComma": {
           "description": "Append trailing commas for multi-line arrays.",
           "type": "boolean",
           "scope": "resource",
           "default": true
         },
-        "coc-toml.formatter.arrayAutoExpand": {
+        "toml.formatter.arrayAutoExpand": {
           "description": "Expand arrays to multiple lines that exceed the maximum column width.",
           "type": "boolean",
           "scope": "resource",
           "default": true
         },
-        "coc-toml.formatter.arrayAutoCollapse": {
+        "toml.formatter.arrayAutoCollapse": {
           "description": "Collapse arrays that don't exceed the maximum column width and don't contain comments.",
           "type": "boolean",
           "scope": "resource",
           "default": true
         },
-        "coc-toml.formatter.compactArrays": {
+        "toml.formatter.compactArrays": {
           "description": "Omit white space padding from single-line arrays.",
           "type": "boolean",
           "scope": "resource",
           "default": true
         },
-        "coc-toml.formatter.compactInlineTables": {
+        "toml.formatter.compactInlineTables": {
           "description": "Omit white space padding from the start and end of inline tables.",
           "type": "boolean",
           "scope": "resource",
           "default": false
         },
-        "coc-toml.formatter.columnWidth": {
+        "toml.formatter.columnWidth": {
           "description": "Maximum column width in characters, affects array expansion and collapse, this doesn't take whitespace into account.",
           "type": "number",
           "minimum": 0,
           "default": 80
         },
-        "coc-toml.formatter.indentTables": {
+        "toml.formatter.indentTables": {
           "description": "Indent based on tables and arrays of tables and their subtables, subtables out of order are not indented.",
           "type": "boolean",
           "scope": "resource",
           "default": false
         },
-        "coc-toml.formatter.indentString": {
+        "toml.formatter.indentString": {
           "description": "The substring that is used for indentation, should be tabs or spaces, but technically can be anything. Uses the IDE setting if not set.",
           "type": [
             "string",
@@ -194,44 +200,44 @@
           "scope": "resource",
           "default": null
         },
-        "coc-toml.formatter.reorderKeys": {
+        "toml.formatter.reorderKeys": {
           "description": "Alphabetically reorder keys that are not separated by empty lines.",
           "type": "boolean",
           "scope": "resource",
           "default": false
         },
-        "coc-toml.formatter.allowedBlankLines": {
+        "toml.formatter.allowedBlankLines": {
           "description": "Maximum amount of allowed consecutive blank lines. This does not affect the whitespace at the end of the document, as it is always stripped.",
           "type": "integer",
           "scope": "resource",
           "minimum": 0,
           "default": 2
         },
-        "coc-toml.formatter.trailingNewline": {
+        "toml.formatter.trailingNewline": {
           "description": "Add trailing newline at the end of the file if not present.",
           "type": "boolean",
           "scope": "resource",
           "default": true
         },
-        "coc-toml.formatter.crlf": {
+        "toml.formatter.crlf": {
           "description": "Use CRLF for line endings.",
           "type": "boolean",
           "scope": "resource",
           "default": false
         },
-        "coc-toml.schema.enabled": {
+        "toml.schema.enabled": {
           "description": "Enable completion and validation based on JSON schemas.",
           "type": "boolean",
           "scope": "resource",
           "default": true
         },
-        "coc-toml.schema.links": {
+        "toml.schema.links": {
           "description": "Enable editor links.",
           "type": "boolean",
           "scope": "resource",
           "default": false
         },
-        "coc-toml.schema.associations": {
+        "toml.schema.associations": {
           "description": "Document and schema associations.",
           "markdownDescription": "Document and schema associations. \n\n The key must be a regular expression, this pattern is used to associate schemas with absolute document URIs. On multiple matches the first one is used in an undefined order. \n\n The value must be an absolute URI to the JSON schema, for supported values and more information [read here](https://github.com/tamasfe/taplo/tree/master/taplo-ide/schemas).",
           "type": "object",
@@ -240,10 +246,11 @@
             ".*/Cargo\\.toml": "taplo://cargo@Cargo.toml",
             ".*/pyproject\\.toml": "taplo://python@pyproject.toml",
             ".*/\\.?taplo\\.toml": "taplo://taplo@taplo.toml",
-            ".*/*dein*\\.toml": "https://raw.githubusercontent.com/kkiyama117/coc-toml/main/schemas/dein.json"
+            ".*/\\.?rustfmt\\.toml": "taplo://rustfmt@rustfmt.toml",
+            ".*/\\.*dein.*\\.toml": "taplo://dein@dein.toml"
           }
         },
-        "coc-toml.extension.actions.schema.addNewBuiltins": {
+        "toml.extension.actions.schema.addNewBuiltins": {
           "description": "Whether to update new builtin schema associations.",
           "scope": "resource",
           "type": "string",
@@ -254,7 +261,7 @@
           ],
           "default": "ask"
         },
-        "coc-toml.extension.actions.schema.removeOldBuiltins": {
+        "toml.extension.actions.schema.removeOldBuiltins": {
           "description": "Whether to remove old builtin schema associations.",
           "scope": "resource",
           "type": "string",
@@ -265,7 +272,7 @@
           ],
           "default": "ask"
         },
-        "coc-toml.debug": {
+        "toml.debug": {
           "description": "Enable features to debug the extension.",
           "type": "boolean",
           "scope": "resource",
