@@ -260,7 +260,9 @@ coc-toml.schema.associations~
         default: {
             ".*/Cargo\\.toml": "taplo://cargo@Cargo.toml",
             ".*/pyproject\\.toml": "taplo://python@pyproject.toml",
-            ".*/\\.?taplo\\.toml": "taplo://taplo@taplo.toml"
+            ".*/\\.?taplo\\.toml": "taplo://taplo@taplo.toml",
+            ".*/\\.?rustfmt\\.toml": "taplo://rustfmt@rustfmt.toml",
+            ".*/\\.*dein.*\\.toml": "taplo://dein@dein.toml"
         }
 
         Document and schema associations.
