@@ -14,8 +14,8 @@ export function tomlToJson(client: LanguageClient): any {
       // Select all range
       range = allRange(doc);
     }
-    if (!range){
-      workspace.showMessage("Document and range are not selected","error")
+    if (!range) {
+      workspace.showMessage('Document and range are not selected', 'error');
       return;
     }
     const text: string = doc.textDocument.getText(range);
@@ -35,7 +35,10 @@ export function tomlToJson(client: LanguageClient): any {
         errLines.push(`${err}`);
       }
 
-      const show = await workspace.showQuickpick(['Yes', 'No'], 'Show details of error');
+      const show = await workspace.showQuickpick(
+        ['Yes', 'No'],
+        'Show details of error'
+      );
 
       if (show === 0) {
         await workspace.echoLines(errLines);
@@ -46,7 +49,10 @@ export function tomlToJson(client: LanguageClient): any {
     if (!res.text) {
       workspace.showMessage(`The response shouldn't be empty, but it is.`);
 
-      const show = await workspace.showQuickpick(['Yes', 'No'], 'Show details of error');
+      const show = await workspace.showQuickpick(
+        ['Yes', 'No'],
+        'Show details of error'
+      );
 
       if (show === 0) {
         await workspace.echoLines(errLines);

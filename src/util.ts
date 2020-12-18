@@ -11,7 +11,8 @@ export function isAbsolutePath(p: string): boolean {
 
 export function allRange(doc: Document): Range {
   return Range.create(
-    0, 0,
+    0,
+    0,
     doc.lineCount - 1,
     doc.getline(doc.lineCount - 1).length
   );
