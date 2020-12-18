@@ -8,17 +8,14 @@ Powered by [taplo](https://github.com/tamasfe/taplo)
 
 ## ! Important
 
-- This repo and package is under developing.
-
 - There are some bugs, unimplemented features, and documents missing,
 though I'm making efforts to add them on it.
 
 - Issues and pull requests are all welcome. I'm a beginner in rust and ts.
 So, please tell me if I'm wrong or going to bad way to implement this.
 
-- Sometimes breaking changes occur because of this plugin is based on mutli
-programing language, rust and typescripts. Prease remain I'm trying to make
-way to install and run much efficiently under version 0.xx.
+- This repo and package is under developing. Sometimes breaking changes is made because of this plugin is based on mutli
+programing language, rust and typescripts. Please read changelog and doc.
 
 ## Install
 
@@ -44,9 +41,9 @@ Use your own keybinding or commands for coc.nvim.
 
 ## Features
 ### commands
-- `coc-toml.syntaxTree` -> show syntaxTree like `rust-analyzer` does.
-- `coc-toml.tomlToJson` -> convert toml to Json. If you run it with visualmode, convert toml in selected range instead of it in the whole of document.
-- `coc-toml.reload` -> reload this plugin and taplo instance.
+- `toml.syntaxTree` -> show syntaxTree like `rust-analyzer` does.
+- `toml.tomlToJson` -> convert toml to Json. If you run it with visualmode, convert toml in selected range instead of it in the whole of document.
+- `toml.reload` -> reload this plugin and taplo instance.
 
 ### options
 there are many options for this coc-extension.
@@ -55,7 +52,7 @@ if you need to set these options, edit your `coc-settings.json`(or run `:CocConf
 
 ```json
 {
-  "coc-toml": {
+  "toml": {
     "debug": true,
     "formatter": {
       "reorderKeys": true

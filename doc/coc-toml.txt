@@ -43,7 +43,7 @@ file name, open `:CocConfig` and write config like this.
 
 >
   (other configs ...)
-  "coc-toml.schema.associations": {
+  "toml.schema.associations": {
     ".*/Cargo\\.toml": "taplo://cargo@Cargo.toml",
     ".*/pyproject\\.toml": "taplo://python@pyproject.toml",
     ".*/\\.?taplo\\.toml": "taplo://taplo@taplo.toml",
