@@ -1,6 +1,6 @@
 {
   "name": "coc-toml",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "toml extension for coc-nvim",
   "author": "kkiyama117 <k.kiyama117@gmail.com>",
   "publisher": "kkiyama117 <k.kiyama117@gmail.com>",
@@ -22,7 +22,7 @@
   },
   "preview": true,
   "engines": {
-    "coc": "^0.0.79"
+    "coc": "^0.0.77"
   },
   "scripts": {
     "build": "yarn --ignore-engines rollup --silent -c rollup.config.js",
