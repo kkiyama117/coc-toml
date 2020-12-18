@@ -40,9 +40,7 @@ export function tomlToJson(client: LanguageClient): any {
     }
 
     if (!res.text) {
-        workspace.showMessage(
-            `The response shouldn't be empty, but it is.`
-        );
+      workspace.showMessage(`The response shouldn't be empty, but it is.`);
 
       const show = await workspace.showQuickpick(['Yes', 'No'], 'Show Details');
 

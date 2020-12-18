@@ -36,9 +36,7 @@ let serverTaploConfigWatcher: fs.FSWatcher | undefined;
 export async function activate(context: ExtensionContext): Promise<void> {
   // Don't activate if disabled
   if (!config.enabled) {
-    workspace.showMessage(
-      'activate stopped because of: toml.enabled is false'
-    );
+    workspace.showMessage('activate stopped because of: toml.enabled is false');
     return;
   }
   // Create lsp client with server process
@@ -57,20 +55,20 @@ export async function activate(context: ExtensionContext): Promise<void> {
   registerCommand(context, client, 'syntaxTree', syntaxTree);
   registerCommand(context, client, 'reload', () => {
     return async () => {
-        workspace.showMessage(`Reloading taplo...`);
+      workspace.showMessage(`Reloading taplo...`);
 
-        for (const sub of context.subscriptions) {
-          try {
-            sub.dispose();
-          } catch (e) {
-            console.error(e);
-          }
+      for (const sub of context.subscriptions) {
+        try {
+          sub.dispose();
+        } catch (e) {
+          console.error(e);
         }
+      }
 
-        await activate(context);
+      await activate(context);
 
-        workspace.showMessage(`Reloaded taplo`);
-    }
+      workspace.showMessage(`Reloaded taplo`);
+    };
   });
 
   // wait onReady
@@ -149,7 +147,7 @@ function watchConfigFile(c: LanguageClient) {
   taploConfigWatcher?.close();
   taploConfigWatcher = undefined;
 
-  let cfgPath: string | undefined = config.taploConfig
+  let cfgPath: string | undefined = config.taploConfig;
 
   if (typeof cfgPath === 'string' && cfgPath.length > 0) {
     let p = cfgPath;
@@ -212,12 +210,12 @@ const cacheSchemaGen = (context: ExtensionContext) => async (
   const schemas = await _schemaData(schemaPath(context));
   schemas[params.schemaUri] = params.schemaJson;
   await fs.writeFile(
-        schemaPath(context),
-        new TextEncoder().encode(JSON.stringify(schemas)),
-        (_err: any) => {
-            workspace.showMessage('error occurred when caching schema', 'error');
-        }
-    );
+    schemaPath(context),
+    new TextEncoder().encode(JSON.stringify(schemas)),
+    (_err: any) => {
+      workspace.showMessage('error occurred when caching schema', 'error');
+    }
+  );
 };
 
 const getCachedSchemaGen = (context: ExtensionContext) => async (
