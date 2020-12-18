@@ -1,5 +1,7 @@
 # coc-toml
 
+![Node.js Package](https://github.com/kkiyama117/coc-toml/workflows/Node.js%20Package/badge.svg)
+
 toml lsp client extension for coc-nvim.
 
 Powered by [taplo](https://github.com/tamasfe/taplo)
