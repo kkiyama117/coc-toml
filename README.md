@@ -42,9 +42,9 @@ Use your own keybinding or commands for coc.nvim.
 
 ## Features
 ### commands
-- `coc-toml.syntaxTree` -> show syntaxTree like `rust-analyzer` does.
-- `coc-toml.tomlToJson` -> convert toml to Json. If you run it with visualmode, convert toml in selected range instead of it in the whole of document.
-- `coc-toml.reload` -> reload this plugin and taplo instance.
+- `toml.syntaxTree` -> show syntaxTree like `rust-analyzer` does.
+- `toml.tomlToJson` -> convert toml to Json. If you run it with visualmode, convert toml in selected range instead of it in the whole of document.
+- `toml.reload` -> reload this plugin and taplo instance.
 
 ### options
 there are many options for this coc-extension.
@@ -53,7 +53,7 @@ if you need to set these options, edit your `coc-settings.json`(or run `:CocConf
 
 ```json
 {
-  "coc-toml": {
+  "toml": {
     "debug": true,
     "formatter": {
       "reorderKeys": true

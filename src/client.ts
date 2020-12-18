@@ -34,11 +34,11 @@ export function createClient(p: string): LanguageClient {
     ],
 
     initializationOptions: {
-      configuration: workspace.getConfiguration().get('coc-toml'),
+      configuration: workspace.getConfiguration().get('toml'),
     },
 
     synchronize: {
-      configurationSection: 'coc-toml',
+      configurationSection: 'toml',
       fileEvents: [
         workspace.createFileSystemWatcher('**/.toml'),
         workspace.createFileSystemWatcher('**/Cargo.lock'),

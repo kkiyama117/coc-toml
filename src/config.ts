@@ -8,7 +8,7 @@ import {
 type Choice = 'ask' | 'always' | 'never';
 
 export class Config {
-  private readonly rootSection = 'coc-toml';
+  private readonly rootSection = 'toml';
   //TODO: check reload options
   private readonly requiresReloadOpts = [
     'taploConfig',
@@ -49,11 +49,11 @@ export class Config {
   }
 
   private async update(section: string, value: any, isUser?: boolean) {
-    await this.cfg.update(`${this.rootSection}.${section}`, value, isUser);
+    this.cfg.update(`${this.rootSection}.${section}`, value, isUser);
   }
 
   get enabled(): boolean {
-    return this.cfg.get('enabled', true);
+    return this.cfg.get('enabled');
   }
 
   get showNotification(): boolean {
@@ -125,3 +125,5 @@ export class Config {
   //   };
   // }
 }
+
+export default new Config();
