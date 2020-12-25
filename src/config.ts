@@ -109,6 +109,7 @@ export class Config {
       isUser
     );
   }
+
   // get inlayHints() {
   //   const hasVirtualText =
   //     workspace.isNvim &&

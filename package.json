@@ -63,8 +63,9 @@
   "activationEvents": [
     "onLanguage:toml",
     "onLanguage:cargoLock",
-    "onCommand:toml.showTomlAsJson",
-    "onCommand:toml.syntaxTree"
+    "onCommand:toml.tomlToJson",
+    "onCommand:toml.syntaxTree",
+    "onCommand:toml.reload"
   ],
   "contributes": {
     "grammars": [
@@ -85,14 +86,16 @@
     ],
     "commands": [
       {
-        "command": "toml.tomlAsJson",
-        "title": "TOML: Show Selection as JSON",
-        "enablement": "editorHasSelection"
+        "command": "toml.tomlToJson",
+        "title": "Show Selection as JSON"
       },
       {
-        "command": "toml.debug.showSyntaxTree",
-        "title": "TOML (debug): Show Syntax Tree",
-        "enablement": "editorLangId == toml && config.toml.debug"
+        "command": "toml.syntaxTree",
+        "title": "Show Syntax Tree"
+      },
+      {
+        "command": "toml.reload",
+        "title": "Reload coc-toml extension"
       }
     ],
     "semanticTokenTypes": [
