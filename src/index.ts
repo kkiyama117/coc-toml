@@ -15,7 +15,6 @@ import { createClient } from './client';
 import path from 'path';
 import { MessageWithOutput, CachePath } from './requestExt';
 import { TextEncoder } from 'util';
-import deepEqual from 'deep-equal';
 import { isAbsolutePath } from './util';
 
 // TODO: Divide files

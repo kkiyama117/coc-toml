@@ -37,7 +37,6 @@
     "semi": true
   },
   "dependencies": {
-    "deep-equal": "^2.0.5",
     "node-fetch": "^2.6.1"
   },
   "devDependencies": {
@@ -45,7 +44,6 @@
     "@rollup/plugin-commonjs": "^16.0.0",
     "@rollup/plugin-json": "^4.1.0",
     "@rollup/plugin-node-resolve": "^10.0.0",
-    "@types/deep-equal": "^1.0.1",
     "@types/node-fetch": "^2.5.7",
     "@wasm-tool/rollup-plugin-rust": "^1.0.5",
     "coc.nvim": "0.0.79",
