@@ -34,6 +34,15 @@ export function createClient(p: string): LanguageClient {
       ],
     },
     outputChannel,
+    middleware: {
+        workspace: {
+            configuration: (_params, _token, _next) => {
+                return [
+                    workspace.getConfiguration().get('toml')
+                ]
+            }
+        }
+    }
   };
 
   // Create client for toml
