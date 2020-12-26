@@ -98,18 +98,6 @@ export class Config {
     await this.update('schema.associations', value, isUser);
   }
 
-  async setAddNewBuiltins(value: Choice, isUser?: boolean) {
-    await this.update('extension.actions.schema.addNewBuiltins', value, isUser);
-  }
-
-  async setRemoveOldBuiltins(value: Choice, isUser?: boolean) {
-    await this.update(
-      'extension.actions.schema.removeOldBuiltins',
-      value,
-      isUser
-    );
-  }
-
   // get inlayHints() {
   //   const hasVirtualText =
   //     workspace.isNvim &&

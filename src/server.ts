@@ -6,11 +6,11 @@
 // And provides some utilities.
 
 // @ts-ignore
-import loadTaplo from '../taplo/taplo-lsp/Cargo.toml';
-import * as fs from 'fs';
-import * as path from 'path';
-import fetch, { Headers, Request, Response } from 'node-fetch';
-import { exit } from 'process';
+import loadTaplo from "../taplo/taplo-lsp/Cargo.toml";
+import * as fs from "fs";
+import * as path from "path";
+import fetch, { Headers, Request, Response } from "node-fetch";
+import { exit } from "process";
 
 // For reqwest
 (global as any).Headers = Headers;
@@ -19,12 +19,9 @@ import { exit } from 'process';
 (global as any).Window = Object;
 (global as any).fetch = fetch;
 
-const debug = true;
-// const debug = false;
-
 // Needed for taplo-cli's glob matching
 (global as any).isWindows = () => {
-  return process.platform == 'win32';
+  return process.platform == "win32";
 };
 
 (global as any).sendMessage = (msg: any) => {
@@ -37,9 +34,13 @@ const debug = true;
   return fs.promises.readFile(path);
 };
 
+(global as any).writeFile = (path: string, data: Uint8Array): Promise<void> => {
+  return fs.promises.writeFile(path, data);
+};
+
 (global as any).isAbsolutePath = (p: string): boolean => {
   return (
-    path.resolve(p) === path.normalize(p).replace(RegExp(path.sep + '$'), '')
+    path.resolve(p) === path.normalize(p).replace(RegExp(path.sep + "$"), "")
   );
 };
 
@@ -47,32 +48,30 @@ const debug = true;
   return fs.existsSync(p);
 };
 
+(global as any).mkdir = (p: string) => {
+  fs.mkdirSync(p, { recursive: true });
+};
+
+// For cached schemas.
+(global as any).needsUpdate = (path: string, newDate: number): boolean =>
+  fs.statSync(path).mtimeMs < newDate;
+
 let taplo: any;
 
-process.on('message', async (d) => {
-  if (d.method === 'exit') {
-    console.error('[INFO] taplo exit');
+process.on("message", async d => {
+  if (d.method === "exit") {
     exit(0);
   }
 
-  if (typeof taplo === 'undefined') {
+  if (typeof taplo === "undefined") {
     taplo = await loadTaplo();
     await taplo.initialize();
-    if (debug) {
-      console.error('[INFO] taplo initialized');
-    }
   }
 
-  if (debug) {
-    console.error(JSON.stringify(d));
-  }
   taplo.message(d);
 });
 
 // These are panics from rust
-process.on('unhandledRejection', (up) => {
-  if (debug) {
-    console.error(up);
-  }
+process.on("unhandledRejection", up => {
   throw up;
 });
