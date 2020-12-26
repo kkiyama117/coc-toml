@@ -79,7 +79,7 @@ export async function activate(context: ExtensionContext): Promise<void> {
   }
 
   client.sendNotification(CachePath.METHOD, {
-    path: path.join(context.storagePath,  ".local.cache"),
+    path: path.join(context.storagePath, '.local.cache'),
   });
   client.onNotification(MessageWithOutput.METHOD, showMessage);
 }

@@ -12,7 +12,7 @@ export namespace TomlToJson {
     errors?: string[];
   }
 
-  export const METHOD = "taplo/tomlToJson";
+  export const METHOD = 'taplo/tomlToJson';
 }
 
 export namespace JsonToToml {
@@ -27,7 +27,7 @@ export namespace JsonToToml {
     error?: string;
   }
 
-  export const METHOD = "taplo/jsonToToml";
+  export const METHOD = 'taplo/jsonToToml';
 }
 
 export namespace SyntaxTree {
@@ -41,14 +41,14 @@ export namespace SyntaxTree {
     text: string;
   }
 
-  export const METHOD = "taplo/syntaxTree";
+  export const METHOD = 'taplo/syntaxTree';
 }
 
 export namespace MessageWithOutput {
   export const enum MessageKind {
-    Info = "info",
-    Warn = "warn",
-    Error = "error",
+    Info = 'info',
+    Warn = 'warn',
+    Error = 'error',
   }
 
   export interface Params {
@@ -56,7 +56,7 @@ export namespace MessageWithOutput {
     message: string;
   }
 
-  export const METHOD = "taplo/messageWithOutput";
+  export const METHOD = 'taplo/messageWithOutput';
 }
 
 export namespace CachePath {
@@ -64,5 +64,5 @@ export namespace CachePath {
     path: string;
   }
 
-  export const METHOD = "taplo/cachePath";
+  export const METHOD = 'taplo/cachePath';
 }
