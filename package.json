@@ -275,11 +275,10 @@
           "type": "object",
           "scope": "resource",
           "default": {
-            ".*/Cargo\\.toml": "taplo://cargo@Cargo.toml",
-            ".*/pyproject\\.toml": "taplo://python@pyproject.toml",
-            ".*/\\.?taplo\\.toml": "taplo://taplo@taplo.toml",
-            ".*/\\.?rustfmt\\.toml": "taplo://rustfmt@rustfmt.toml",
-            ".*/\\.*dein.*\\.toml": "taplo://dein@dein.toml"
+            ".*/Cargo\\.toml": "https://raw.githubusercontent.com/tamasfe/taplo/master/schemas/cargo.toml.json",
+            ".*/pyproject\\.toml": "https://raw.githubusercontent.com/tamasfe/taplo/master/schemas/pyproject.toml.json",
+            ".*/\\.?taplo\\.toml": "taplo://taplo.toml",
+            ".*/\\.?rustfmt\\.toml": "https://raw.githubusercontent.com/tamasfe/taplo/master/schemas/rustfmt.toml.json"
           }
         },
         "toml.debug": {
