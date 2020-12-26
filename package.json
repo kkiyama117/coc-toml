@@ -275,7 +275,11 @@
           "type": "object",
           "scope": "resource",
           "default": {
-            ".*/\\.?taplo\\.toml": "taplo://taplo.toml"
+            ".*/Cargo\\.toml": "taplo://cargo@Cargo.toml",
+            ".*/pyproject\\.toml": "taplo://python@pyproject.toml",
+            ".*/\\.?taplo\\.toml": "taplo://taplo@taplo.toml",
+            ".*/\\.?rustfmt\\.toml": "taplo://rustfmt@rustfmt.toml",
+            ".*/\\.*dein.*\\.toml": "taplo://dein@dein.toml"
           }
         },
         "toml.debug": {
