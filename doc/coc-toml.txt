@@ -44,14 +44,13 @@ file name, open `:CocConfig` and write config like this.
 >
   (other configs ...)
   "toml.schema.associations": {
-    ".*/Cargo\\.toml": "https://raw.githubusercontent.com/tamasfe/taplo/master/schemas/cargo.toml.json",
-    ".*/pyproject\\.toml": "https://raw.githubusercontent.com/tamasfe/taplo/master/schemas/pyproject.toml.json",
-    ".*/\\.?taplo\\.toml": "taplo://taplo.toml",
-    ".*/\\.?rustfmt\\.toml": "https://raw.githubusercontent.com/tamasfe/taplo/master/schemas/rustfmt.toml.json"
+    ".*/Cargo\\.toml": "https://raw.githubusercon ... cargo.toml.json",
+    ".*/\\.?taplo\\.toml": "taplo://taplo.toml"
   },
   (other configs ...)
 >
 
+To check default config, please see `package.json` of this package. 
 See |coc-toml-options-schema-associations| and homepage of taplo
 ( https://taplo.tamasfe.dev/configuration/#schema )for details.
 
