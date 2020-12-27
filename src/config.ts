@@ -5,8 +5,6 @@ import {
   WorkspaceConfiguration,
 } from 'coc.nvim';
 
-type Choice = 'ask' | 'always' | 'never';
-
 export class Config {
   private readonly rootSection = 'toml';
   //TODO: check reload options
@@ -66,20 +64,6 @@ export class Config {
 
   get taploServerConfig() {
     return this.cfg.get('taploServerConfig');
-  }
-
-  get addNewBuiltins(): Choice {
-    return this.cfg.get<string>(
-      'extension.actions.schema.addNewBuiltins',
-      'ask'
-    ) as Choice;
-  }
-
-  get removeOldBuiltins() {
-    return this.cfg.get<string>(
-      'extension.actions.schema.removeOldBuiltins',
-      'ask'
-    ) as Choice;
   }
 
   get defaultAssociations() {

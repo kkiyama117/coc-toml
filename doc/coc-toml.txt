@@ -44,10 +44,10 @@ file name, open `:CocConfig` and write config like this.
 >
   (other configs ...)
   "toml.schema.associations": {
-    ".*/Cargo\\.toml": "taplo://cargo@Cargo.toml",
-    ".*/pyproject\\.toml": "taplo://python@pyproject.toml",
-    ".*/\\.?taplo\\.toml": "taplo://taplo@taplo.toml",
-    ".*/*dein*\\.toml": "file:///home/me/.cache/coc/coc-toml-data/test.json"
+    ".*/Cargo\\.toml": "https://raw.githubusercontent.com/tamasfe/taplo/master/schemas/cargo.toml.json",
+    ".*/pyproject\\.toml": "https://raw.githubusercontent.com/tamasfe/taplo/master/schemas/pyproject.toml.json",
+    ".*/\\.?taplo\\.toml": "taplo://taplo.toml",
+    ".*/\\.?rustfmt\\.toml": "https://raw.githubusercontent.com/tamasfe/taplo/master/schemas/rustfmt.toml.json"
   },
   (other configs ...)
 >
@@ -258,11 +258,10 @@ toml.schema.associations~
         type: object
         scope: resource
         default: {
-            ".*/Cargo\\.toml": "taplo://cargo@Cargo.toml",
-            ".*/pyproject\\.toml": "taplo://python@pyproject.toml",
-            ".*/\\.?taplo\\.toml": "taplo://taplo@taplo.toml",
-            ".*/\\.?rustfmt\\.toml": "taplo://rustfmt@rustfmt.toml",
-            ".*/\\.*dein.*\\.toml": "taplo://dein@dein.toml"
+           ".*/Cargo\\.toml": "https://raw.githubusercontent.com/tamasfe/taplo/master/schemas/cargo.toml.json",
+           ".*/pyproject\\.toml": "https://raw.githubusercontent.com/tamasfe/taplo/master/schemas/pyproject.toml.json",
+           ".*/\\.?taplo\\.toml": "taplo://taplo.toml",
+           ".*/\\.?rustfmt\\.toml": "https://raw.githubusercontent.com/tamasfe/taplo/master/schemas/rustfmt.toml.json"
         }
 
         Document and schema associations.
@@ -272,25 +271,7 @@ toml.schema.associations~
             matches the first one is used in an undefined order. \n\n
             The value must be an absolute URI to the JSON schema, for
             supported values and more information [read here]
-            (https://github.com/tamasfe/taplo/tree/master/taplo-ide/schemas).
-
-                              *coc-toml-options-actions-schema-addNewBuiltins*
-toml.extension.actions.schema.addNewBuiltins~
-        type: string
-        scope: resource
-        enum: "ask" | "always" | "never"
-        default: "ask"
-
-        Whether to update new builtin schema associations.
-
-                           *coc-toml-options-actions-schema-removeOldBuiltins*
-toml.extension.actions.schema.removeOldBuiltins~
-        type: string
-        scope: resource
-        enum: "ask" | "always" | "never"
-        default: "ask"
-
-        Whether to remove old builtin schema associations.
+            (https://github.com/tamasfe/taplo/tree/master/schemas).
 
                                                       *coc-toml-options-debug*
 toml.debug~
