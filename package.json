@@ -6,10 +6,7 @@
   "publisher": "kkiyama117 <k.kiyama117@gmail.com>",
   "license": "MIT",
   "main": "lib/index.js",
-  "keywords": [
-    "coc.nvim",
-    "toml"
-  ],
+  "keywords": ["coc.nvim", "toml"],
   "repository": {
     "type": "git",
     "url": "git+https://github.com/kkiyama117/coc-toml.git"
@@ -25,7 +22,7 @@
     "coc": "^0.0.77"
   },
   "scripts": {
-    "build": "yarn --ignore-engines rollup --silent -c rollup.config.js",
+    "build": "RELEASE=true yarn --ignore-engines rollup --silent -c rollup.config.js",
     "build:syntax": "ts-node src/syntax/index.ts",
     "clean": "rimraf lib",
     "prepare": "npm-run-all clean build",
@@ -40,7 +37,6 @@
     "semi": true
   },
   "dependencies": {
-    "deep-equal": "^2.0.5",
     "node-fetch": "^2.6.1"
   },
   "devDependencies": {
@@ -48,7 +44,6 @@
     "@rollup/plugin-commonjs": "^16.0.0",
     "@rollup/plugin-json": "^4.1.0",
     "@rollup/plugin-node-resolve": "^10.0.0",
-    "@types/deep-equal": "^1.0.1",
     "@types/node-fetch": "^2.5.7",
     "@wasm-tool/rollup-plugin-rust": "^1.0.5",
     "coc.nvim": "0.0.79",
@@ -66,8 +61,9 @@
   "activationEvents": [
     "onLanguage:toml",
     "onLanguage:cargoLock",
-    "onCommand:toml.showTomlAsJson",
-    "onCommand:toml.syntaxTree"
+    "onCommand:toml.tomlToJson",
+    "onCommand:toml.syntaxTree",
+    "onCommand:toml.reload"
   ],
   "contributes": {
     "grammars": [
@@ -80,28 +76,24 @@
     "languages": [
       {
         "id": "toml",
-        "aliases": [
-          "TOML"
-        ],
-        "extensions": [
-          ".toml"
-        ],
-        "filenames": [
-          "Cargo.lock"
-        ],
+        "aliases": ["TOML"],
+        "extensions": [".toml"],
+        "filenames": ["Cargo.lock"],
         "configuration": "./language-configuration.json"
       }
     ],
     "commands": [
       {
-        "command": "toml.tomlAsJson",
-        "title": "TOML: Show Selection as JSON",
-        "enablement": "editorHasSelection"
+        "command": "toml.tomlToJson",
+        "title": "Show Selection as JSON"
       },
       {
-        "command": "toml.debug.showSyntaxTree",
-        "title": "TOML (debug): Show Syntax Tree",
-        "enablement": "editorLangId == toml && config.toml.debug"
+        "command": "toml.syntaxTree",
+        "title": "Show Syntax Tree"
+      },
+      {
+        "command": "toml.reload",
+        "title": "Reload coc-toml extension"
       }
     ],
     "semanticTokenTypes": [
@@ -119,12 +111,8 @@
     "semanticTokenScopes": [
       {
         "scopes": {
-          "tomlArrayKey": [
-            "variable.key.array.toml"
-          ],
-          "tomlTableKey": [
-            "variable.key.table.toml"
-          ]
+          "tomlArrayKey": ["variable.key.array.toml"],
+          "tomlTableKey": ["variable.key.table.toml"]
         }
       }
     ],
@@ -171,6 +159,18 @@
           "type": "boolean",
           "scope": "resource",
           "default": false
+        },
+        "toml.commands.copyJsonAsToml": {
+          "description": "Option only for run lsp correctly.",
+          "type": "boolean",
+          "scope": "resource",
+          "default": true
+        },
+        "toml.commands.pasteJsonAsToml": {
+          "description": "Option only for run lsp correctly.",
+          "type": "boolean",
+          "scope": "resource",
+          "default": true
         },
         "toml.formatter.alignEntries": {
           "description": "Align consecutive entries vertically.",
@@ -222,12 +222,9 @@
         },
         "toml.formatter.indentString": {
           "description": "The substring that is used for indentation, should be tabs or spaces, but technically can be anything. Uses the IDE setting if not set.",
-          "type": [
-            "string",
-            "null"
-          ],
+          "type": ["string", "null"],
           "scope": "resource",
-          "default": null
+          "default": "  "
         },
         "toml.formatter.reorderKeys": {
           "description": "Alphabetically reorder keys that are not separated by empty lines.",
@@ -266,40 +263,23 @@
           "scope": "resource",
           "default": false
         },
+        "toml.schema.indexUrl": {
+          "description": "A HTTP(S) URL that points to a schema index.",
+          "type": "string",
+          "scope": "resource",
+          "default": "http://localhost:9000/index.json"
+        },
         "toml.schema.associations": {
           "description": "Document and schema associations.",
           "markdownDescription": "Document and schema associations. \n\n The key must be a regular expression, this pattern is used to associate schemas with absolute document URIs. On multiple matches the first one is used in an undefined order. \n\n The value must be an absolute URI to the JSON schema, for supported values and more information [read here](https://github.com/tamasfe/taplo/tree/master/taplo-ide/schemas).",
           "type": "object",
           "scope": "resource",
           "default": {
-            ".*/Cargo\\.toml": "taplo://cargo@Cargo.toml",
-            ".*/pyproject\\.toml": "taplo://python@pyproject.toml",
-            ".*/\\.?taplo\\.toml": "taplo://taplo@taplo.toml",
-            ".*/\\.?rustfmt\\.toml": "taplo://rustfmt@rustfmt.toml",
-            ".*/\\.*dein.*\\.toml": "taplo://dein@dein.toml"
+            ".*/Cargo\\.toml": "https://raw.githubusercontent.com/tamasfe/taplo/master/schemas/cargo.toml.json",
+            ".*/pyproject\\.toml": "https://raw.githubusercontent.com/tamasfe/taplo/master/schemas/pyproject.toml.json",
+            ".*/\\.?taplo\\.toml": "taplo://taplo.toml",
+            ".*/\\.?rustfmt\\.toml": "https://raw.githubusercontent.com/tamasfe/taplo/master/schemas/rustfmt.toml.json"
           }
-        },
-        "toml.extension.actions.schema.addNewBuiltins": {
-          "description": "Whether to update new builtin schema associations.",
-          "scope": "resource",
-          "type": "string",
-          "enum": [
-            "ask",
-            "always",
-            "never"
-          ],
-          "default": "ask"
-        },
-        "toml.extension.actions.schema.removeOldBuiltins": {
-          "description": "Whether to remove old builtin schema associations.",
-          "scope": "resource",
-          "type": "string",
-          "enum": [
-            "ask",
-            "always",
-            "never"
-          ],
-          "default": "ask"
         },
         "toml.debug": {
           "description": "Enable features to debug the extension.",

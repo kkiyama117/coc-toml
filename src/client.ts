@@ -8,17 +8,6 @@ import {
 } from 'coc.nvim';
 import { ClientCapabilities } from 'vscode-languageserver-protocol';
 
-class ExperimentalFeatures implements StaticFeature {
-  fillClientCapabilities(capabilities: ClientCapabilities): void {
-    const caps: any = capabilities.experimental ?? {};
-    caps.snippetTextEdit = false;
-    caps.resolveCodeAction = false;
-    caps.statusNotification = false;
-    capabilities.experimental = caps;
-  }
-  initialize(): void {}
-}
-
 export function createClient(p: string): LanguageClient {
   const serverOpts: ServerOptions = {
     run: { module: p, transport: TransportKind.ipc },
@@ -45,6 +34,17 @@ export function createClient(p: string): LanguageClient {
       ],
     },
     outputChannel,
+    middleware: {
+      workspace: {
+        configuration: (params, token, next) => {
+          params.items = params.items.map((item) => ({
+            ...item,
+            section: (item.section ?? '').replace('evenBetterToml', 'toml'),
+          }));
+          return next(params, token);
+        },
+      },
+    },
   };
 
   // Create client for toml
@@ -56,7 +56,6 @@ export function createClient(p: string): LanguageClient {
   );
 
   client.registerProposedFeatures();
-  client.registerFeature(new ExperimentalFeatures());
 
   return client;
 }

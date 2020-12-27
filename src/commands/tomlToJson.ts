@@ -18,7 +18,12 @@ export function tomlToJson(client: LanguageClient): any {
       workspace.showMessage('Document and range are not selected', 'error');
       return;
     }
+
     const text: string = doc.textDocument.getText(range);
+    if (text.trim().length === 0) {
+      return;
+    }
+
     const params: requestExt.TomlToJson.Params = {
       text: text,
     };
