@@ -6,7 +6,10 @@
   "publisher": "kkiyama117 <k.kiyama117@gmail.com>",
   "license": "MIT",
   "main": "lib/index.js",
-  "keywords": ["coc.nvim", "toml"],
+  "keywords": [
+    "coc.nvim",
+    "toml"
+  ],
   "repository": {
     "type": "git",
     "url": "git+https://github.com/kkiyama117/coc-toml.git"
@@ -76,9 +79,15 @@
     "languages": [
       {
         "id": "toml",
-        "aliases": ["TOML"],
-        "extensions": [".toml"],
-        "filenames": ["Cargo.lock"],
+        "aliases": [
+          "TOML"
+        ],
+        "extensions": [
+          ".toml"
+        ],
+        "filenames": [
+          "Cargo.lock"
+        ],
         "configuration": "./language-configuration.json"
       }
     ],
@@ -111,8 +120,12 @@
     "semanticTokenScopes": [
       {
         "scopes": {
-          "tomlArrayKey": ["variable.key.array.toml"],
-          "tomlTableKey": ["variable.key.table.toml"]
+          "tomlArrayKey": [
+            "variable.key.array.toml"
+          ],
+          "tomlTableKey": [
+            "variable.key.table.toml"
+          ]
         }
       }
     ],
@@ -222,7 +235,10 @@
         },
         "toml.formatter.indentString": {
           "description": "The substring that is used for indentation, should be tabs or spaces, but technically can be anything. Uses the IDE setting if not set.",
-          "type": ["string", "null"],
+          "type": [
+            "string",
+            "null"
+          ],
           "scope": "resource",
           "default": "  "
         },
@@ -278,7 +294,8 @@
             ".*/Cargo\\.toml": "https://raw.githubusercontent.com/tamasfe/taplo/master/schemas/cargo.toml.json",
             ".*/pyproject\\.toml": "https://raw.githubusercontent.com/tamasfe/taplo/master/schemas/pyproject.toml.json",
             ".*/\\.?taplo\\.toml": "taplo://taplo.toml",
-            ".*/\\.?rustfmt\\.toml": "https://raw.githubusercontent.com/tamasfe/taplo/master/schemas/rustfmt.toml.json"
+            ".*/\\.?rustfmt\\.toml": "https://raw.githubusercontent.com/tamasfe/taplo/master/schemas/rustfmt.toml.json",
+            ".*/\\.*dein.*\\.toml": "https://gist.githubusercontent.com/kkiyama117/fda8e271801a2e34ef2409c167e1ebdb/raw/7dcdce1ae79041a70aeb8526dcdb32b7c07f31ff/dein.json"
           }
         },
         "toml.debug": {

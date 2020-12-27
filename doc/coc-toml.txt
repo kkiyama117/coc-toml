@@ -257,10 +257,7 @@ toml.schema.associations~
         type: object
         scope: resource
         default: {
-           ".*/Cargo\\.toml": "https://raw.githubusercontent.com/tamasfe/taplo/master/schemas/cargo.toml.json",
-           ".*/pyproject\\.toml": "https://raw.githubusercontent.com/tamasfe/taplo/master/schemas/pyproject.toml.json",
-           ".*/\\.?taplo\\.toml": "taplo://taplo.toml",
-           ".*/\\.?rustfmt\\.toml": "https://raw.githubusercontent.com/tamasfe/taplo/master/schemas/rustfmt.toml.json"
+            (omitted. see `package.json`)
         }
 
         Document and schema associations.
