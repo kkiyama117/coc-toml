@@ -1,6 +1,6 @@
 {
   "name": "coc-toml",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "toml extension for coc-nvim",
   "author": "kkiyama117 <k.kiyama117@gmail.com>",
   "publisher": "kkiyama117 <k.kiyama117@gmail.com>",
