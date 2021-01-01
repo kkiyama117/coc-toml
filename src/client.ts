@@ -2,11 +2,9 @@ import {
   LanguageClient,
   LanguageClientOptions,
   ServerOptions,
-  StaticFeature,
   TransportKind,
   workspace,
 } from 'coc.nvim';
-import { ClientCapabilities } from 'vscode-languageserver-protocol';
 
 export function createClient(p: string): LanguageClient {
   const serverOpts: ServerOptions = {
@@ -36,6 +34,7 @@ export function createClient(p: string): LanguageClient {
     outputChannel,
     middleware: {
       workspace: {
+        // Replace `toml` to `evenBetterToml` to communicate to `taplo/lsp` correctly.
         configuration: (params, token, next) => {
           params.items = params.items.map((item) => ({
             ...item,
