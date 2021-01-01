@@ -50,6 +50,10 @@ export class Config {
     this.cfg.update(`${this.rootSection}.${section}`, value, isUser);
   }
 
+  async reset() {
+    await this.update('', '', true);
+  }
+
   get enabled(): boolean {
     return this.cfg.get('enabled');
   }
@@ -66,11 +70,7 @@ export class Config {
     return this.cfg.get('taploServerConfig');
   }
 
-  get defaultAssociations() {
-    return this.cfg.inspect('schema.associations')?.defaultValue ?? {};
-  }
-
-  get currentAssociations() {
+  get associations() {
     return this.cfg.get('schema.associations') ?? {};
   }
 
@@ -80,6 +80,22 @@ export class Config {
 
   async setAssociations(value: any, isUser?: boolean) {
     await this.update('schema.associations', value, isUser);
+  }
+
+  get repositoryEnabled() {
+    return this.cfg.get('schemas.repositoryEnabled') ?? false;
+  }
+
+  get indexUrl(): string {
+    return this.cfg.get('schemas.repositoryUrl') ?? '';
+  }
+
+  get ignoreDeprecatedAssociations(): boolean {
+    return this.cfg.get('actions.ignoreDeprecatedAssociations');
+  }
+
+  async setIgnoreDeprecatedAssociations(value: boolean, isUser?: boolean) {
+    await this.cfg.update('actions.ignoreDeprecatedAssociations', value, isUser);
   }
 
   // get inlayHints() {

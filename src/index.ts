@@ -14,8 +14,6 @@ import { Context } from 'vm';
 import { createClient } from './client';
 import path from 'path';
 import { MessageWithOutput, CachePath } from './requestExt';
-import { TextEncoder } from 'util';
-import { isAbsolutePath } from './util';
 
 // TODO: Divide files
 /// side effects should be capsuled into one place.
