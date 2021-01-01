@@ -1,4 +1,4 @@
-name: coc-toml CI
+name: coc-toml test
 
 on:
   push:
