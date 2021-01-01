@@ -1,6 +1,6 @@
 {
   "name": "coc-toml",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "toml extension for coc-nvim",
   "author": "kkiyama117 <k.kiyama117@gmail.com>",
   "publisher": "kkiyama117 <k.kiyama117@gmail.com>",
@@ -25,7 +25,7 @@
     "coc": "^0.0.77"
   },
   "scripts": {
-    "build": "RELEASE=true yarn --ignore-engines rollup --silent -c rollup.config.js",
+    "build": "yarn --ignore-engines rollup --silent -c rollup.config.js",
     "build:syntax": "ts-node src/syntax/index.ts",
     "clean": "rimraf lib",
     "prepare": "npm-run-all clean build",
@@ -40,6 +40,7 @@
     "semi": true
   },
   "dependencies": {
+    "@taplo/lsp": "^0.1.3",
     "node-fetch": "^2.6.1"
   },
   "devDependencies": {
@@ -48,7 +49,6 @@
     "@rollup/plugin-json": "^4.1.0",
     "@rollup/plugin-node-resolve": "^10.0.0",
     "@types/node-fetch": "^2.5.7",
-    "@wasm-tool/rollup-plugin-rust": "^1.0.5",
     "coc.nvim": "0.0.79",
     "ini": ">=1.3.6",
     "npm-run-all": "^4.1.5",
@@ -65,8 +65,10 @@
     "onLanguage:toml",
     "onLanguage:cargoLock",
     "onCommand:toml.tomlToJson",
+    "onCommand:toml.jsonToToml",
     "onCommand:toml.syntaxTree",
-    "onCommand:toml.reload"
+    "onCommand:toml.clearCache",
+    "onCommand:toml.downloadSchemas"
   ],
   "contributes": {
     "grammars": [
@@ -94,15 +96,20 @@
     "commands": [
       {
         "command": "toml.tomlToJson",
-        "title": "Show Selection as JSON"
+        "title": "TOML: Show selection as JSON"
       },
       {
-        "command": "toml.syntaxTree",
-        "title": "Show Syntax Tree"
+        "command": "toml.clearCache",
+        "title": "TOML: Clear Cache"
       },
       {
-        "command": "toml.reload",
-        "title": "Reload coc-toml extension"
+        "command": "toml.downloadSchemas",
+        "title": "TOML: Download All Schemas"
+      },
+      {
+        "command": "toml.debug.showSyntaxTree",
+        "title": "TOML (debug): Show Syntax Tree",
+        "enablement": "editorLangId == toml && config.evenBetterToml.debug"
       }
     ],
     "semanticTokenTypes": [
@@ -161,17 +168,29 @@
           "scope": "resource",
           "default": false
         },
+        "toml.commands.clearCache": {
+          "description": "Show the \"Clear Cache\" command in the palette.",
+          "type": "boolean",
+          "scope": "resource",
+          "default": true
+        },
+        "toml.commands.downloadSchemas": {
+          "description": "Show the \"Download All Schemas\" command in the palette.",
+          "type": "boolean",
+          "scope": "resource",
+          "default": true
+        },
         "toml.commands.copyTomlAsJson": {
           "description": "Option only for run lsp correctly.",
           "type": "boolean",
           "scope": "resource",
-          "default": false
+          "default": true
         },
         "toml.commands.pasteTomlAsJson": {
           "description": "Option only for run lsp correctly.",
           "type": "boolean",
           "scope": "resource",
-          "default": false
+          "default": true
         },
         "toml.commands.copyJsonAsToml": {
           "description": "Option only for run lsp correctly.",
@@ -279,24 +298,32 @@
           "scope": "resource",
           "default": false
         },
-        "toml.schema.indexUrl": {
+        "toml.schema.repositoryEnabled": {
+          "description": "Whether to use schemas from the provided schema repository.",
+          "type": "boolean",
+          "scope": "resource",
+          "default": true
+        },
+        "toml.schema.repositoryUrl": {
           "description": "A HTTP(S) URL that points to a schema index.",
           "type": "string",
           "scope": "resource",
-          "default": "http://localhost:9000/index.json"
+          "default": "https://taplo.tamasfe.dev/schema_index.json"
         },
         "toml.schema.associations": {
           "description": "Document and schema associations.",
-          "markdownDescription": "Document and schema associations. \n\n The key must be a regular expression, this pattern is used to associate schemas with absolute document URIs. On multiple matches the first one is used in an undefined order. \n\n The value must be an absolute URI to the JSON schema, for supported values and more information [read here](https://github.com/tamasfe/taplo/tree/master/taplo-ide/schemas).",
+          "markdownDescription": "Document and schema associations. \n\n The key must be a regular expression, this pattern is used to associate schemas with absolute document URIs. On multiple matches the first one is used in an undefined order. \n\n The value must be an absolute URI to the JSON schema, for supported values and more information [read here](https://taplo.tamasfe.dev/configuration#visual-studio-code).",
           "type": "object",
           "scope": "resource",
           "default": {
-            ".*/Cargo\\.toml": "https://raw.githubusercontent.com/tamasfe/taplo/master/schemas/cargo.toml.json",
-            ".*/pyproject\\.toml": "https://raw.githubusercontent.com/tamasfe/taplo/master/schemas/pyproject.toml.json",
-            ".*/\\.?taplo\\.toml": "taplo://taplo.toml",
-            ".*/\\.?rustfmt\\.toml": "https://raw.githubusercontent.com/tamasfe/taplo/master/schemas/rustfmt.toml.json",
-            ".*/\\.*dein.*\\.toml": "https://gist.githubusercontent.com/kkiyama117/fda8e271801a2e34ef2409c167e1ebdb/raw/7dcdce1ae79041a70aeb8526dcdb32b7c07f31ff/dein.json"
+            "^(.*(/|\\\\)\\.?taplo\\.toml|\\.?taplo\\.toml)$": "taplo://taplo.toml"
           }
+        },
+        "toml.actions.ignoreDeprecatedAssociations": {
+          "description": "Whether to ignore deprecated builtin associations.",
+          "type": "string",
+          "scope": "resource",
+          "default": false
         },
         "toml.debug": {
           "description": "Enable features to debug the extension.",
