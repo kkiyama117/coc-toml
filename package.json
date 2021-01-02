@@ -316,7 +316,8 @@
           "type": "object",
           "scope": "resource",
           "default": {
-            "^(.*(/|\\\\)\\.?taplo\\.toml|\\.?taplo\\.toml)$": "taplo://taplo.toml"
+            "^(.*(/|\\\\)\\.?taplo\\.toml|\\.?taplo\\.toml)$": "taplo://taplo.toml",
+            ".*/\\.*dein.*\\.toml": "https://gist.githubusercontent.com/kkiyama117/fda8e271801a2e34ef2409c167e1ebdb/raw/7dcdce1ae79041a70aeb8526dcdb32b7c07f31ff/dein.json"
           }
         },
         "toml.actions.ignoreDeprecatedAssociations": {

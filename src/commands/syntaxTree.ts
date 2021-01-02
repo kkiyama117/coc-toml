@@ -1,17 +1,17 @@
 // Various debug commands
 
-import * as requestExt from '../requestExt';
+import { Methods } from '../requestExt';
 import { LanguageClient, workspace } from 'coc.nvim';
 
 export function syntaxTree(client: LanguageClient): any {
   return async () => {
     const doc = await workspace.document;
-    const params: requestExt.SyntaxTree.Params = {
-      uri: doc.uri.toString(),
+    const params: Methods.SyntaxTree.Params = {
+      uri: doc.uri.toString()
     };
 
-    const res = await client.sendRequest<requestExt.SyntaxTree.Response>(
-      requestExt.SyntaxTree.METHOD,
+    const res = await client.sendRequest<Methods.SyntaxTree.Response>(
+      Methods.SyntaxTree.METHOD,
       params
     );
     await workspace.nvim.command('tabnew').then(async () => {
