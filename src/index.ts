@@ -1,12 +1,13 @@
 import { ExtensionContext, MsgTypes, services, workspace } from 'coc.nvim';
+import path from 'path';
+
 import config, { Config } from './config';
+import { createClient } from './client';
 import { tomlToJson } from './commands/conversion';
 import { syntaxTree } from './commands/syntaxTree';
-import { createClient } from './client';
-import path from 'path';
-import { Methods } from './requestExt';
-import { registerCommand } from './commands';
 import { clearCache, downloadSchemas } from './commands/cache';
+import { registerCommand } from './commands';
+import { Methods } from './requestExt';
 
 let extensionContext: ExtensionContext;
 

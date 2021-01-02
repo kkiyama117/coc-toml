@@ -34,9 +34,6 @@ export function downloadSchemas(
     statusItem.show();
     if (!config.repositoryEnabled) {
       workspace.showMessage('Schema repository is disabled in the settings.');
-      if (config.debug) {
-        await workspace.echoLines([JSON.stringify(config)]);
-      }
       statusItem.hide();
       return;
     }

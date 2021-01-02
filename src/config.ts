@@ -83,11 +83,11 @@ export class Config {
   }
 
   get repositoryEnabled() {
-    return this.cfg.get('schemas.repositoryEnabled') ?? false;
+    return this.cfg.get('schema.repositoryEnabled') ?? false;
   }
 
   get indexUrl(): string {
-    return this.cfg.get('schemas.repositoryUrl') ?? '';
+    return this.cfg.get('schema.repositoryUrl') ?? '';
   }
 
   get ignoreDeprecatedAssociations(): boolean {
