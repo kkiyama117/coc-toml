@@ -25,7 +25,7 @@ export function tomlToJson(client: LanguageClient): any {
     }
 
     const params: Methods.TomlToJson.Params = {
-      text: text
+      text: text,
     };
 
     const res = await client.sendRequest<Methods.TomlToJson.Response>(
@@ -95,7 +95,7 @@ export function jsonToToml(client: LanguageClient): any {
     }
 
     const params: Methods.TomlToJson.Params = {
-      text: text
+      text: text,
     };
 
     const res = await client.sendRequest<Methods.TomlToJson.Response>(

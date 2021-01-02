@@ -1,9 +1,4 @@
-import {
-  ExtensionContext,
-  MsgTypes,
-  services,
-  workspace
-} from 'coc.nvim';
+import { ExtensionContext, MsgTypes, services, workspace } from 'coc.nvim';
 import config, { Config } from './config';
 import { tomlToJson } from './commands/conversion';
 import { syntaxTree } from './commands/syntaxTree';
@@ -54,7 +49,7 @@ export async function activate(context: ExtensionContext): Promise<void> {
   }
 
   client.sendNotification(Methods.CachePath.METHOD, {
-    path: path.join(context.storagePath)
+    path: path.join(context.storagePath),
   });
   client.onNotification(Methods.MessageWithOutput.METHOD, showMessage);
 }
@@ -64,7 +59,7 @@ async function checkAssociations(config: Config) {
     'taplo://taplo@taplo.toml',
     'taplo://cargo@Cargo.toml',
     'taplo://python@pyproject.toml',
-    'taplo://rust@rustfmt.toml'
+    'taplo://rust@rustfmt.toml',
   ];
 
   if (config.ignoreDeprecatedAssociations) {
@@ -85,9 +80,7 @@ async function checkAssociations(config: Config) {
         'Your schema associations reference schemas that are not bundled anymore and will not work.',
         'warning'
       );
-      const c = await workspace.showQuickpick(
-        ['More Information', 'Ignore']
-      );
+      const c = await workspace.showQuickpick(['More Information', 'Ignore']);
 
       if (c === 0) {
         workspace.showMessage(
@@ -102,7 +95,9 @@ async function checkAssociations(config: Config) {
 }
 
 function showMessage(params: Methods.MessageWithOutput.Params) {
-  const _trans = (a: Methods.MessageWithOutput.MessageKind): MsgTypes | undefined => {
+  const _trans = (
+    a: Methods.MessageWithOutput.MessageKind
+  ): MsgTypes | undefined => {
     switch (a) {
       case Methods.MessageWithOutput.MessageKind.Info:
         return undefined;
@@ -116,4 +111,3 @@ function showMessage(params: Methods.MessageWithOutput.Params) {
   };
   workspace.showMessage(params.message, _trans(params.kind));
 }
-

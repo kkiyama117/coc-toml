@@ -81,7 +81,7 @@ export namespace Methods {
     export const enum MessageKind {
       Info = 'info',
       Warn = 'warn',
-      Error = 'error'
+      Error = 'error',
     }
 
     export interface Params {

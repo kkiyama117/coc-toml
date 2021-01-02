@@ -95,7 +95,11 @@ export class Config {
   }
 
   async setIgnoreDeprecatedAssociations(value: boolean, isUser?: boolean) {
-    await this.cfg.update('actions.ignoreDeprecatedAssociations', value, isUser);
+    await this.cfg.update(
+      'actions.ignoreDeprecatedAssociations',
+      value,
+      isUser
+    );
   }
 
   // get inlayHints() {
