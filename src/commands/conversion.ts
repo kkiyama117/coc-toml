@@ -73,6 +73,7 @@ export function tomlToJson(client: LanguageClient): any {
     workspace.showMessage('JSON has been generated!');
   };
 }
+
 export function jsonToToml(client: LanguageClient): any {
   return async () => {
     const doc = await workspace.document;
@@ -94,29 +95,23 @@ export function jsonToToml(client: LanguageClient): any {
       return;
     }
 
-    const params: Methods.TomlToJson.Params = {
+    const params: Methods.JsonToToml.Params = {
       text: text,
     };
 
-    const res = await client.sendRequest<Methods.TomlToJson.Response>(
-      Methods.TomlToJson.METHOD,
+    const res = await client.sendRequest<Methods.JsonToToml.Response>(
+      Methods.JsonToToml.METHOD,
       params
     );
 
-    const errLines: string[] = [];
-    if (res.errors?.length ?? 0 !== 0) {
-      errLines.push(`Selection Parse Errors in toml:`);
-      for (const err of res.errors!) {
-        errLines.push(`${err}`);
-      }
-
+    if (res.error) {
       const show = await workspace.showQuickpick(
         ['Yes', 'No'],
         'Show details of error'
       );
 
       if (show === 0) {
-        await workspace.echoLines(errLines);
+        await workspace.echoLines([res.error]);
       }
       return;
     }
@@ -130,7 +125,7 @@ export function jsonToToml(client: LanguageClient): any {
       );
 
       if (show === 0) {
-        await workspace.echoLines(errLines);
+        await workspace.echoLines([res.error]);
       }
 
       return;

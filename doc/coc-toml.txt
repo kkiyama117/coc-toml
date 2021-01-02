@@ -252,22 +252,50 @@ toml.schema.links~
 
         Enable editor links.
 
+                                   *coc-toml-options-schema-repositoryEnabled*
+toml.schema.repositoryEnabled~
+        type: boolean
+        scope: resource
+        default: true
+
+        Whether to use schemas from the provided schema repository.
+
+                                       *coc-toml-options-schema-repositoryUrl*
+toml.schema.repositoryUrl~
+        type: string
+        scope: resource
+        default: "/home/kiyama/programs/mine/vim/coc-toml/package.json"
+
+        A HTTP(S) URL that points to a schema index.
+
                                         *coc-toml-options-schema-associations*
 toml.schema.associations~
         type: object
         scope: resource
         default: {
-            (omitted. see `package.json`)
+          "^(.*(/|\\\\)\\.?taplo\\.toml|\\.?taplo\\.toml)$":
+              "taplo://taplo.toml",
+          ".*/\\.*dein.*\\.toml": 
+              "https://gist.githubusercontent.com/kkiyama117/" \
+              "fda8e271801a2e34ef2409c167e1ebdb/raw/" \
+              "7dcdce1ae79041a70aeb8526dcdb32b7c07f31ff/dein.json"
         }
 
         Document and schema associations.
-            Document and schema associations. \n\n
-            The key must be a regular expression, this pattern is used to
-            associate schemas with absolute document URIs. On multiple
-            matches the first one is used in an undefined order. \n\n
-            The value must be an absolute URI to the JSON schema, for
-            supported values and more information [read here]
-            (https://github.com/tamasfe/taplo/tree/master/schemas).
+        The key must be a regular expression, this pattern is used to
+        associate schemas with absolute document URIs. On multiple
+        matches the first one is used in an undefined order.
+        The value must be an absolute URI to the JSON schema, for
+        supported values and more information [read here]
+        (https://github.com/tamasfe/taplo/tree/master/schemas).
+
+                       *coc-toml-options-actions-ignoreDeprecatedAssociations*
+toml.actions.ignoreDeprecatedAssociations~
+        type: boolean
+        scope: resource
+        default: false
+
+        Whether to ignore deprecated builtin associations.
 
                                                       *coc-toml-options-debug*
 toml.debug~

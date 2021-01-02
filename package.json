@@ -321,7 +321,7 @@
         },
         "toml.actions.ignoreDeprecatedAssociations": {
           "description": "Whether to ignore deprecated builtin associations.",
-          "type": "string",
+          "type": "boolean",
           "scope": "resource",
           "default": false
         },

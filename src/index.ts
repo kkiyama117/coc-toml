@@ -3,13 +3,11 @@ import path from 'path';
 
 import config, { Config } from './config';
 import { createClient } from './client';
-import { tomlToJson } from './commands/conversion';
+import { jsonToToml, tomlToJson } from './commands/conversion';
 import { syntaxTree } from './commands/syntaxTree';
 import { clearCache, downloadSchemas } from './commands/cache';
 import { registerCommand } from './commands';
 import { Methods } from './requestExt';
-
-let extensionContext: ExtensionContext;
 
 export async function activate(context: ExtensionContext): Promise<void> {
   // Don't activate if disabled
@@ -19,7 +17,6 @@ export async function activate(context: ExtensionContext): Promise<void> {
   }
   // Create lsp client with server process
   const serverPath = context.asAbsolutePath(path.join('lib', 'server.js'));
-  extensionContext = context;
   let client = createClient(serverPath);
 
   // register commands
@@ -30,6 +27,7 @@ export async function activate(context: ExtensionContext): Promise<void> {
   }
 
   registerCommand(context, client, 'tomlToJson', tomlToJson);
+  registerCommand(context, client, 'jsonToToml', jsonToToml);
   registerCommand(context, client, 'syntaxTree', syntaxTree);
   registerCommand(context, client, 'clearCache', clearCache);
   registerCommand(context, client, 'downloadSchemas', downloadSchemas);
