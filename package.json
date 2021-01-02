@@ -16,11 +16,6 @@
   },
   "bugs": {
     "url": "https://github.com/kkiyama117/coc-toml/issues"
-  },
-  "publishConfig": {
-    "registry": "https://npm.pkg.github.com/"
-  },
-  "preview": true,
   "engines": {
     "coc": "^0.0.77"
   },
