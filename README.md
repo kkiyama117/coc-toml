@@ -10,6 +10,7 @@ Powered by [taplo](https://github.com/tamasfe/taplo)
 
 - Issues and pull requests are all welcome. I'm a beginner in rust and ts.
 So, please tell me if I'm wrong or going to bad way to implement this.
+- This plugin supports coc `0.0.80` now.
 
 ## Install
 
@@ -21,7 +22,6 @@ So, please tell me if I'm wrong or going to bad way to implement this.
     [[plugins]]
     repo    = 'kkiyama117/coc-toml'
     depends = 'coc.nvim'
-    on_ft   = 'toml'
     ```
 
 ### Add external schemas
@@ -34,11 +34,18 @@ This plugin has no unique keymaps now.
 Use your own keybinding or commands for coc.nvim.
 
 ## Features
+### lsp support
+- You can format and lint every toml file.
+- Completion is supported by some of toml file format.
+  - `pyproject.toml`, `rustfmt.toml`, `Cargo.toml`, `dein.nvim` ...
+  - default schema and rules are [here](https://taplo.tamasfe.dev/configuration/#builtin-schemas)
+
 ### commands
 - `toml.syntaxTree` -> show syntaxTree like `rust-analyzer` does.
 - `toml.downloadSchemas` -> Download all schemas to local.
 - `toml.tomlToJson` -> convert toml to json. If you run it with visualmode, convert toml in selected range instead of it in the whole of document.
 - `toml.jsonToToml` -> convert json to toml. If you run it with visualmode, convert json in selected range instead of it in the whole of document.
+  - Keep in mind if `coc-toml` is active when using these command (especially `jsonToToml`).
 
 ### options
 there are many options for this coc-extension.
@@ -48,7 +55,6 @@ if you need to set these options, edit your `coc-settings.json`(or run `:CocConf
 ### Develop
 
 if you want to build from sources or debug this repo, switch to `main` branch and run `yarn --frozen-lockfile` to build.
-
 
 ## License
 
