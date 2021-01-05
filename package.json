@@ -59,6 +59,7 @@
   "activationEvents": [
     "onLanguage:toml",
     "onLanguage:cargoLock",
+    "onLanguage:config",
     "onCommand:toml.tomlToJson",
     "onCommand:toml.jsonToToml",
     "onCommand:toml.syntaxTree",
@@ -312,7 +313,7 @@
           "scope": "resource",
           "default": {
             "^(.*(/|\\\\)\\.?taplo\\.toml|\\.?taplo\\.toml)$": "taplo://taplo.toml",
-            ".*/\\.*dein.*\\.toml": "https://gist.githubusercontent.com/kkiyama117/fda8e271801a2e34ef2409c167e1ebdb/raw/7dcdce1ae79041a70aeb8526dcdb32b7c07f31ff/dein.json"
+            ".*/\\.*dein.*\\.toml": "https://gist.githubusercontent.com/kkiyama117/fda8e271801a2e34ef2409c167e1ebdb/raw/12518520e592445dc539455959c77c709d1f9cb6/dein.json"
           }
         },
         "toml.actions.ignoreDeprecatedAssociations": {
