@@ -1,5 +1,6 @@
 # coc-toml
 
+[![npm version](https://badge.fury.io/js/coc-toml.svg)](https://badge.fury.io/js/coc-toml)
 ![Node.js Package](https://github.com/kkiyama117/coc-toml/workflows/Node.js%20Package/badge.svg)
 
 toml lsp client extension for coc-nvim.
