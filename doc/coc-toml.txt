@@ -109,7 +109,7 @@ toml.taploConfig~
         An absolute, or workspace relative path to the Taplo
         configuration file.
 
-                                                *coc-toml-options-taploConfig*
+                                         *coc-toml-options-taploConfigEnabled*
 toml.taploConfigEnabled~
         type: boolean
         scope: resource

@@ -1,49 +1,21 @@
 # This workflow will run tests using node and then publish a package to GitHub Packages when a release is created
 # For more information see: https://help.github.com/actions/language-and-framework-guides/publishing-nodejs-packages
 
-name: coc-toml Publish
-
+name: Node.js Package
 on:
   release:
-    types: [ created ]
-
+    types: [created]
 jobs:
-  test:
+  build:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
-      - uses: actions/setup-node@v1
-        with:
-          node-version: 14
-      - name: prettier
-        run: |
-          npm ci
-          npm run prettier
-  publish-npm:
-    needs: test
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v2
-      - uses: actions/setup-node@v1
-        with:
-          # always-auth: true
-          node-version: 14
-          registry-url: 'https://registry.npmjs.org/'
-      - run: npm ci
-      - run: npm publish
-        env:
-          NPM_AUTH_TOKEN: ${{secrets.npm_token}}
-  publish-gpr:
-    needs: test
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v2
-      - uses: actions/setup-node@v1
-        with:
-          scope: '@kkiyama117'
-          node-version: 14
-          registry-url: 'https://npm.pkg.github.com/'
-      - run: npm ci
-      - run: npm publish
-        env:
-          NODE_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN}}
+    - uses: actions/checkout@v2
+    # npmへの公開のための.npmrcファイルのセットアップ
+    - uses: actions/setup-node@v1
+      with:
+        node-version: '12.x'
+        registry-url: 'https://registry.npmjs.org'
+    - run: npm i
+    - run: npm publish
+      env:
+        NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
