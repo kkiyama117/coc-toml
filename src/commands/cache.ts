@@ -1,4 +1,4 @@
-import { ExtensionContext, LanguageClient, workspace,window } from 'coc.nvim';
+import { ExtensionContext, LanguageClient, workspace, window } from 'coc.nvim';
 import fs from 'fs';
 import path from 'path';
 import fetch from 'node-fetch';
@@ -41,9 +41,7 @@ export function downloadSchemas(
     await config.reset();
 
     if (!config.indexUrl) {
-      window.showMessage(
-        'Schema repository is not available in the settings.'
-      );
+      window.showMessage('Schema repository is not available in the settings.');
       statusItem.hide();
       return;
     }

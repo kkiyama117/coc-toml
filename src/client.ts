@@ -1,4 +1,11 @@
-import { LanguageClient, LanguageClientOptions, ServerOptions, TransportKind, window, workspace } from 'coc.nvim';
+import {
+  LanguageClient,
+  LanguageClientOptions,
+  ServerOptions,
+  TransportKind,
+  window,
+  workspace,
+} from 'coc.nvim';
 
 export function createClient(p: string): LanguageClient {
   const serverOpts: ServerOptions = {

@@ -1,4 +1,10 @@
-import { ExtensionContext, MsgTypes, services, workspace,window } from 'coc.nvim';
+import {
+  ExtensionContext,
+  MsgTypes,
+  services,
+  workspace,
+  window,
+} from 'coc.nvim';
 import path from 'path';
 
 import config, { Config } from './config';

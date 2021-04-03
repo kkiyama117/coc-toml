@@ -1,5 +1,5 @@
 import { Methods } from '../requestExt';
-import { LanguageClient, workspace,window } from 'coc.nvim';
+import { LanguageClient, workspace, window } from 'coc.nvim';
 import { Range } from 'vscode-languageserver-types';
 import { allRange } from '../util';
 
