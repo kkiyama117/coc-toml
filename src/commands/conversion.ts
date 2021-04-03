@@ -1,5 +1,5 @@
 import { Methods } from '../requestExt';
-import { LanguageClient, workspace } from 'coc.nvim';
+import { LanguageClient, workspace,window } from 'coc.nvim';
 import { Range } from 'vscode-languageserver-types';
 import { allRange } from '../util';
 
@@ -15,7 +15,7 @@ export function tomlToJson(client: LanguageClient): any {
       range = allRange(doc);
     }
     if (!range) {
-      workspace.showMessage('Document and range are not selected', 'error');
+      window.showMessage('Document and range are not selected', 'error');
       return;
     }
 
@@ -40,27 +40,27 @@ export function tomlToJson(client: LanguageClient): any {
         errLines.push(`${err}`);
       }
 
-      const show = await workspace.showQuickpick(
+      const show = await window.showQuickpick(
         ['Yes', 'No'],
         'Show details of error'
       );
 
       if (show === 0) {
-        await workspace.echoLines(errLines);
+        await window.echoLines(errLines);
       }
       return;
     }
 
     if (!res.text) {
-      workspace.showMessage(`The response shouldn't be empty, but it is.`);
+      window.showMessage(`The response shouldn't be empty, but it is.`);
 
-      const show = await workspace.showQuickpick(
+      const show = await window.showQuickpick(
         ['Yes', 'No'],
         'Show details of error'
       );
 
       if (show === 0) {
-        await workspace.echoLines(errLines);
+        await window.echoLines(errLines);
       }
 
       return;
@@ -70,7 +70,7 @@ export function tomlToJson(client: LanguageClient): any {
       const buf = await workspace.nvim.buffer;
       buf.setLines(res.text.split('\n'), { start: 0, end: -1 });
     });
-    workspace.showMessage('JSON has been generated!');
+    window.showMessage('JSON has been generated!');
   };
 }
 
@@ -86,7 +86,7 @@ export function jsonToToml(client: LanguageClient): any {
       range = allRange(doc);
     }
     if (!range) {
-      workspace.showMessage('Document and range are not selected', 'error');
+      window.showMessage('Document and range are not selected', 'error');
       return;
     }
 
@@ -105,27 +105,27 @@ export function jsonToToml(client: LanguageClient): any {
     );
 
     if (res.error) {
-      const show = await workspace.showQuickpick(
+      const show = await window.showQuickpick(
         ['Yes', 'No'],
         'Show details of error'
       );
 
       if (show === 0) {
-        await workspace.echoLines([res.error]);
+        await window.echoLines([res.error]);
       }
       return;
     }
 
     if (!res.text) {
-      workspace.showMessage(`The response shouldn't be empty, but it is.`);
+      window.showMessage(`The response shouldn't be empty, but it is.`);
 
-      const show = await workspace.showQuickpick(
+      const show = await window.showQuickpick(
         ['Yes', 'No'],
         'Show details of error'
       );
 
       if (show === 0) {
-        await workspace.echoLines([res.error]);
+        await window.echoLines([res.error]);
       }
 
       return;
@@ -135,6 +135,6 @@ export function jsonToToml(client: LanguageClient): any {
       const buf = await workspace.nvim.buffer;
       buf.setLines(res.text.split('\n'), { start: 0, end: -1 });
     });
-    workspace.showMessage('JSON has been generated!');
+    window.showMessage('JSON has been generated!');
   };
 }

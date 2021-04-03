@@ -1,6 +1,7 @@
 import {
   commands,
   ConfigurationChangeEvent,
+  window,
   workspace,
   WorkspaceConfiguration,
 } from 'coc.nvim';
@@ -30,8 +31,8 @@ export class Config {
   private async onConfigChange(event: ConfigurationChangeEvent) {
     this.cfg = workspace.getConfiguration(this.rootSection);
     if (this.debug) {
-      workspace.showMessage('config is changed!');
-      workspace.showMessage(JSON.stringify(this.cfg));
+      window.showMessage('config is changed!');
+      window.showMessage(JSON.stringify(this.cfg));
     }
 
     const requiresReloadOpt = this.requiresReloadOpts.find((opt) =>
@@ -40,7 +41,7 @@ export class Config {
     if (!requiresReloadOpt) return;
 
     const msg = `Changing "${requiresReloadOpt}" requires a reload`;
-    const prompt = await workspace.showPrompt(`${msg}. Reload now?`);
+    const prompt = await window.showPrompt(`${msg}. Reload now?`);
     if (prompt) {
       await commands.executeCommand(`workbench.action.reloadWindow`);
     }

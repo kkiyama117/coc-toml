@@ -1,4 +1,4 @@
-import { ExtensionContext, LanguageClient, workspace } from 'coc.nvim';
+import { ExtensionContext, LanguageClient, workspace,window } from 'coc.nvim';
 import fs from 'fs';
 import path from 'path';
 import fetch from 'node-fetch';
@@ -19,7 +19,7 @@ export function clearCache(_c: LanguageClient, ctx: ExtensionContext): any {
       recursive: true,
     });
 
-    workspace.showMessage('The cache directory has been cleared.');
+    window.showMessage('The cache directory has been cleared.');
   };
 }
 
@@ -28,12 +28,12 @@ export function downloadSchemas(
   ctx: ExtensionContext
 ): any {
   return async () => {
-    const statusItem = workspace.createStatusBarItem(0, { progress: true });
+    const statusItem = window.createStatusBarItem(0, { progress: true });
     ctx.subscriptions.push(statusItem);
     statusItem.text = 'Downloading Schemas.';
     statusItem.show();
     if (!config.repositoryEnabled) {
-      workspace.showMessage('Schema repository is disabled in the settings.');
+      window.showMessage('Schema repository is disabled in the settings.');
       statusItem.hide();
       return;
     }
@@ -41,7 +41,7 @@ export function downloadSchemas(
     await config.reset();
 
     if (!config.indexUrl) {
-      workspace.showMessage(
+      window.showMessage(
         'Schema repository is not available in the settings.'
       );
       statusItem.hide();
@@ -91,14 +91,14 @@ export function downloadSchemas(
 
         statusItem.text = `Downloaded schema (${i}/${schemaCount}).`;
 
-        workspace.showMessage(
+        window.showMessage(
           `Updated ${schemaDone}/${schemaCount} schemas from the repository.`
         );
       }
       statusItem.hide();
     } catch (e) {
       console.error(e);
-      workspace.showMessage('Failed to download schemas.');
+      window.showMessage('Failed to download schemas.');
     }
   };
 }

@@ -1,4 +1,4 @@
-import { ExtensionContext, MsgTypes, services, workspace } from 'coc.nvim';
+import { ExtensionContext, MsgTypes, services, workspace,window } from 'coc.nvim';
 import path from 'path';
 
 import config, { Config } from './config';
@@ -12,7 +12,7 @@ import { Methods } from './requestExt';
 export async function activate(context: ExtensionContext): Promise<void> {
   // Don't activate if disabled
   if (!config.enabled) {
-    workspace.showMessage('activate stopped because of: toml.enabled is false');
+    window.showMessage('activate stopped because of: toml.enabled is false');
     return;
   }
   // Create lsp client with server process
@@ -22,7 +22,7 @@ export async function activate(context: ExtensionContext): Promise<void> {
   // register commands
   if (config.debug) {
     registerCommand(context, client, 'configList', (_) => async () => {
-      workspace.showMessage(JSON.stringify(config));
+      window.showMessage(JSON.stringify(config));
     });
   }
 
@@ -37,7 +37,7 @@ export async function activate(context: ExtensionContext): Promise<void> {
   await checkAssociations(config);
   if (config.showNotification) {
     // show loading status.
-    const statusItem = workspace.createStatusBarItem(0, { progress: true });
+    const statusItem = window.createStatusBarItem(0, { progress: true });
     context.subscriptions.push(statusItem);
     statusItem.text = 'TOML loading...';
     statusItem.show();
@@ -75,14 +75,14 @@ async function checkAssociations(config: Config) {
     const val = assoc[k];
 
     if (oldBuiltins.indexOf(val) !== -1) {
-      workspace.showMessage(
+      window.showMessage(
         'Your schema associations reference schemas that are not bundled anymore and will not work.',
         'warning'
       );
-      const c = await workspace.showQuickpick(['More Information', 'Ignore']);
+      const c = await window.showQuickpick(['More Information', 'Ignore']);
 
       if (c === 0) {
-        workspace.showMessage(
+        window.showMessage(
           'See https://taplo.tamasfe.dev/configuration/#official-schemas'
         );
       } else if (c === 1) {
@@ -108,5 +108,5 @@ function showMessage(params: Methods.MessageWithOutput.Params) {
         return undefined;
     }
   };
-  workspace.showMessage(params.message, _trans(params.kind));
+  window.showMessage(params.message, _trans(params.kind));
 }

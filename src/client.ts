@@ -1,17 +1,11 @@
-import {
-  LanguageClient,
-  LanguageClientOptions,
-  ServerOptions,
-  TransportKind,
-  workspace,
-} from 'coc.nvim';
+import { LanguageClient, LanguageClientOptions, ServerOptions, TransportKind, window, workspace } from 'coc.nvim';
 
 export function createClient(p: string): LanguageClient {
   const serverOpts: ServerOptions = {
     run: { module: p, transport: TransportKind.ipc },
     debug: { module: p, transport: TransportKind.ipc },
   };
-  const outputChannel = workspace.createOutputChannel(
+  const outputChannel = window.createOutputChannel(
     'Taplo Language Server Trace'
   );
   const clientOpts: LanguageClientOptions = {
@@ -47,14 +41,10 @@ export function createClient(p: string): LanguageClient {
   };
 
   // Create client for toml
-  const client = new LanguageClient(
+  return new LanguageClient(
     'toml',
     'toml language server',
     serverOpts,
     clientOpts
   );
-
-  client.registerProposedFeatures();
-
-  return client;
 }
