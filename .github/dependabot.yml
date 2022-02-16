@@ -1,0 +1,10 @@
+# 2 つのパッケージマネージャーの最低限の設定を含む
+# 基本的な dependabot.yml ファイル
+
+version: 2
+updates:
+  # npm のバージョン更新を有効にする
+  - package-ecosystem: "npm"
+    directory: "/"
+    schedule:
+      interval: "weekly"
