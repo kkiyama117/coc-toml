@@ -7,7 +7,8 @@
     "moduleResolution": "node",
     "module": "ESNext",
     "allowSyntheticDefaultImports": true,
-    "strict": false
+    "strict": false,
+    "types": ["node"]
   },
   "exclude": ["node_modules","taplo"]
 }

@@ -49,7 +49,7 @@ export function downloadSchemas(
     statusItem.text = 'Fetching schema index';
 
     try {
-      const index = await fetch(config.indexUrl).then((res) => res.json());
+      const index:any = await fetch(config.indexUrl).then((res) => res.json());
 
       if (!index?.schemas) {
         throw new Error('invalid index JSON');
