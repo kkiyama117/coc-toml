@@ -21,7 +21,7 @@ import fetch, { Headers, Request, Response } from 'node-fetch';
 
 let taplo: TaploLsp;
 
-process.on('message', async (d:any) => {
+process.on('message', async (d: any) => {
   if (d.method === 'exit') {
     exit(0);
   }
