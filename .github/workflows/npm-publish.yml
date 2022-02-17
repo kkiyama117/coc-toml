@@ -11,7 +11,7 @@ jobs:
     steps:
     - uses: actions/checkout@v2
     # npmへの公開のための.npmrcファイルのセットアップ
-    - uses: actions/setup-node@v1
+    - uses: actions/setup-node@v2
       with:
         node-version: '16.x'
         registry-url: 'https://registry.npmjs.org'
