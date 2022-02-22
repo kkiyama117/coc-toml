@@ -1,9 +1,9 @@
 import { ExtensionContext, LanguageClient, workspace, window } from 'coc.nvim';
 import fs from 'fs';
 import path from 'path';
-import fetch from 'node-fetch';
 
 import config from '../config';
+import fetch from 'node-fetch';
 
 export function clearCache(_c: LanguageClient, ctx: ExtensionContext): any {
   return async () => {
