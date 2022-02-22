@@ -52,7 +52,7 @@ export function downloadSchemas(
       const index: any = await fetch(config.indexUrl).then((res) => res.json());
 
       if (!index?.schemas) {
-        throw new Error('invalid index JSON');
+        window.showMessage('invalid index JSON');
       }
 
       await fs.promises.writeFile(
