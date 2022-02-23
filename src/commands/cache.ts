@@ -49,7 +49,7 @@ export function downloadSchemas(
     statusItem.text = 'Fetching schema index';
 
     try {
-      const index: any = await fetch(config.indexUrl).then((res) => res.json());
+      const index: TaploSchemas = await fetch(config.indexUrl).then((res) => res.json());
 
       if (!index?.schemas) {
         window.showMessage('invalid index JSON');
@@ -61,17 +61,16 @@ export function downloadSchemas(
       );
 
       const schemaCount: number = index.schemas?.length ?? 0;
-      let schemaDone: number = 0;
 
       const schemasPath = path.join(ctx.storagePath, 'schemas');
 
       await fs.promises.mkdir(schemasPath, { recursive: true });
 
-      // FIXME: maybe do this concurrently?
-      for (let i = 0; i < schemaCount; i++) {
-        const schemaMeta = index.schemas[i];
+      const promises:Promise<boolean>[] = (index.schemas as TaploSchema[]).map(async (schemaMeta)=>{
         try {
-          const schema = await fetch(schemaMeta.url).then((res) => res.json());
+          const schema: TaploSchema = await fetch(schemaMeta.url).then((res) =>
+            res.json()
+          );
 
           await fs.promises.writeFile(
             path.join(schemasPath, `${schemaMeta.urlHash}.json`),
@@ -80,19 +79,21 @@ export function downloadSchemas(
               schema: schema,
             })
           );
-
-          schemaDone += 1;
         } catch (e) {
           // TODO: handle this better.
           console.warn(e);
+          return false;
         }
-
-        statusItem.text = `Downloaded schema (${i}/${schemaCount}).`;
-
+        statusItem.text = `Downloaded schema (${schemaMeta.title}).`;
         window.showMessage(
-          `Updated ${schemaDone}/${schemaCount} schemas from the repository.`
+          `Updated ${schemaMeta.title} schema from the repository.`
         );
-      }
+        return true;
+      });
+      const sucessed = await Promise.all(promises);
+      window.showMessage(
+        `Updated ${sucessed.filter(Boolean).length}/${schemaCount} schemas from the repository.`
+      );
       statusItem.hide();
     } catch (e) {
       console.error(e);
@@ -100,3 +101,14 @@ export function downloadSchemas(
     }
   };
 }
+
+type TaploSchemas = { schemas: TaploSchema[] };
+type TaploSchema = {
+  title: string;
+  description: string;
+  updated: string;
+  url: string;
+  urlHash: string;
+  authors: string[];
+  patterns: string[];
+};
