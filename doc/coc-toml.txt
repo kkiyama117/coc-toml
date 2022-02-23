@@ -264,7 +264,7 @@ toml.schema.repositoryEnabled~
 toml.schema.repositoryUrl~
         type: string
         scope: resource
-        default: "/home/kiyama/programs/mine/vim/coc-toml/package.json"
+        default: https://taplo.tamasfe.dev/schema_index.json
 
         A HTTP(S) URL that points to a schema index.
 
