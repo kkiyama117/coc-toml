@@ -49,7 +49,9 @@ export function downloadSchemas(
     statusItem.text = 'Fetching schema index';
 
     try {
-      const index: TaploSchemas = await fetch(config.indexUrl).then((res) => res.json());
+      const index: TaploSchemas = await fetch(config.indexUrl).then((res) =>
+        res.json()
+      );
 
       if (!index?.schemas) {
         window.showMessage('invalid index JSON');
@@ -66,33 +68,37 @@ export function downloadSchemas(
 
       await fs.promises.mkdir(schemasPath, { recursive: true });
 
-      const promises:Promise<boolean>[] = (index.schemas as TaploSchema[]).map(async (schemaMeta)=>{
-        try {
-          const schema: TaploSchema = await fetch(schemaMeta.url).then((res) =>
-            res.json()
-          );
+      const promises: Promise<boolean>[] = (index.schemas as TaploSchema[]).map(
+        async (schemaMeta) => {
+          try {
+            const schema: TaploSchema = await fetch(schemaMeta.url).then(
+              (res) => res.json()
+            );
 
-          await fs.promises.writeFile(
-            path.join(schemasPath, `${schemaMeta.urlHash}.json`),
-            JSON.stringify({
-              url: schemaMeta.url,
-              schema: schema,
-            })
+            await fs.promises.writeFile(
+              path.join(schemasPath, `${schemaMeta.urlHash}.json`),
+              JSON.stringify({
+                url: schemaMeta.url,
+                schema: schema,
+              })
+            );
+          } catch (e) {
+            // TODO: handle this better.
+            console.warn(e);
+            return false;
+          }
+          statusItem.text = `Downloaded schema (${schemaMeta.title}).`;
+          window.showMessage(
+            `Updated ${schemaMeta.title} schema from the repository.`
           );
-        } catch (e) {
-          // TODO: handle this better.
-          console.warn(e);
-          return false;
+          return true;
         }
-        statusItem.text = `Downloaded schema (${schemaMeta.title}).`;
-        window.showMessage(
-          `Updated ${schemaMeta.title} schema from the repository.`
-        );
-        return true;
-      });
+      );
       const sucessed = await Promise.all(promises);
       window.showMessage(
-        `Updated ${sucessed.filter(Boolean).length}/${schemaCount} schemas from the repository.`
+        `Updated ${
+          sucessed.filter(Boolean).length
+        }/${schemaCount} schemas from the repository.`
       );
       statusItem.hide();
     } catch (e) {
