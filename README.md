@@ -2,7 +2,7 @@
 
 [![npm version](https://badge.fury.io/js/coc-toml.svg)](https://badge.fury.io/js/coc-toml)
 
-toml lsp client extension for coc-nvim.
+toml language server extension for [coc.nvim](https://github.com/neoclide/coc.nvim).
 
 Powered by [taplo](https://github.com/tamasfe/taplo)
 
@@ -23,21 +23,23 @@ So, please tell me if I'm wrong or going to bad way to implement this.
     repo    = 'kkiyama117/coc-toml'
     depends = 'coc.nvim'
     ```
+  - I checked this plugin(v1.2.5) works with dein.vim and vim-plug
 
 ### Add external schemas
 
 You can add external schema config for specific type of toml like dein.nvim config file.
-To see how to add, see vim help or [doc txt on the web](https://github.com/kkiyama117/coc-toml/blob/main/doc/coc-toml.txt) and [taplo doc](https://taplo.tamasfe.dev/configuration/#schemas).
+To read details, see vim help(If installed with plugin manager) or [doc txt on the web](https://github.com/kkiyama117/coc-toml/blob/main/doc/coc-toml.txt) and [taplo doc](https://taplo.tamasfe.dev/configuration/#schemas).
 
 ## Keymaps
 This plugin has no unique keymaps now.
 Use your own keybinding or commands for coc.nvim.
+See [coc.nvim document](https://github.com/neoclide/coc.nvim/blob/a1688fc34143b1b7a25ab8c98438088199863e35/doc/coc.txt#L1291).
 
 ## Features
 ### lsp support
-- You can format and lint every toml file.
-- Completion is supported by some of toml file format.
-  - `pyproject.toml`, `rustfmt.toml`, `Cargo.toml`, `dein.nvim` ...
+- You can format and lint all kind of toml file.
+- Completion is supported on some format of toml files.
+  - (e.x.) `pyproject.toml`, `rustfmt.toml`, `Cargo.toml`, `dein.nvim` ...
   - default schema and rules are [here](https://taplo.tamasfe.dev/configuration/#builtin-schemas)
 
 ### commands
@@ -60,7 +62,8 @@ if you want to build from sources or debug this repo, switch to `main` branch an
 
 MIT.
 
-## Using
+## Dependencies
 
 - [taplo](https://github.com/tamasfe/taplo)
   - to parse toml and some commands
+- [coc.nvim](https://github.com/neoclide/coc.nvim)
