@@ -6,5 +6,6 @@ updates:
   # npm のバージョン更新を有効にする
   - package-ecosystem: "npm"
     directory: "/"
+    target-branch: "develop"
     schedule:
       interval: "weekly"
