@@ -14,10 +14,10 @@
   dependencies:
     "@cspotcode/source-map-consumer" "0.8.0"
 
-"@rollup/plugin-commonjs@^21.0.1":
-  version "21.0.3"
-  resolved "https://registry.yarnpkg.com/@rollup/plugin-commonjs/-/plugin-commonjs-21.0.3.tgz#287896c64926ef3d7f0013708dcdcc1223576ef0"
-  integrity sha512-ThGfwyvcLc6cfP/MWxA5ACF+LZCvsuhUq7V5134Az1oQWsiC7lNpLT4mJI86WQunK7BYmpUiHmMk2Op6OAHs0g==
+"@rollup/plugin-commonjs@^22.0.0":
+  version "22.0.0"
+  resolved "https://registry.yarnpkg.com/@rollup/plugin-commonjs/-/plugin-commonjs-22.0.0.tgz#f4d87016e2fbf187a593ab9f46626fe05b59e8bd"
+  integrity sha512-Ktvf2j+bAO+30awhbYoCaXpBcyPmJbaEUYClQns/+6SNCYFURbvBiNbWgHITEsIgDDWCDUclWRKEuf8cwZCFoQ==
   dependencies:
     "@rollup/pluginutils" "^3.1.0"
     commondir "^1.0.1"
@@ -107,9 +107,9 @@
     form-data "^3.0.0"
 
 "@types/node@*", "@types/node@^17.0.19":
-  version "17.0.23"
-  resolved "https://registry.yarnpkg.com/@types/node/-/node-17.0.23.tgz#3b41a6e643589ac6442bdbd7a4a3ded62f33f7da"
-  integrity sha512-UxDxWn7dl97rKVeVS61vErvw086aCYhDLyvRQZ5Rk65rZKepaFdm53GeqXaKBuOhED4e9uWq34IC3TdSdJJ2Gw==
+  version "17.0.26"
+  resolved "https://registry.yarnpkg.com/@types/node/-/node-17.0.26.tgz#1bbff9b23ee5a64f87b4f30c0c854b112ee2e635"
+  integrity sha512-z/FG/6DUO7pnze3AE3TBGIjGGKkvCcGcWINe1C7cADY8hKLJPDYpzsNE37uExQ4md5RFtTCvg+M8Mu1Enyeg2A==
 
 "@types/resolve@1.17.1":
   version "1.17.1"
