@@ -107,9 +107,9 @@
     form-data "^3.0.0"
 
 "@types/node@*", "@types/node@^17.0.19":
-  version "17.0.33"
-  resolved "https://registry.yarnpkg.com/@types/node/-/node-17.0.33.tgz#3c1879b276dc63e73030bb91165e62a4509cd506"
-  integrity sha512-miWq2m2FiQZmaHfdZNcbpp9PuXg34W5JZ5CrJ/BaS70VuhoJENBEQybeiYSaPBRNq6KQGnjfEnc/F3PN++D+XQ==
+  version "17.0.36"
+  resolved "https://registry.yarnpkg.com/@types/node/-/node-17.0.36.tgz#c0d5f2fe76b47b63e0e0efc3d2049a9970d68794"
+  integrity sha512-V3orv+ggDsWVHP99K3JlwtH20R7J4IhI1Kksgc+64q5VxgfRkQG8Ws3MFm/FZOKDYGy9feGFlZ70/HpCNe9QaA==
 
 "@types/resolve@1.17.1":
   version "1.17.1"
@@ -189,10 +189,10 @@ chalk@^2.4.1:
     escape-string-regexp "^1.0.5"
     supports-color "^5.3.0"
 
-coc.nvim@0.0.80:
-  version "0.0.80"
-  resolved "https://registry.npmjs.org/coc.nvim/-/coc.nvim-0.0.80.tgz"
-  integrity sha512-/3vTcnofoAYMrdENrlQmADTzfXX4+PZ0fiM10a39UA37dTR2dpIGi9O469kcIksuunLjToqWG8S45AGx/9wV7g==
+coc.nvim@0.0.81:
+  version "0.0.81"
+  resolved "https://registry.yarnpkg.com/coc.nvim/-/coc.nvim-0.0.81.tgz#6c28ed4e773e7f274f1c295dd4fa2d46e351d306"
+  integrity sha512-e9FSAXPNs3vAgjSrspYRuPcX8L+AQw1T+0SfY0srJ6tsDtWnainnwSvyjInw1tEmGXRMgdBmVowW0JY2qjv9Dw==
 
 color-convert@^1.9.0:
   version "1.9.3"
