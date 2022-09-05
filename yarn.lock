@@ -81,10 +81,17 @@
     estree-walker "^2.0.1"
     picomatch "^2.2.2"
 
-"@taplo/lsp@^0.2.4":
-  version "0.2.4"
-  resolved "https://registry.npmjs.org/@taplo/lsp/-/lsp-0.2.4.tgz"
-  integrity sha512-/FcGQVvXAslhiC9aMG5gxKXJctg8N7XLZrP+wYrFTFccWEPZd/Xon5y7jUXpKOVSOFEA1MOKZKbPuK4ET5/T8Q==
+"@taplo/core@^0.1.0":
+  version "0.1.0"
+  resolved "https://registry.yarnpkg.com/@taplo/core/-/core-0.1.0.tgz#ab4c2208ec054ac73c224f3e498a0263092aaa7e"
+  integrity sha512-3cxIoYx6wChiFbsv+rdlt77QdPVjOSv9DeJeg9iuM/Qhj6pIvX5/NPSwUd6WOGXwD1ex/9x9qtAUjfeaKFsHTA==
+
+"@taplo/lsp@^0.4.2":
+  version "0.4.2"
+  resolved "https://registry.yarnpkg.com/@taplo/lsp/-/lsp-0.4.2.tgz#fc53d69e4fc7e0cb31c2896b80a9bbbb584860cd"
+  integrity sha512-SGr98gexxKMF/i7V6z1+voukIPmMGk7k9wSXy37/rCVZ6BVlV8yIWp78t/FH2LrbRum0/E/nZSCSjBgGYFRXmg==
+  dependencies:
+    "@taplo/core" "^0.1.0"
 
 "@tsconfig/node10@^1.0.7":
   version "1.0.8"
