@@ -20,7 +20,14 @@ export default {
   },
   plugins: [
     json(),
-    typescript(),
+    typescript({
+      tsconfigOverride: {
+        compilerOptions: {
+          module: 'ESNext',
+          moduleResolution: 'node',
+        },
+      },
+    }),
     commonjs({ include: ['src/*.ts', 'node_modules/**'] }),
     resolve({ jsnext: true, preferBuiltins: true }),
   ],
