@@ -5,24 +5,23 @@ import resolve from '@rollup/plugin-node-resolve';
 
 export default {
   input: {
-    server: 'src/server.ts',
-    index: 'src/index.ts'
+    index: 'src/index.ts',
   },
   output: {
     sourcemap: false,
     format: 'cjs',
-    dir: 'lib'
+    dir: 'lib',
   },
   external: ['commonjs', 'coc.nvim'],
   watch: {
     chokidar: {
-      exclude: ['node_modules/**']
-    }
+      exclude: ['node_modules/**'],
+    },
   },
   plugins: [
     json(),
     typescript(),
     commonjs({ include: ['src/*.ts', 'node_modules/**'] }),
-    resolve({ jsnext: true, preferBuiltins: true })
-  ]
+    resolve({ jsnext: true, preferBuiltins: true }),
+  ],
 };

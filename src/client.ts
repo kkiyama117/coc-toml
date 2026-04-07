@@ -2,55 +2,47 @@ import {
   LanguageClient,
   LanguageClientOptions,
   ServerOptions,
-  TransportKind,
   window,
   workspace,
 } from 'coc.nvim';
+import { TombiBin } from './bootstrap';
+import config from './config';
 
-export function createClient(p: string): LanguageClient {
+export function createClient(tombiBin: TombiBin): LanguageClient {
+  const args = [...tombiBin.args, 'lsp', ...config.args];
+
   const serverOpts: ServerOptions = {
-    run: { module: p, transport: TransportKind.ipc },
-    debug: { module: p, transport: TransportKind.ipc },
+    command: tombiBin.command,
+    args,
+    options: {
+      env: {
+        ...process.env,
+        NO_COLOR: '1',
+        ...config.env,
+      },
+    },
   };
-  const outputChannel = window.createOutputChannel(
-    'Taplo Language Server Trace'
-  );
+
+  const outputChannel = window.createOutputChannel('Tombi Language Server');
+
   const clientOpts: LanguageClientOptions = {
     documentSelector: [
       { scheme: 'file', language: 'toml' },
       { scheme: 'file', language: 'cargoLock' },
     ],
-
-    initializationOptions: {
-      configuration: workspace.getConfiguration().get('toml'),
-    },
-
     synchronize: {
-      configurationSection: 'toml',
       fileEvents: [
-        workspace.createFileSystemWatcher('**/.toml'),
-        workspace.createFileSystemWatcher('**/Cargo.lock'),
+        workspace.createFileSystemWatcher('**/tombi.toml'),
+        workspace.createFileSystemWatcher('**/.tombi.toml'),
+        workspace.createFileSystemWatcher('**/pyproject.toml'),
       ],
     },
     outputChannel,
-    middleware: {
-      workspace: {
-        // Replace `toml` to `evenBetterToml` to communicate to `taplo/lsp` correctly.
-        configuration: (params, token, next) => {
-          params.items = params.items.map((item) => ({
-            ...item,
-            section: (item.section ?? '').replace('evenBetterToml', 'toml'),
-          }));
-          return next(params, token);
-        },
-      },
-    },
   };
 
-  // Create client for toml
   return new LanguageClient(
-    'toml',
-    'toml language server',
+    'tombi',
+    'Tombi Language Server',
     serverOpts,
     clientOpts
   );
