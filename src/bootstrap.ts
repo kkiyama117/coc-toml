@@ -16,7 +16,7 @@ export interface TombiBin {
 }
 
 export async function findTombiBinary(
-  context: ExtensionContext
+  context: ExtensionContext,
 ): Promise<TombiBin | null> {
   const config = workspace.getConfiguration('tombi');
 
@@ -53,7 +53,7 @@ export async function findTombiBinary(
   // 4. Auto-download
   const choice = await window.showQuickpick(
     ['Download', 'Cancel'],
-    'tombi binary not found. Download from GitHub?'
+    'tombi binary not found. Download from GitHub?',
   );
   if (choice !== 0) {
     return null;
@@ -69,7 +69,7 @@ export async function findTombiBinary(
     return { command: binPath, args: [], source: 'downloaded' };
   } catch (e) {
     window.showErrorMessage(
-      `Failed to download tombi: ${e}. Install manually with \`npm install -g @tombi-toml/tombi\` or set \`tombi.path\`.`
+      `Failed to download tombi: ${e}. Install manually with \`npm install -g @tombi-toml/tombi\` or set \`tombi.path\`.`,
     );
     return null;
   }
@@ -91,7 +91,7 @@ export async function checkUpdate(context: ExtensionContext): Promise<void> {
     if (prompt) {
       const choice = await window.showQuickpick(
         ['Update', 'Skip'],
-        `tombi ${release.version} is available. Update?`
+        `tombi ${release.version} is available. Update?`,
       );
       if (choice !== 0) return;
     }
@@ -99,7 +99,7 @@ export async function checkUpdate(context: ExtensionContext): Promise<void> {
     await downloadServer(release, context.storagePath);
     await context.globalState.update('tombi-release', release.tag);
     window.showInformationMessage(
-      `tombi updated to ${release.version}. Restart the language server to apply.`
+      `tombi updated to ${release.version}. Restart the language server to apply.`,
     );
   } catch (e) {
     // Update check failure is non-fatal

@@ -6,8 +6,8 @@ export function registerCommand(
   name: string,
   cmd: (
     client: LanguageClient,
-    context: ExtensionContext
-  ) => (...args: any[]) => Promise<void>
+    context: ExtensionContext,
+  ) => (...args: any[]) => Promise<void>,
 ) {
   const fullName = `tombi.${name}`;
   const d = commands.registerCommand(fullName, cmd(client, context));

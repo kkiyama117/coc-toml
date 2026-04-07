@@ -28,15 +28,15 @@ export async function activate(context: ExtensionContext): Promise<void> {
   context.subscriptions.push(
     commands.registerCommand(
       'tombi.showLanguageServerVersion',
-      showVersion(tombiBin)
-    )
+      showVersion(tombiBin),
+    ),
   );
   context.subscriptions.push(
     commands.registerCommand('tombi.restartLanguageServer', async () => {
       await client.stop();
       client.start();
       window.showInformationMessage('Tombi Language Server restarted.');
-    })
+    }),
   );
 
   // Background update check (non-blocking)

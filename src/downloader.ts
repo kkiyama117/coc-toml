@@ -38,7 +38,7 @@ function httpsGet(url: string): Promise<IncomingMessage> {
     const req = https.get(
       url,
       { headers: { 'User-Agent': 'coc-toml' } },
-      resolve
+      resolve,
     );
     req.on('error', reject);
   });
@@ -78,7 +78,7 @@ export async function getLatestRelease(): Promise<ReleaseInfo | null> {
   const platform = getPlatform();
   if (!platform) {
     window.showErrorMessage(
-      `Unsupported platform: ${process.arch} ${process.platform}`
+      `Unsupported platform: ${process.arch} ${process.platform}`,
     );
     return null;
   }
@@ -86,19 +86,19 @@ export async function getLatestRelease(): Promise<ReleaseInfo | null> {
   const suffix = process.platform === 'win32' ? 'zip' : 'gz';
 
   const release = await fetchJson(
-    `https://api.github.com/repos/${GITHUB_REPO}/releases/latest`
+    `https://api.github.com/repos/${GITHUB_REPO}/releases/latest`,
   );
 
   const tag: string = release.tag_name;
   const version = tag.startsWith('v') ? tag.slice(1) : tag;
 
   const asset = (release.assets as any[]).find((a: any) =>
-    a.name.endsWith(`${platform}.${suffix}`)
+    a.name.endsWith(`${platform}.${suffix}`),
   );
 
   if (!asset) {
     window.showErrorMessage(
-      `No tombi binary found for ${platform} in release ${tag}`
+      `No tombi binary found for ${platform} in release ${tag}`,
     );
     return null;
   }
@@ -113,7 +113,7 @@ export async function getLatestRelease(): Promise<ReleaseInfo | null> {
 
 export async function downloadServer(
   release: ReleaseInfo,
-  storagePath: string
+  storagePath: string,
 ): Promise<string> {
   await fs.promises.mkdir(storagePath, { recursive: true });
 
@@ -143,7 +143,7 @@ export async function downloadServer(
       // Extract using built-in unzip on Windows
       execSync(
         `powershell -Command "Expand-Archive -Path '${zipTmp}' -DestinationPath '${storagePath}' -Force"`,
-        { encoding: 'utf-8' }
+        { encoding: 'utf-8' },
       );
       await fs.promises.unlink(zipTmp).catch(() => {});
       // The extracted binary should be in storagePath

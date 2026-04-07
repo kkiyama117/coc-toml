@@ -6,7 +6,7 @@ export function selectSchema(client: LanguageClient): any {
     try {
       const res = await client.sendRequest<Methods.ListSchemas.Response>(
         Methods.ListSchemas.METHOD,
-        {}
+        {},
       );
 
       if (!res.schemas || res.schemas.length === 0) {
@@ -31,7 +31,7 @@ export function selectSchema(client: LanguageClient): any {
       } as Methods.AssociateSchema.Params);
 
       window.showInformationMessage(
-        `Schema "${selected.title || selected.uri}" associated.`
+        `Schema "${selected.title || selected.uri}" associated.`,
       );
     } catch (e) {
       window.showErrorMessage(`Failed to select schema: ${e}`);

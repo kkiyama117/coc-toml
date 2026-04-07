@@ -44,6 +44,6 @@ export function createClient(tombiBin: TombiBin): LanguageClient {
     'tombi',
     'Tombi Language Server',
     serverOpts,
-    clientOpts
+    clientOpts,
   );
 }

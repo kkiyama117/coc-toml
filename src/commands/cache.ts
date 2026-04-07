@@ -6,7 +6,7 @@ export function refreshCache(client: LanguageClient): any {
     try {
       const result = await client.sendRequest<Methods.RefreshCache.Response>(
         Methods.RefreshCache.METHOD,
-        {}
+        {},
       );
       if (result) {
         window.showInformationMessage('Cache refreshed successfully.');
