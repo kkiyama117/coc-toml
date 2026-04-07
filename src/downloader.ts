@@ -1,4 +1,5 @@
 import { window } from 'coc.nvim';
+import { execSync } from 'child_process';
 import fs from 'fs';
 import os from 'os';
 import path from 'path';
@@ -140,7 +141,6 @@ export async function downloadServer(
       const zipDest = fs.createWriteStream(zipTmp);
       await pipeline(res, zipDest);
       // Extract using built-in unzip on Windows
-      const { execSync } = await import('child_process');
       execSync(
         `powershell -Command "Expand-Archive -Path '${zipTmp}' -DestinationPath '${storagePath}' -Force"`,
         { encoding: 'utf-8' }

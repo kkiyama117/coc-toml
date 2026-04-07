@@ -36,19 +36,19 @@
   },
   "dependencies": {},
   "devDependencies": {
-    "@rollup/plugin-commonjs": "^22.0.0",
-    "@rollup/plugin-json": "^4.1.0",
-    "@rollup/plugin-node-resolve": "^13.1.3",
-    "@types/node": "^18.7.6",
+    "@rollup/plugin-commonjs": "^29.0.2",
+    "@rollup/plugin-json": "^6.1.0",
+    "@rollup/plugin-node-resolve": "^16.0.3",
+    "@types/node": "^25.5.2",
     "coc.nvim": "0.0.82",
-    "ini": ">=2.0.0",
+    "ini": ">=6.0.0",
     "npm-run-all": "^4.1.5",
-    "prettier": "^2.5.1",
-    "rimraf": "^3.0.2",
-    "rollup": "^2.68.0",
-    "rollup-plugin-typescript2": "^0.33.0",
+    "prettier": "^3.8.1",
+    "rimraf": "^6.1.3",
+    "rollup": "^4.60.1",
+    "rollup-plugin-typescript2": "^0.37.0",
     "ts-node": "^10.5.0",
-    "typescript": "^4.5.5"
+    "typescript": "^6.0.2"
   },
   "activationEvents": [
     "onLanguage:toml",
@@ -105,13 +105,18 @@
         },
         "tombi.path": {
           "description": "Absolute path to the tombi executable. If not set, searches PATH.",
-          "type": ["string", "null"],
+          "type": [
+            "string",
+            "null"
+          ],
           "default": null
         },
         "tombi.args": {
           "description": "Additional arguments passed to the tombi lsp command.",
           "type": "array",
-          "items": { "type": "string" },
+          "items": {
+            "type": "string"
+          },
           "default": []
         },
         "tombi.env": {
@@ -119,7 +124,9 @@
           "type": "object",
           "default": {},
           "patternProperties": {
-            "^.+$": { "type": "string" }
+            "^.+$": {
+              "type": "string"
+            }
           }
         },
         "tombi.updates.checkOnStartup": {
