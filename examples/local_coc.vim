@@ -1,0 +1,1 @@
+Plug '/home/kiyama/programs/tools/coc-toml'
