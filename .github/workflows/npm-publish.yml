@@ -5,7 +5,7 @@ on:
     types: [created]
 
 jobs:
-  publish:
+  publish-npm:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -19,3 +19,25 @@ jobs:
       - run: npm publish
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+
+  publish-github:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          registry-url: 'https://npm.pkg.github.com'
+          scope: '@kkiyama117'
+
+      - run: yarn --frozen-lockfile
+
+      - run: |
+          npm pkg set name='@kkiyama117/coc-toml'
+          npm publish
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
