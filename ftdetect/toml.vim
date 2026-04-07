@@ -1,0 +1,4 @@
+" COPYED FROM `cespare/vim-toml`
+
+" Go dep and Rust use several TOML config files that are not named with .toml.
+autocmd BufNewFile,BufRead *.toml,pdm.lock,Gopkg.lock,Cargo.lock,*/.cargo/config,*/.cargo/credentials,Pipfile set filetype=toml

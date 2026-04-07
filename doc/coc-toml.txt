@@ -1,6 +1,6 @@
 *coc-toml.txt*          toml analyzer, parser and formatter extension for vim.
 
-Version: 0.1.3
+Version: 0.1.4
 Author: kkiyama117 <k.kiyama117@gmail.com>
 License: MIT license
 

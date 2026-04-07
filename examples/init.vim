@@ -4,10 +4,21 @@ execute 'set runtimepath+=' . s:config_dir . '/after'
 
 call plug#begin()
 
-" List your plugins here
+" Test that vim-plug can install plugin
 Plug 'tpope/vim-sensible'
 
-" Use release branch (recommended)
+" Install coc-toml
+let s:local_coc_config = s:config_dir .. "/local_coc.vim"
+exec 'source ' .  s:local_coc_config
+
+" Install coc.nvim 
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 
 call plug#end()
+filetype plugin indent on
+
+" Color
+hi Normal guibg=NONE ctermbg=NONE
+silent! colorscheme seoul256
+
+command! -nargs=0 Format :call CocAction('format')
