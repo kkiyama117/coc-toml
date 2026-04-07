@@ -21,3 +21,4 @@ CLAUDE.md
 
 #coc-nvim
 examples/autoload/plug.vim
+examples/local_coc.vim
