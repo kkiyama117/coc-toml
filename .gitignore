@@ -1,7 +1,23 @@
-lib
+# Build output
+lib/
+
+# Dependencies
 node_modules/
 
-# for use other editor
-.vscode
-.idea
+# Editor / IDE
+.vscode/
+.idea/
 .netrwhist
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Claude Code
+CLAUDE.md
+
+#coc-nvim
+examples/autoload/plug.vim
