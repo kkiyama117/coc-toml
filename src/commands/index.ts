@@ -5,13 +5,11 @@ export function registerCommand(
   client: LanguageClient,
   name: string,
   cmd: (
-    arg0: LanguageClient,
-    arg1: ExtensionContext
+    client: LanguageClient,
+    context: ExtensionContext
   ) => (...args: any[]) => Promise<void>
 ) {
-  const fullName = `toml.${name}`;
+  const fullName = `tombi.${name}`;
   const d = commands.registerCommand(fullName, cmd(client, context));
-  client.onReady().then(() => {
-    context.subscriptions.push(d);
-  });
+  context.subscriptions.push(d);
 }

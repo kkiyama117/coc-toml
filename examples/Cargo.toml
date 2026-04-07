@@ -1,0 +1,125 @@
+[workspace]
+resolver = "3"
+
+[package]
+name        = "Test_Package"
+version     = "0.1.0"
+edition     = "2024"
+description = "Rust binding of Hoge"
+license     = "GNU GPL-3.0-or-later"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+[lib]
+name       = "Fuga"
+path       = "src/lib.rs"
+crate-type = ["cdylib", "rlib"]
+
+[[bin]]
+name = "Fuga_bin"
+path = "src/main.rs"
+
+[features]
+log = ["dep:log", "env_logger", "tracing", "tracing-subscriber"]
+
+# If you need simple client of pubchem, use this.
+# We choose `tokio` as default runtime
+# We use serde_json to parse response
+# This feature is included in default
+tokio = ["futures", "dep:tokio", "reqwest", "urlencoding", "json"]
+
+# Client application implementation
+cli = ["clap", "tokio"]
+
+# Output
+json       = ["serde_json"]
+xml        = ["quick-xml"]
+all_output = ["json", "xml"]
+
+# pyO3
+pyo3       = ["dep:pyo3", "constcat"]
+pyo3_log   = ["pyo3", "log", "pyo3-log"]
+pyo3_serde = ["pyo3", "pythonize", "json"]
+pyo3_tokio = ["pyo3", "tokio", "pyo3-async-runtimes"]
+# pyo3_polars = ["pyo3", "polars"]
+# Full PyO3 features with integrations
+pyo3_full = [
+    "pyo3",
+    "pyo3_log",
+    "pyo3_serde",
+    "pyo3_tokio",
+    # "pyo3-polars"
+]
+
+# In default, use json
+default = ["log", "tokio"]
+# default = ["full"]
+full = ["default", "pyo3_full", "cli", "all_output", "quick-xml/async-tokio"]
+
+[dependencies]
+# Simplified error handling
+anyhow    = "1.0"
+thiserror = "2.0"
+# Enum utils
+strum = { version = "*", features = ["derive"] }
+# Construct Url
+url = { version = "*", features = ["serde"] }
+# other Utilities
+itertools = { version = "*" }
+
+# Optional ===================================================================
+
+# Polars compatible
+polars = { version = "0.52", optional = true }
+chrono = { version = "0.4", optional = true }
+
+# feature of cli
+clap = { version = "4.5", features = ["derive", "string"], optional = true }
+
+# for logging and tracing
+log                = { version = "0.4", optional = true }
+env_logger         = { version = "0.11", optional = true }
+tracing            = { version = "0.1", optional = true }
+tracing-subscriber = { version = "0.3", optional = true }
+
+# Asynchronous runtime and utilities
+futures     = { version = "0.3", optional = true }
+http        = { version = "*", optional = true }
+tokio       = { version = "1.0", features = ["process", "macros", "rt-multi-thread"], optional = true }
+reqwest     = { version = "0.12", features = ["json"], optional = true }
+urlencoding = { version = "2.1", optional = true }
+
+# Serialization
+serde      = { version = "1.0", features = ["derive"] }
+serde_json = { version = "*", optional = true }
+quick-xml  = { version = "*", features = ["encoding", "serialize"], optional = true }
+
+# For Python bindings
+constcat = { version = "0.6", optional = true }
+# "extension-module" tells pyo3 we want to build an extension module (skips linking against libpython.so)
+# "abi3-py39" tells pyo3 (and maturin) to build using the stable ABI with minimum Python version 3.9
+# version of pythonize is "0.26", so use version "0.26" here.
+pyo3 = { version = "0.27", features = [
+    "abi3-py39",
+    "generate-import-lib",
+    # https://pyo3.rs/main/features.html#features-for-embedding-python-in-rust
+    "auto-initialize",
+    # https://pyo3.rs/main/features.html#advanced-features
+    "experimental-async",
+    "experimental-inspect",
+    # "py-clone",
+    "nightly",
+    # Connection to other useful crates
+    # https://pyo3.rs/main/features.html#optional-dependencies
+    "anyhow",
+    "chrono",
+    # "either",
+    # "hashbrown",
+    # "eyre",
+    # "time",
+    "serde",
+    # "uuid",
+], optional = true }
+pythonize = { version = "0.27", optional = true }
+pyo3-log = { version = "*", optional = true }
+pyo3-async-runtimes = { version = "0.27", features = ["attributes", "tokio-runtime"], optional = true }
+# pyo3-polars = { git = "https://github.com/pola-rs/polars", optional = true }

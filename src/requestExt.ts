@@ -1,107 +1,53 @@
-// Same as one in `@taplo/lsp` but declare namespace cause error in runtime with
-// current rollup config
-
 export namespace Methods {
-  /**
-   * Sent from the client to the server.
-   *
-   * Convert a TOML text to JSON.
-   */
-  export namespace TomlToJson {
-    export interface Params {
-      /**
-       * TOML text
-       */
-      text: string;
-    }
-
-    export interface Response {
-      /**
-       * JSON text
-       */
-      text?: string;
-      errors?: string[];
-    }
-
-    export const METHOD = 'taplo/tomlToJson';
+  export namespace RefreshCache {
+    export const METHOD = 'tombi/refreshCache';
+    export type Response = boolean;
   }
-  /**
-   * Sent from the client to the server.
-   *
-   * Convert a JSON text to TOML.
-   */
-  export namespace JsonToToml {
-    export interface Params {
-      /**
-       * JSON text
-       */
-      text: string;
-    }
 
-    export interface Response {
-      /**
-       * TOML text
-       */
-      text?: string;
-      error?: string;
-    }
-
-    export const METHOD = 'taplo/jsonToToml';
-  }
-  /**
-   * Sent from the client to the server.
-   *
-   * Print the syntax tree for a document for debugging.
-   */
-  export namespace SyntaxTree {
-    export interface Params {
-      /**
-       * URI of the TOML document,
-       * it must have been opened.
-       */
+  export namespace ListSchemas {
+    export interface SchemaInfo {
+      title?: string;
+      description?: string;
       uri: string;
+      fileMatch: string[];
+      tomlVersion?: string;
     }
-
     export interface Response {
-      /**
-       * The syntax tree.
-       */
-      text: string;
+      schemas: SchemaInfo[];
     }
-
-    export const METHOD = 'taplo/syntaxTree';
+    export const METHOD = 'tombi/listSchemas';
   }
-  /**
-   * Sent from the server to the client.
-   *
-   * Used for showing a message to the user with
-   * a button that navigates to the server's logs.
-   */
-  export namespace MessageWithOutput {
-    export const enum MessageKind {
-      Info = 'info',
-      Warn = 'warn',
-      Error = 'error',
-    }
 
+  export namespace AssociateSchema {
     export interface Params {
-      kind: MessageKind;
-      message: string;
+      title?: string;
+      description?: string;
+      uri: string;
+      fileMatch: string[];
+      tomlVersion?: string;
+      force?: boolean;
     }
-
-    export const METHOD = 'taplo/messageWithOutput';
+    export const METHOD = 'tombi/associateSchema';
   }
-  /**
-   * Sent from the client to the server.
-   *
-   * Set the path the server should use for caching,
-   * this is optional.
-   */
-  export namespace CachePath {
-    export interface Params {
-      path: string;
-    }
 
-    export const METHOD = 'taplo/cachePath';
+  export namespace UpdateConfig {
+    export const METHOD = 'tombi/updateConfig';
+    export type Response = boolean;
+  }
+
+  export namespace UpdateSchema {
+    export const METHOD = 'tombi/updateSchema';
+    export type Response = boolean;
+  }
+
+  export namespace GetStatus {
+    export interface Response {
+      tomlVersion: string;
+      source: string;
+      configPath?: string;
+      ignore?: boolean;
+      schema?: string;
+    }
+    export const METHOD = 'tombi/getStatus';
   }
 }
