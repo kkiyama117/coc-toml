@@ -1,6 +1,6 @@
 {
   "name": "coc-toml",
-  "version": "2.0.1",
+  "version": "2.0.2",
   "packageManager": "pnpm@10.33.0",
   "description": "toml extension for coc.nvim",
   "author": "kkiyama117 <k.kiyama117@gmail.com>",
@@ -19,7 +19,7 @@
     "url": "https://github.com/kkiyama117/coc-toml/issues"
   },
   "engines": {
-    "coc": "^0.0.80"
+    "coc": "^0.0.82"
   },
   "scripts": {
     "build": "node esbuild.js",

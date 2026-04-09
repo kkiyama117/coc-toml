@@ -14,7 +14,7 @@ v2.0 is a **complete rewrite** with the following breaking changes:
 
 The underlying language server has been replaced from [Taplo](https://github.com/tamasfe/taplo) to [Tombi](https://github.com/tombi-toml/tombi). Tombi runs as a **native binary** (`tombi lsp`) — WASM is no longer used.
 
-**You must install `tombi` separately** (e.g., `cargo install tombi-cli`, or download from [releases](https://github.com/tombi-toml/tombi/releases)).
+The tombi binary is **automatically downloaded** when the extension activates. You can also specify a custom path via `tombi.path` setting.
 
 ### Configuration namespace: `toml.*` → `tombi.*`
 
@@ -51,6 +51,10 @@ Schemas are now configured in project-level `tombi.toml` or `.tombi.toml` files,
 Global config by coc-settings.json will be implemented later.
 
 ## Install
+
+### Prerequisites
+
+- [coc.nvim](https://github.com/neoclide/coc.nvim) >= 0.0.82
 
 ```vim
 :CocInstall coc-toml
