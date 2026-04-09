@@ -2,61 +2,124 @@
 
 [![npm version](https://badge.fury.io/js/coc-toml.svg)](https://badge.fury.io/js/coc-toml)
 
-toml language server extension for [coc.nvim](https://github.com/neoclide/coc.nvim).
+TOML language server extension for [coc.nvim](https://github.com/neoclide/coc.nvim).
 
-Powered by [taplo](https://github.com/tamasfe/taplo)
+Powered by [Tombi](https://github.com/tombi-toml/tombi).
 
-## ! Important
+## Breaking Changes in v2.0
 
-- Issues and pull requests are all welcome. I'm a beginner in rust and ts.
-So, please tell me if I'm wrong or going to bad way to implement this.
-- This plugin supports coc `0.0.80` now.
+v2.0 is a **complete rewrite** with the following breaking changes:
+
+### Language Server: Taplo → Tombi
+
+The underlying language server has been replaced from [Taplo](https://github.com/tamasfe/taplo) to [Tombi](https://github.com/tombi-toml/tombi). Tombi runs as a **native binary** (`tombi lsp`) — WASM is no longer used.
+
+**You must install `tombi` separately** (e.g., `cargo install tombi-cli`, or download from [releases](https://github.com/tombi-toml/tombi/releases)).
+
+### Configuration namespace: `toml.*` → `tombi.*`
+
+All settings have been renamed:
+
+| v1.x (`toml.*`) | v2.0 (`tombi.*`) |
+|---|---|
+| `toml.enabled` | `tombi.enabled` |
+| `toml.activationStatus` | *(removed)* |
+| `toml.taploConfig` | *(project-level `tombi.toml` instead)* |
+| `toml.taploConfigEnabled` | *(removed)* |
+| `toml.semanticTokens` | *(removed — handled by Tombi)* |
+| `toml.formatter.*` | *(project-level `tombi.toml` instead)* |
+| `toml.schema.*` | *(project-level `tombi.toml` instead)* |
+| *(new)* | `tombi.path` |
+| *(new)* | `tombi.args` |
+| *(new)* | `tombi.env` |
+
+### Commands renamed
+
+| v1.x | v2.0 |
+|---|---|
+| `toml.syntaxTree` | *(removed)* |
+| `toml.downloadSchemas` | `tombi.refreshCache` |
+| `toml.tomlToJson` | *(removed)* |
+| `toml.jsonToToml` | *(removed)* |
+| *(new)* | `tombi.selectSchema` |
+| *(new)* | `tombi.showLanguageServerVersion` |
+| *(new)* | `tombi.restartLanguageServer` |
+
+### Schema configuration
+
+Schemas are now configured in project-level `tombi.toml` or `.tombi.toml` files, not in `coc-settings.json`. See [Tombi documentation](https://github.com/tombi-toml/tombi) for details.
 
 ## Install
 
-- from coc command
-`:CocInstall coc-toml`
-- from plugin manager
-  - (e.x) dein.vim
-    ```
-    [[plugins]]
-    repo    = 'kkiyama117/coc-toml'
-    depends = 'coc.nvim'
-    ```
-  - I checked this plugin(v1.2.5) works with dein.vim and vim-plug
+### Prerequisites
 
-### Add external schemas
+Install the Tombi binary:
 
-You can add external schema config for specific type of toml like dein.nvim config file.
-To read details, see vim help(If installed with plugin manager) or [doc txt on the web](https://github.com/kkiyama117/coc-toml/blob/main/doc/coc-toml.txt) and [taplo doc](https://taplo.tamasfe.dev/configuration/#schemas).
+```bash
+cargo install tombi-cli
+```
 
-## Keymaps
-This plugin has no unique keymaps now.
-Use your own keybinding or commands for coc.nvim.
-See [coc.nvim document](https://github.com/neoclide/coc.nvim/blob/a1688fc34143b1b7a25ab8c98438088199863e35/doc/coc.txt#L1291).
+Or download from [Tombi releases](https://github.com/tombi-toml/tombi/releases).
+
+### coc.nvim
+
+```vim
+:CocInstall coc-toml
+```
+
+Or via plugin manager (e.g., dein.vim):
+
+```vim
+[[plugins]]
+repo    = 'kkiyama117/coc-toml'
+depends = 'coc.nvim'
+```
+
+## Configuration
+
+Add to your `coc-settings.json` (`:CocConfig`):
+
+```json
+{
+  "tombi.enabled": true,
+  "tombi.path": null,
+  "tombi.args": [],
+  "tombi.env": {}
+}
+```
+
+| Setting | Description | Default |
+|---|---|---|
+| `tombi.enabled` | Enable the extension | `true` |
+| `tombi.path` | Absolute path to the tombi executable. If not set, searches PATH. | `null` |
+| `tombi.args` | Additional arguments passed to `tombi lsp` | `[]` |
+| `tombi.env` | Environment variables passed to the tombi process | `{}` |
+
+Formatter, linter, and schema settings are configured in project-level `tombi.toml` files, not in `coc-settings.json`.
+
+## Commands
+
+| Command | Description |
+|---|---|
+| `tombi.refreshCache` | Refresh schema cache |
+| `tombi.selectSchema` | Select schema for current file |
+| `tombi.showLanguageServerVersion` | Show Tombi version |
+| `tombi.restartLanguageServer` | Restart the language server |
 
 ## Features
-### lsp support
-- You can format and lint all kind of toml file.
-- Completion is supported on some format of toml files.
-  - (e.x.) `pyproject.toml`, `rustfmt.toml`, `Cargo.toml`, `dein.nvim` ...
-  - default schema and rules are [here](https://taplo.tamasfe.dev/configuration/#builtin-schemas)
 
-### commands
-- `toml.syntaxTree` -> show syntaxTree like `rust-analyzer` does.
-- `toml.downloadSchemas` -> Download all schemas to local.
-- `toml.tomlToJson` -> convert toml to json. If you run it with visualmode, convert toml in selected range instead of it in the whole of document.
-- `toml.jsonToToml` -> convert json to toml. If you run it with visualmode, convert json in selected range instead of it in the whole of document.
-  - Keep in mind if `coc-toml` is active when using these command (especially `jsonToToml`).
+- Formatting and linting for TOML files
+- Completion with schema validation
+- Go-to-definition and hover
+- Diagnostics
+- Schema association
 
-### options
-there are many options for this coc-extension.
-see `:help coc-toml-options`.
-if you need to set these options, edit your `coc-settings.json`(or run `:CocConfig`).
+## Develop
 
-### Develop
-
-if you want to build from sources or debug this repo, switch to `main` branch and run `yarn --frozen-lockfile` to build.
+```bash
+pnpm install --frozen-lockfile
+pnpm build
+```
 
 ## License
 
@@ -64,6 +127,5 @@ MIT.
 
 ## Dependencies
 
-- [taplo](https://github.com/tamasfe/taplo)
-  - to parse toml and some commands
+- [Tombi](https://github.com/tombi-toml/tombi) — TOML language server
 - [coc.nvim](https://github.com/neoclide/coc.nvim)

@@ -13,13 +13,16 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+      - uses: pnpm/action-setup@v4
+
       - uses: actions/setup-node@v4
         with:
           node-version: '22'
           registry-url: 'https://registry.npmjs.org'
+          cache: 'pnpm'
 
-      - run: yarn --frozen-lockfile
-      - run: npm publish --provenance --access public
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm publish --provenance --access public --no-git-checks
 
   publish-github:
     runs-on: ubuntu-latest
@@ -29,16 +32,19 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+      - uses: pnpm/action-setup@v4
+
       - uses: actions/setup-node@v4
         with:
           node-version: '22'
           registry-url: 'https://npm.pkg.github.com'
           scope: '@kkiyama117'
+          cache: 'pnpm'
 
-      - run: yarn --frozen-lockfile
+      - run: pnpm install --frozen-lockfile
 
       - run: |
           npm pkg set name='@kkiyama117/coc-toml'
-          npm publish
+          pnpm publish --no-git-checks
         env:
           NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}

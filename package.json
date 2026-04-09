@@ -1,6 +1,7 @@
 {
   "name": "coc-toml",
   "version": "2.0.1",
+  "packageManager": "pnpm@10.33.0",
   "description": "toml extension for coc.nvim",
   "author": "kkiyama117 <k.kiyama117@gmail.com>",
   "publisher": "kkiyama117 <k.kiyama117@gmail.com>",
@@ -25,9 +26,9 @@
     "clean": "rimraf lib",
     "prepare": "npm-run-all clean build",
     "prettier:base": "prettier --parser typescript --single-quote",
-    "prettier": "yarn prettier:base --list-different \"src/**/*.ts\"",
-    "format": "yarn prettier:base --write \"src/**/*.ts\"",
-    "watch": "yarn build --watch"
+    "prettier": "pnpm prettier:base --list-different \"src/**/*.ts\"",
+    "format": "pnpm prettier:base --write \"src/**/*.ts\"",
+    "watch": "pnpm build --watch"
   },
   "prettier": {
     "singleQuote": true,
