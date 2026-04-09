@@ -9,7 +9,7 @@ Plug 'tpope/vim-sensible'
 
 " Install coc-toml
 let s:local_coc_config = s:config_dir .. "/local_coc.vim"
-exec 'source ' .  s:local_coc_config
+" exec 'source ' .  s:local_coc_config
 
 " Install coc.nvim 
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
