@@ -24,11 +24,11 @@ All settings have been renamed:
 |---|---|
 | `toml.enabled` | `tombi.enabled` |
 | `toml.activationStatus` | *(removed)* |
-| `toml.taploConfig` | *(project-level `tombi.toml` instead)* |
+| `toml.taploConfig` | *(project-level `tombi.toml` instead now. global config will be implemented later)* |
 | `toml.taploConfigEnabled` | *(removed)* |
 | `toml.semanticTokens` | *(removed — handled by Tombi)* |
-| `toml.formatter.*` | *(project-level `tombi.toml` instead)* |
-| `toml.schema.*` | *(project-level `tombi.toml` instead)* |
+| `toml.formatter.*` | *(project-level `tombi.toml` instead. global config will be implemented later)* |
+| `toml.schema.*` | *(project-level `tombi.toml` instead. global config will be implemented later)* |
 | *(new)* | `tombi.path` |
 | *(new)* | `tombi.args` |
 | *(new)* | `tombi.env` |
@@ -48,20 +48,9 @@ All settings have been renamed:
 ### Schema configuration
 
 Schemas are now configured in project-level `tombi.toml` or `.tombi.toml` files, not in `coc-settings.json`. See [Tombi documentation](https://github.com/tombi-toml/tombi) for details.
+Global config by coc-settings.json will be implemented later.
 
 ## Install
-
-### Prerequisites
-
-Install the Tombi binary:
-
-```bash
-cargo install tombi-cli
-```
-
-Or download from [Tombi releases](https://github.com/tombi-toml/tombi/releases).
-
-### coc.nvim
 
 ```vim
 :CocInstall coc-toml
