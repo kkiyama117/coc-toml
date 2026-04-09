@@ -7,6 +7,9 @@ on:
 jobs:
   publish-npm:
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      id-token: write
     steps:
       - uses: actions/checkout@v4
 
@@ -16,9 +19,7 @@ jobs:
           registry-url: 'https://registry.npmjs.org'
 
       - run: yarn --frozen-lockfile
-      - run: npm publish
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+      - run: npm publish --provenance --access public
 
   publish-github:
     runs-on: ubuntu-latest
