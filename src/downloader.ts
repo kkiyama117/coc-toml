@@ -3,7 +3,6 @@ import { execSync } from 'child_process';
 import fs from 'fs';
 import os from 'os';
 import path from 'path';
-import { createGunzip } from 'zlib';
 import { pipeline } from 'stream/promises';
 import https from 'https';
 import { IncomingMessage } from 'http';
@@ -83,7 +82,7 @@ export async function getLatestRelease(): Promise<ReleaseInfo | null> {
     return null;
   }
 
-  const suffix = process.platform === 'win32' ? 'zip' : 'gz';
+  const suffix = process.platform === 'win32' ? 'zip' : 'tar.gz';
 
   const release = await fetchJson(
     `https://api.github.com/repos/${GITHUB_REPO}/releases/latest`,
@@ -131,10 +130,13 @@ export async function downloadServer(
       throw new Error(`HTTP ${res.statusCode} downloading ${release.assetUrl}`);
     }
 
-    const dest = fs.createWriteStream(tmpPath, { mode: 0o755 });
-
-    if (release.assetName.endsWith('.gz')) {
-      await pipeline(res, createGunzip(), dest);
+    if (release.assetName.endsWith('.tar.gz')) {
+      await pipeline(res, fs.createWriteStream(tmpPath));
+      execSync(
+        `tar -xzf '${tmpPath}' -C '${storagePath}' --strip-components=1`,
+        { encoding: 'utf-8' }
+      );
+      return destPath;
     } else {
       // .zip handling for Windows
       const zipTmp = `${tmpPath}.zip`;
@@ -149,10 +151,6 @@ export async function downloadServer(
       // The extracted binary should be in storagePath
       return destPath;
     }
-
-    // Atomic rename
-    await fs.promises.rename(tmpPath, destPath);
-    return destPath;
   } finally {
     statusItem.hide();
     statusItem.dispose();
