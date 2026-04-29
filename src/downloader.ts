@@ -134,7 +134,7 @@ export async function downloadServer(
       await pipeline(res, fs.createWriteStream(tmpPath));
       execSync(
         `tar -xzf '${tmpPath}' -C '${storagePath}' --strip-components=1`,
-        { encoding: 'utf-8' }
+        { encoding: 'utf-8' },
       );
       return destPath;
     } else {
