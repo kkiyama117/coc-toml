@@ -10,10 +10,10 @@ importers:
     devDependencies:
       '@types/node':
         specifier: ^25.5.2
-        version: 25.5.2
+        version: 25.6.2
       coc.nvim:
         specifier: 0.0.82
-        version: 0.0.82(@types/node@25.5.2)(typescript@6.0.2)
+        version: 0.0.82(@types/node@25.6.2)(typescript@6.0.2)
       esbuild:
         specifier: ^0.25.0
         version: 0.25.12
@@ -188,8 +188,8 @@ packages:
     cpu: [x64]
     os: [win32]
 
-  '@types/node@25.5.2':
-    resolution: {integrity: sha512-tO4ZIRKNC+MDWV4qKVZe3Ql/woTnmHDr5JD8UI5hn2pwBrHEwOEMZK7WlNb5RKB6EoJ02gwmQS9OrjuFnZYdpg==}
+  '@types/node@25.6.2':
+    resolution: {integrity: sha512-sokuT28dxf9JT5Kady1fsXOvI4HVpjZa95NKT5y9PNTIrs2AsobR4GFAA90ZG8M+nxVRLysCXsVj6eGC7Vbrlw==}
 
   ansi-styles@3.2.1:
     resolution: {integrity: sha512-VT0ZI6kZRdTh8YyJw3SMbYm/u+NqfsAxEpWO0Pf9sq8/e94WxxOpPKx9FR1FlyCtOVDNOQ+8ntlqFxiRc+r5qA==}
@@ -741,8 +741,8 @@ packages:
     resolution: {integrity: sha512-nWJ91DjeOkej/TA8pXQ3myruKpKEYgqvpw9lz4OPHj/NWFNluYrjbz9j01CJ8yKQd2g4jFoOkINCTW2I5LEEyw==}
     engines: {node: '>= 0.4'}
 
-  undici-types@7.18.2:
-    resolution: {integrity: sha512-AsuCzffGHJybSaRrmr5eHr81mwJU3kjw6M+uprWvCXiNeN9SOGwQ3Jn8jb8m3Z6izVgknn1R0FTCEAP2QrLY/w==}
+  undici-types@7.19.2:
+    resolution: {integrity: sha512-qYVnV5OEm2AW8cJMCpdV20CDyaN3g0AjDlOGf1OW4iaDEx8MwdtChUp4zu4H0VP3nDRF/8RKWH+IPp9uW0YGZg==}
 
   validate-npm-package-license@3.0.4:
     resolution: {integrity: sha512-DpKm2Ui/xN7/HQKCtpZxoRWBhZ9Z0kqtygG8XCgNQ8ZlDnxuQmWhj566j8fN4Cu3/JmbhsDo7fcAJq4s9h27Ew==}
@@ -847,9 +847,9 @@ snapshots:
   '@esbuild/win32-x64@0.25.12':
     optional: true
 
-  '@types/node@25.5.2':
+  '@types/node@25.6.2':
     dependencies:
-      undici-types: 7.18.2
+      undici-types: 7.19.2
 
   ansi-styles@3.2.1:
     dependencies:
@@ -912,9 +912,9 @@ snapshots:
       escape-string-regexp: 1.0.5
       supports-color: 5.5.0
 
-  coc.nvim@0.0.82(@types/node@25.5.2)(typescript@6.0.2):
+  coc.nvim@0.0.82(@types/node@25.6.2)(typescript@6.0.2):
     dependencies:
-      '@types/node': 25.5.2
+      '@types/node': 25.6.2
       typescript: 6.0.2
 
   color-convert@1.9.3:
@@ -1584,7 +1584,7 @@ snapshots:
       has-symbols: 1.1.0
       which-boxed-primitive: 1.1.1
 
-  undici-types@7.18.2: {}
+  undici-types@7.19.2: {}
 
   validate-npm-package-license@3.0.4:
     dependencies:
