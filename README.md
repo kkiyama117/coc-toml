@@ -134,6 +134,30 @@ pnpm install --frozen-lockfile
 pnpm build
 ```
 
+## Testing
+
+Smoke tests run inside a container so they are reproducible across
+hosts. Both Docker and Podman work — the `pnpm docker:*` scripts use
+the `docker` CLI name, and Podman ships a `docker` alias by default.
+
+```bash
+# Build the image and run every scenario (build check + all fixtures).
+pnpm test
+
+# Or step through pieces:
+pnpm docker:build                # build the test image
+pnpm docker:test                 # build artifact + tombi binary check
+pnpm docker:test:all             # all scenarios
+
+# Interactive shell / nvim inside the image:
+pnpm docker:shell
+pnpm docker:nvim
+```
+
+A `docker/compose.yaml` is also provided for `docker compose` /
+`podman compose` users — see `pnpm compose:test`, `compose:test:all`,
+`compose:shell`, and `compose:nvim`.
+
 ## License
 
 MIT.
