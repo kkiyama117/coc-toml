@@ -44,7 +44,23 @@ check_build() {
     echo "[smoke-test] FAIL: ${EXT_BUNDLE} has JS syntax errors"
     return 1
   fi
-  echo "[smoke-test] PASS: build artifact parses"
+  # Feature markers: stable string literals from syncConfig.ts and
+  # userSchemas.ts. esbuild bundles preserve string literals, so a missing
+  # marker means the wiring was dropped from the bundle.
+  local missing=0
+  for needle in \
+      'workspace/didChangeConfiguration' \
+      'toml-version' \
+      'tombi/associateSchema'; do
+    if ! grep -qF "$needle" "$EXT_BUNDLE"; then
+      echo "[smoke-test] FAIL: bundle missing feature marker '${needle}'"
+      missing=1
+    fi
+  done
+  if [[ $missing -ne 0 ]]; then
+    return 1
+  fi
+  echo "[smoke-test] PASS: build artifact parses and includes expected features"
   return 0
 }
 
