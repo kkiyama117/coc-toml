@@ -7,6 +7,7 @@ import { registerCommand } from './commands';
 import { refreshCache } from './commands/cache';
 import { showVersion } from './commands/version';
 import { selectSchema } from './commands/selectSchema';
+import { registerUserSchemas } from './userSchemas';
 
 export async function activate(context: ExtensionContext): Promise<void> {
   if (!config.enabled) {
@@ -38,6 +39,11 @@ export async function activate(context: ExtensionContext): Promise<void> {
       window.showInformationMessage('Tombi Language Server restarted.');
     }),
   );
+
+  // Register user-defined schemas from tombi.schemas (non-blocking)
+  registerUserSchemas(client, config.schemas).catch((e) => {
+    window.showWarningMessage(`tombi.schemas registration failed: ${e}`);
+  });
 
   // Background update check (non-blocking)
   if (tombiBin.source === 'stored') {

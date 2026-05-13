@@ -77,7 +77,8 @@ Add to your `coc-settings.json` (`:CocConfig`):
   "tombi.enabled": true,
   "tombi.path": null,
   "tombi.args": [],
-  "tombi.env": {}
+  "tombi.env": {},
+  "tombi.schemas": []
 }
 ```
 
@@ -87,8 +88,25 @@ Add to your `coc-settings.json` (`:CocConfig`):
 | `tombi.path` | Absolute path to the tombi executable. If not set, searches PATH. | `null` |
 | `tombi.args` | Additional arguments passed to `tombi lsp` | `[]` |
 | `tombi.env` | Environment variables passed to the tombi process | `{}` |
+| `tombi.schemas` | Editor-level JSON schema associations registered on startup. Each entry calls `tombi/associateSchema`. | `[]` |
 
-Formatter, linter, and schema settings are configured in project-level `tombi.toml` files, not in `coc-settings.json`.
+Formatter, linter, and project-wide schema settings are configured in project-level `tombi.toml` files. For editor-level schema overrides (similar to `yaml.schemas` in coc-yaml), use `tombi.schemas`:
+
+```json
+{
+  "tombi.schemas": [
+    {
+      "uri": "https://json.schemastore.org/cargo.json",
+      "fileMatch": ["Cargo.toml"],
+      "tomlVersion": "v1.1.0"
+    },
+    {
+      "uri": "https://json.schemastore.org/pyproject.json",
+      "fileMatch": ["pyproject.toml"]
+    }
+  ]
+}
+```
 
 ## Commands
 
