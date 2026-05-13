@@ -40,6 +40,10 @@ export class Config {
   get schemas(): SchemaEntry[] {
     return this.cfg.get<SchemaEntry[]>('schemas', []);
   }
+
+  get tomlVersion(): string {
+    return this.cfg.get<string>('tomlVersion', 'v1.1.0');
+  }
 }
 
 export default new Config();

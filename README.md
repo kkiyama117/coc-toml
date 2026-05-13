@@ -78,6 +78,7 @@ Add to your `coc-settings.json` (`:CocConfig`):
   "tombi.path": null,
   "tombi.args": [],
   "tombi.env": {},
+  "tombi.tomlVersion": "v1.1.0",
   "tombi.schemas": []
 }
 ```
@@ -88,6 +89,7 @@ Add to your `coc-settings.json` (`:CocConfig`):
 | `tombi.path` | Absolute path to the tombi executable. If not set, searches PATH. | `null` |
 | `tombi.args` | Additional arguments passed to `tombi lsp` | `[]` |
 | `tombi.env` | Environment variables passed to the tombi process | `{}` |
+| `tombi.tomlVersion` | Default TOML version (`"v1.0.0"` or `"v1.1.0"`). Sent to Tombi via `workspace/didChangeConfiguration` and used as fallback for `tombi.schemas` entries that omit `tomlVersion`. Schema/comment directives still take precedence. | `"v1.1.0"` |
 | `tombi.schemas` | Editor-level JSON schema associations registered on startup. Each entry calls `tombi/associateSchema`. | `[]` |
 
 Formatter, linter, and project-wide schema settings are configured in project-level `tombi.toml` files. For editor-level schema overrides (similar to `yaml.schemas` in coc-yaml), use `tombi.schemas`:
