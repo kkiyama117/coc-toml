@@ -1,0 +1,14 @@
+# Fixture: no tombi.toml here.
+#
+# Content is intentionally TOML 1.0-compatible so the file lints cleanly
+# under tombi's default (v1.0.0) without any project configuration. This
+# proves the toolchain works end-to-end before we exercise version
+# switching in the with-config-* fixtures.
+
+[package]
+name = "no-config-sample"
+version = "0.1.0"
+
+[settings]
+enabled = true
+verbose = false

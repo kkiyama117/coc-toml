@@ -1,0 +1,13 @@
+# Fixture: sibling tombi.toml pins toml-version to v1.0.0.
+#
+# Multi-line inline tables are TOML 1.1-only, so `tombi lint` MUST fail here
+# even though the same content lints clean in the v1.1 fixtures.
+
+[package]
+name = "pinned-v1-0-sample"
+version = "0.1.0"
+
+config = {
+  enabled = true,
+  verbose = false,
+}

@@ -1,0 +1,58 @@
+# Compose file for running coc-toml smoke tests and ad-hoc sessions.
+#
+# Works with both `docker compose` and `podman compose`.
+#
+#   docker compose -f docker/compose.yaml run --rm test
+#   docker compose -f docker/compose.yaml run --rm test-all
+#   docker compose -f docker/compose.yaml run --rm test-no-config
+#   docker compose -f docker/compose.yaml run --rm test-config-v1.0
+#   docker compose -f docker/compose.yaml run --rm test-config-v1.1
+#   docker compose -f docker/compose.yaml run --rm shell
+#   docker compose -f docker/compose.yaml run --rm nvim
+#
+# All services share the same image built from the repository Dockerfile.
+
+x-base: &base
+  build:
+    context: ..
+    dockerfile: Dockerfile
+  image: coc-toml-test:latest
+
+services:
+  # Activation-only smoke test (tombi LSP reaches running state).
+  test:
+    <<: *base
+    command: []
+
+  # Run every scenario in sequence inside a single container.
+  test-all:
+    <<: *base
+    command: ["all"]
+
+  # No tombi.toml in the working directory; falls back to editor default v1.1.0.
+  test-no-config:
+    <<: *base
+    command: ["no-config"]
+
+  # Project tombi.toml pins toml-version to v1.0.0 (overrides editor default).
+  test-config-v1.0:
+    <<: *base
+    command: ["with-config-v1.0"]
+
+  # Project tombi.toml explicitly pins toml-version to v1.1.0.
+  test-config-v1.1:
+    <<: *base
+    command: ["with-config-v1.1"]
+
+  shell:
+    <<: *base
+    entrypoint: ["bash"]
+    tty: true
+    stdin_open: true
+
+  nvim:
+    <<: *base
+    entrypoint: ["nvim"]
+    command: ["/work/examples/test.toml"]
+    tty: true
+    stdin_open: true

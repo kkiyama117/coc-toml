@@ -28,7 +28,20 @@
     "prettier:base": "prettier --parser typescript --single-quote",
     "prettier": "pnpm prettier:base --list-different \"src/**/*.ts\"",
     "format": "pnpm prettier:base --write \"src/**/*.ts\"",
-    "watch": "pnpm build --watch"
+    "watch": "pnpm build --watch",
+    "docker:build": "docker build -t coc-toml-test .",
+    "docker:test": "docker run --rm coc-toml-test",
+    "docker:test:all": "docker run --rm coc-toml-test all",
+    "docker:test:no-config": "docker run --rm coc-toml-test no-config",
+    "docker:test:config-v1.0": "docker run --rm coc-toml-test with-config-v1.0",
+    "docker:test:config-v1.1": "docker run --rm coc-toml-test with-config-v1.1",
+    "docker:shell": "docker run --rm -it --entrypoint bash coc-toml-test",
+    "docker:nvim": "docker run --rm -it coc-toml-test nvim /work/examples/test.toml",
+    "compose:test": "docker compose -f docker/compose.yaml run --rm test",
+    "compose:test:all": "docker compose -f docker/compose.yaml run --rm test-all",
+    "compose:shell": "docker compose -f docker/compose.yaml run --rm shell",
+    "compose:nvim": "docker compose -f docker/compose.yaml run --rm nvim",
+    "test": "pnpm docker:build && pnpm docker:test:all"
   },
   "prettier": {
     "singleQuote": true,
