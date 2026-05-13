@@ -1,0 +1,3 @@
+# Project-level tombi config: explicitly pin TOML to v1.1.0.
+# Verifies the override path even when the editor default would already be v1.1.0.
+toml-version = "v1.1.0"

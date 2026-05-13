@@ -1,0 +1,20 @@
+# Build artifacts and dependencies are reinstalled/rebuilt inside the image.
+node_modules
+lib
+
+# Local Git metadata is not needed for the build.
+.git
+.github
+
+# Editor / IDE state.
+.vscode
+.idea
+.claude
+
+# OS junk.
+.DS_Store
+Thumbs.db
+
+# Local-only example artifacts.
+examples/autoload/plug.vim
+examples/local_coc.vim
