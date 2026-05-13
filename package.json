@@ -133,6 +133,52 @@
           "description": "Prompt before downloading updates. If false, downloads automatically.",
           "type": "boolean",
           "default": true
+        },
+        "tombi.tomlVersion": {
+          "description": "Default TOML specification version used by the language server when neither a schema directive, comment directive, nor tombi.toml specifies one. Sent to Tombi via workspace/didChangeConfiguration as `toml-version`.",
+          "type": "string",
+          "enum": [
+            "v1.0.0",
+            "v1.1.0"
+          ],
+          "default": "v1.1.0"
+        },
+        "tombi.schemas": {
+          "description": "Associate JSON schemas with TOML files. Each entry is registered with the language server on startup via tombi/associateSchema. For project-wide config, prefer tombi.toml in the workspace root.",
+          "type": "array",
+          "default": [],
+          "items": {
+            "type": "object",
+            "required": [
+              "uri",
+              "fileMatch"
+            ],
+            "properties": {
+              "uri": {
+                "type": "string",
+                "description": "Schema URI (http(s):// or file://)."
+              },
+              "fileMatch": {
+                "type": "array",
+                "description": "Glob patterns the schema applies to (e.g. [\"Cargo.toml\"], [\"pyproject.toml\"]).",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "title": {
+                "type": "string",
+                "description": "Optional display title for the schema."
+              },
+              "description": {
+                "type": "string",
+                "description": "Optional description shown alongside the schema."
+              },
+              "tomlVersion": {
+                "type": "string",
+                "description": "TOML version to use with this schema (e.g. \"v1.0.0\" or \"v1.1.0\")."
+              }
+            }
+          }
         }
       }
     }
