@@ -10,10 +10,10 @@ importers:
     devDependencies:
       '@types/node':
         specifier: ^25.5.2
-        version: 25.9.1
+        version: 25.9.3
       coc.nvim:
         specifier: 0.0.82
-        version: 0.0.82(@types/node@25.9.1)(typescript@6.0.2)
+        version: 0.0.82(@types/node@25.9.3)(typescript@6.0.2)
       esbuild:
         specifier: ^0.28.0
         version: 0.28.0
@@ -188,8 +188,8 @@ packages:
     cpu: [x64]
     os: [win32]
 
-  '@types/node@25.9.1':
-    resolution: {integrity: sha512-xfrlY7UD5rMJk3ZVJP8BNzS28J36YJg+xp+LPXV1TdWxr8uMH5A860QNxYDGQe/ylDSgjxE52Q9VnO7p75tJxg==}
+  '@types/node@25.9.3':
+    resolution: {integrity: sha512-603BddQMv3pUcr4U2dhujk83N2tTDVr/34wII2B6bJy6g+8WD6yUb11jszNs0gdi4PesVWl7ABt8nYMVpnLUcg==}
 
   ansi-styles@3.2.1:
     resolution: {integrity: sha512-VT0ZI6kZRdTh8YyJw3SMbYm/u+NqfsAxEpWO0Pf9sq8/e94WxxOpPKx9FR1FlyCtOVDNOQ+8ntlqFxiRc+r5qA==}
@@ -847,7 +847,7 @@ snapshots:
   '@esbuild/win32-x64@0.28.0':
     optional: true
 
-  '@types/node@25.9.1':
+  '@types/node@25.9.3':
     dependencies:
       undici-types: 7.24.6
 
@@ -912,9 +912,9 @@ snapshots:
       escape-string-regexp: 1.0.5
       supports-color: 5.5.0
 
-  coc.nvim@0.0.82(@types/node@25.9.1)(typescript@6.0.2):
+  coc.nvim@0.0.82(@types/node@25.9.3)(typescript@6.0.2):
     dependencies:
-      '@types/node': 25.9.1
+      '@types/node': 25.9.3
       typescript: 6.0.2
 
   color-convert@1.9.3:
