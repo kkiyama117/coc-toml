@@ -16,7 +16,7 @@ importers:
         version: 26.2.0
       coc-test:
         specifier: ^0.2.0
-        version: 0.2.0
+        version: 0.2.2
       coc.nvim:
         specifier: 0.0.82
         version: 0.0.82(@types/node@26.2.0)(typescript@7.0.2)
@@ -446,8 +446,8 @@ packages:
     resolution: {integrity: sha512-Mti+f9lpJNcwF4tWV8/OrTTtF1gZi+f8FqlyAdouralcFWFQWF2+NgCHShjkCb+IFBLq9buZwE1xckQU4peSuQ==}
     engines: {node: '>=4'}
 
-  coc-test@0.2.0:
-    resolution: {integrity: sha512-ba3Dp60+fOYv7C+ndnz/h8el8rb5/mB0iCIF61IiOBthnWMpMpxbbO7fi0EwCuy/bQ65ZBzfbNZw3m6h7QkEVw==}
+  coc-test@0.2.2:
+    resolution: {integrity: sha512-x4n2/h84+ohZ7kUjhbJyFBCMcw48ZOJKZrrLBOCd8wodb0nF9qneIPezOKo9BDL6LlRsVQb23FK+JzHX7SSuew==}
     engines: {node: '>=22.15.0'}
     hasBin: true
 
@@ -1293,7 +1293,7 @@ snapshots:
       escape-string-regexp: 1.0.5
       supports-color: 5.5.0
 
-  coc-test@0.2.0:
+  coc-test@0.2.2:
     dependencies:
       esbuild: 0.28.2
       fast-glob: 3.3.3
